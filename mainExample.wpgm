@@ -1,11 +1,16 @@
 import wollok.game.*
+import example.*
 
-import example.pepita
 
-program PepitaGame {
-	game.title("Pepita")
-	game.height(10)
-	game.width(10)
+program juego {
+    game.title("juego")
+    game.height(10)
+    game.width(10)
 
-	game.start()
+    game.addVisual(textoSeleccion)
+
+    keyboard.right().onPressDo { detective.siguiente() }
+    keyboard.left().onPressDo { detective.anterior() }
+    keyboard.enter().onPressDo { detective.confirmar() }
+    game.start()
 }
