@@ -42,14 +42,14 @@ object patricioJuan {
     const nombre = "Patricio Juan"
     var property position = game.origin()
     method nombre() = nombre
-    method image() = "patrickJane.png"
+    method image() = "patrickJanePrueba.png"
 }
 
 object sargentoDocs{
     const nombre = "Sargento Docs"
     var property position = game.origin()
     method nombre() = nombre
-    method image() = "goat.png"
+    method image() = "spiderman.png"
 }
 
 object oliviaBenson{

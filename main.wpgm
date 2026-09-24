@@ -1,0 +1,22 @@
+import wollok.game.*
+import detectives.*
+import objetos.*
+import interacciones.*
+
+program juego {
+    game.title("juego")
+    game.cellSize(50)
+    game.width(16)
+    game.height(12)
+    //los fondos deben medir exactamente 800x600
+
+    game.addVisual(textoSeleccion)
+    game.addVisual(llave)
+
+    keyboard.right().onPressDo({ detective.siguiente() })
+    keyboard.left().onPressDo({ detective.anterior() })
+    keyboard.enter().onPressDo({ detective.confirmar() })
+    keyboard.z().onPressDo({ interacciones.interactuar() })
+
+    game.start()
+}
