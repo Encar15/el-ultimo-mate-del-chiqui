@@ -9,8 +9,8 @@ class Pista {
 
     method image() = nombre + ".png"
 
-    method puedeInteractuar(unDetective){
-        return disponible && unDetective.position() == self.position()
+    method estaDisponible(){
+        return disponible
     }
 
     method interactuar(unDetective){
@@ -21,7 +21,7 @@ class Pista {
 
     method finalizarInteraccion(){
         game.removeVisual(self)
-}
+    }
 }
 
 const llave = new Pista(

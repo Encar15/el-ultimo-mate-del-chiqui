@@ -2,6 +2,7 @@ import wollok.game.*
 import detectives.*
 import objetos.*
 import interacciones.*
+import restoPersonajes.*
 
 program juego {
     game.title("juego")
@@ -12,7 +13,7 @@ program juego {
 
     game.addVisual(textoSeleccion)
     game.addVisual(llave)
-
+    game.addVisual(testigo)
     keyboard.right().onPressDo({ detective.siguiente() })
     keyboard.left().onPressDo({ detective.anterior() })
     keyboard.enter().onPressDo({ detective.confirmar() })
