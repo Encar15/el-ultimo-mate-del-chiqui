@@ -3,17 +3,17 @@ import detectives.*
 import objetos.*
 import interacciones.*
 import restoPersonajes.*
+import directorJuego.*
 
 program juego {
-    game.title("juego")
+    game.title("El Ultimo Mate del Chiqui Tapia")
     game.cellSize(50)
     game.width(16)
     game.height(12)
     //los fondos deben medir exactamente 800x600
 
-    game.addVisual(textoSeleccion)
-    game.addVisual(llave)
-    game.addVisual(testigo)
+    nivel.configurarInicio()
+
     keyboard.right().onPressDo({ detective.siguiente() })
     keyboard.left().onPressDo({ detective.anterior() })
     keyboard.enter().onPressDo({ detective.confirmar() })

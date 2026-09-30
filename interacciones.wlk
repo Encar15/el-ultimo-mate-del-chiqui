@@ -1,67 +1,37 @@
+import wollok.game.*
 import detectives.*
-import objetos.*
 import cuadroDeTexto.*
-import restoPersonajes.*
 
 object interacciones {
-    const tiposDeInteraccion = [interaccionPista,interaccionPersona]
 
-    method interactuar(){
-        if(cuadros.hayCuadroAbierto()){
+    method interactuar() {
+        if (cuadros.hayCuadroAbierto()) {
             cuadros.cerrar()
-        }else{
-            const disponibles = tiposDeInteraccion.filter({
-                unaInteraccion => unaInteraccion.puedeInteractuar(detective.detectiveActual())
-            })
-
-            if(!disponibles.isEmpty()){
-                disponibles.first().interactuar(detective.detectiveActual())
-            }
+        } else {
+            self.interactuarConCercano()
         }
     }
-}
 
-object interaccionPersona {
-    const personas = [testigo]
-
-    method puedeInteractuar(unDetective){
-        return personas.any({
-            unaPersona => self.estaAlLado(unaPersona,unDetective)
-        })
+    method interactuarConCercano() {
+        const detectiveActual = detective.detectiveActual()
+        self.candidatos(detectiveActual)
+            .take(1)
+            .forEach({ elemento => elemento.interactuar(detectiveActual) })
     }
 
-    method interactuar(unDetective){
-        const disponibles = personas.filter({
-            unaPersona => self.estaAlLado(unaPersona,unDetective)
-        })
-
-        disponibles.first().interactuar()
+    method candidatos(unDetective) {
+        return self.posicionesAInterrogar(unDetective)
+                   .flatMap({ pos => game.getObjectsIn(pos) })
+                   .filter({ obj => obj != unDetective })
     }
 
-    method estaAlLado(unaPersona,unDetective){
-        return unDetective.position().up(1) == unaPersona.position()
-            || unDetective.position().down(1) == unaPersona.position()
-            || unDetective.position().left(1) == unaPersona.position()
-            || unDetective.position().right(1) == unaPersona.position()
-    }
-}
-
-object interaccionPista {
-    const pistas = [llave]
-
-    method puedeInteractuar(unDetective){
-        return pistas.any({
-            unaPista => unaPista.estaDisponible()
-                && unaPista.position() == unDetective.position()
-        })
-    }
-
-    method interactuar(unDetective){
-        const disponibles = pistas.filter({
-            unaPista => unaPista.estaDisponible()
-                && unaPista.position() == unDetective.position()
-        })
-
-        disponibles.first().interactuar(unDetective)
+    method posicionesAInterrogar(unDetective) {
+        const pos = unDetective.position()
+        return [                      // Misma celda (para pistas que pisás)
+            pos.up(1),    // Arriba
+            pos.down(1),  // Abajo
+            pos.left(1),  // Izquierda
+            pos.right(1)  // Derecha
+        ]
     }
 }

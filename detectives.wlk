@@ -1,4 +1,5 @@
 import wollok.game.*
+import directorJuego.*
 
 object detective {
     const detectives = [patricioJuan, sargentoDocs, oliviaBenson]
@@ -24,8 +25,8 @@ object detective {
     method confirmar(){
         if(detectiveActual == null){
             detectiveActual = detectives.get(indice)
-            game.removeVisual(textoSeleccion)
-            game.addVisualCharacter(detectiveActual)
+            
+            nivel.iniciarPartida()
     }
 }
 
@@ -49,7 +50,7 @@ object sargentoDocs{
     const nombre = "Sargento Docs"
     var property position = game.origin()
     method nombre() = nombre
-    method image() = "spiderman.png"
+    method image() = "steve.png"
 }
 
 object oliviaBenson{
@@ -60,9 +61,7 @@ object oliviaBenson{
 }
 
 object textoSeleccion {
-    method position() = game.center()
-
-    method text(){
-        return detective.nombreSeleccionado()
-    }
+    method position() = game.at(7, 6)
+    method text() = detective.nombreSeleccionado()
+    method textColor() = "000000FF"
 }

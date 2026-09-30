@@ -9,7 +9,7 @@ class Persona {
 
     method image() = imagen
 
-    method interactuar(){
+    method interactuar(unDetective){
         const cuadro = new CuadroDeTexto(texto = texto)
         cuadros.abrir(cuadro,self)
     }
