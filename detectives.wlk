@@ -1,67 +1,37 @@
 import wollok.game.*
-import directorJuego.*
-
-object detective {
-    const detectives = [patricioJuan, sargentoDocs, oliviaBenson]
-    var indice = 0
-    var detectiveActual = null
-
-    method siguiente(){
-        if(indice == detectives.size() - 1){
-            indice = 0
-        }else{
-            indice = indice + 1
-        }
-    }
-
-    method anterior(){
-        if(indice == 0){
-            indice = detectives.size() - 1
-        }else{
-            indice = indice - 1
-        }
-    }
-
-    method confirmar(){
-        if(detectiveActual == null){
-            detectiveActual = detectives.get(indice)
-            
-            nivel.iniciarPartida()
-    }
-}
-
-    method detectiveActual(){
-        return detectiveActual
-    }
-
-    method nombreSeleccionado(){
-        return detectives.get(indice).nombre()
-    }
-}
+import cuadroDeTexto.*
 
 object patricioJuan {
     const nombre = "Patricio Juan"
     var property position = game.origin()
-    method nombre() = nombre
-    method image() = "patrickJanePrueba.png"
-}
 
-object sargentoDocs{
-    const nombre = "Sargento Docs"
-    var property position = game.origin()
     method nombre() = nombre
     method image() = "steve.png"
-}
 
-object oliviaBenson{
-    const nombre = "Olivia Benson"
-    var property position = game.origin()
-    method nombre() = nombre
-    method image() = "imagenTest.png"
-}
+    method moverArriba(){
+        self.moverA(position.up(1))
+    }
 
-object textoSeleccion {
-    method position() = game.at(7, 6)
-    method text() = detective.nombreSeleccionado()
-    method textColor() = "000000FF"
+    method moverAbajo(){
+        self.moverA(position.down(1))
+    }
+
+    method moverIzquierda(){
+        self.moverA(position.left(1))
+    }
+
+    method moverDerecha(){
+        self.moverA(position.right(1))
+    }
+
+    method moverA(nuevaPosicion){
+    if(!cuadros.hayCuadroAbierto()){
+        if(nuevaPosicion.x() >= 0
+            && nuevaPosicion.x() < game.width()
+            && nuevaPosicion.y() >= 0
+            && nuevaPosicion.y() < game.height()){
+            position = nuevaPosicion
+        }
+    }
+}
 }

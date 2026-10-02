@@ -13,7 +13,7 @@ object interacciones {
     }
 
     method interactuarConCercano() {
-        const detectiveActual = detective.detectiveActual()
+        const detectiveActual = patricioJuan
         self.candidatos(detectiveActual)
             .take(1)
             .forEach({ elemento => elemento.interactuar(detectiveActual) })
@@ -27,11 +27,11 @@ object interacciones {
 
     method posicionesAInterrogar(unDetective) {
         const pos = unDetective.position()
-        return [                      // Misma celda (para pistas que pisás)
-            pos.up(1),    // Arriba
-            pos.down(1),  // Abajo
-            pos.left(1),  // Izquierda
-            pos.right(1)  // Derecha
+        return [
+            pos.up(1),
+            pos.down(1),
+            pos.left(1),
+            pos.right(1)
         ]
     }
 }
