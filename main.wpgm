@@ -7,9 +7,9 @@ import directorJuego.*
 
 program juego {
     game.title("El Ultimo Mate del Chiqui Tapia")
-    game.cellSize(70)
-    game.width(18)
-    game.height(16)
+    game.cellSize(100)
+    game.width(23)
+    game.height(12)
     //los fondos deben medir exactamente 800x600
 
     nivel.iniciarPartida()

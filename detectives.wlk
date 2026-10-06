@@ -6,7 +6,7 @@ object patricioJuan {
     var property position = game.origin()
 
     method nombre() = nombre
-    method image() = "steve.png"
+    method image() = "pixil-frame-1.png"
 
     method moverArriba(){
         self.moverA(position.up(1))
