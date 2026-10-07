@@ -2,8 +2,8 @@ import wollok.game.*
 
 class TextoDelCuadro {
     var property texto
+    var property position
 
-    method position() = game.at(2,2)
     method text() = texto
     method textColor() = "FFFFFFFF"
 }
@@ -17,7 +17,9 @@ class CuadroDeTexto {
     method image() = "fondoNegroCuadroDeTexto.png"
 
     method abrir(){
-        textoVisual = new TextoDelCuadro(texto = texto)
+        textoVisual = new TextoDelCuadro(
+            texto = texto,
+            position = game.at(2,2))
         game.addVisual(self)
         game.addVisual(textoVisual)
         abierto = true
@@ -55,5 +57,10 @@ object cuadros {
 
     method hayCuadroAbierto(){
         return cuadroActual != null
+    }
+
+    method reiniciar(){
+    cuadroActual = null
+    objetoActual = null
     }
 }

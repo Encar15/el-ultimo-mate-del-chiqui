@@ -4,22 +4,21 @@ import objetos.*
 import interacciones.*
 import restoPersonajes.*
 import directorJuego.*
+import dialogos.*
+import controles.*
+import debug.*
+
 
 program juego {
     game.title("El Ultimo Mate del Chiqui Tapia")
     game.cellSize(100)
     game.width(23)
     game.height(12)
-    //los fondos deben medir exactamente 800x600
 
     nivel.iniciarPartida()
 
-    keyboard.right().onPressDo({ patricioJuan.moverDerecha() })
-    keyboard.left().onPressDo({ patricioJuan.moverIzquierda() })
-    keyboard.up().onPressDo({ patricioJuan.moverArriba() })
-    keyboard.down().onPressDo({ patricioJuan.moverAbajo() })
-
-    keyboard.z().onPressDo({ interacciones.interactuar() })
+    controles.configurar()
+    debug.configurar()
 
     game.start()
 }

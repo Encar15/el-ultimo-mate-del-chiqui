@@ -1,6 +1,7 @@
 import wollok.game.*
 import cuadroDeTexto.*
 import colisiones.*
+import dialogos.*
 
 object patricioJuan {
     const nombre = "Patricio Juan"
@@ -34,12 +35,16 @@ object patricioJuan {
     }
 
     method moverA(nuevaPosicion){
-    if(!cuadros.hayCuadroAbierto()){
+    if(!cuadros.hayCuadroAbierto() && !dialogos.hayDialogoAbierto()){
         if(self.casillaDisponible(nuevaPosicion)){
             position = nuevaPosicion
-            }
         }
     }
+    }
+
+    method reiniciar(){
+    position = game.origin()
+}
 }
 
 

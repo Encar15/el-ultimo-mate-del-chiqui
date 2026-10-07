@@ -22,6 +22,10 @@ class Pista {
     method finalizarInteraccion(){
         game.removeVisual(self)
     }
+
+    method reiniciar(){
+    disponible = true
+    }
 }
 
 const llave = new Pista(

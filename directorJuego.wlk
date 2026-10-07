@@ -3,6 +3,8 @@ import wollok.game.*
 import detectives.*
 import objetos.*
 import restoPersonajes.*
+import cuadroDeTexto.*
+import dialogos.*
 
 object nivel {
 
@@ -11,13 +13,24 @@ object nivel {
         game.addVisual(testigo)
         game.addVisual(patricioJuan)
         game.addVisual(contador)
+        game.addVisual(sospechosoPrueba)
 
         contador.iniciarCronometro()
+    }
+
+    method reiniciarEstado(){
+    patricioJuan.reiniciar()
+    llave.reiniciar()
+    sospechosoPrueba.reiniciar()
+    cuadros.reiniciar()
+    dialogos.reiniciar()
+    contador.reiniciar()
     }
 }
 
 object contador {
     var property tiempoRestante = 60
+    var pausado = false
     const cronometro = game.tick(1000, { self.descontar(1)}, false)
 
     method text() = "Tiempo restante: " + tiempoRestante.toString()
@@ -26,6 +39,43 @@ object contador {
 
     method iniciarCronometro() {
         cronometro.start()
+        pausado = false
+    }
+
+    method pausar(){
+        cronometro.stop()
+        pausado = true
+    }
+
+    method reanudar(){
+        cronometro.start()
+        pausado = false
+    }
+
+    method alternarPausa(){
+        if(pausado){
+            self.reanudar()
+        }else{
+            self.pausar()
+        }
+    }
+
+    method reiniciarCronometro(){
+        cronometro.stop()
+        tiempoRestante = 60
+        cronometro.start()
+        pausado = false
+    }
+
+    method detenerCronometro(){
+        cronometro.stop()
+        pausado = false
+    }
+
+    method reiniciar(){
+    cronometro.stop()
+    tiempoRestante = 60
+    pausado = false
     }
 
     method contadorEnCero() {
