@@ -3,7 +3,6 @@ import cuadroDeTexto.*
 
 class Persona {
     var property position
-    const nombre
     const imagen
     const texto
 
@@ -20,7 +19,6 @@ class Persona {
 
 const testigo = new Persona(
     position = game.at(6,5),
-    nombre = "Testigo",
     imagen = "testigoPrueba.png",
     texto = "Vi a alguien salir de la habitación."
 )
