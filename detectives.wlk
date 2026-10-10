@@ -44,7 +44,11 @@ object patricioJuan {
 
     method reiniciar(){
     position = game.origin()
-}
+    }
+
+    method ubicarEn(unaPosicion){
+    position = unaPosicion
+    }
 }
 
 

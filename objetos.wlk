@@ -26,6 +26,26 @@ class Pista {
     method reiniciar(){
     disponible = true
     }
+
+    method mostrar(){
+    if(disponible){
+        game.addVisual(self)
+    }
+   }
+
+    method ocultar(){
+    if(disponible){
+        game.removeVisual(self)
+    }
+    }
+
+    method texto(){
+    return texto
+    }
+
+    method marcarEncontrada(){
+    disponible = false
+    }
 }
 
 const llave = new Pista(

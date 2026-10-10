@@ -4,19 +4,43 @@ import cuadroDeTexto.*
 class OpcionDialogo {
     const texto
     const tono
-    const respuesta
+    
+    // En lugar de una sola "respuesta", ahora tenemos respuestas por estado
+    const respuestaNormal
+    const respuestaEnojada
+    
+    method texto() = texto
 
-    method texto(){
-        return texto
-    }
+    // Double Dispatch: El estado decide qué respuesta sacar de la opción
+    method respuestaSegunEstado(unEstado) = unEstado.reaccionar(self)
+    
+    // Métodos para que el estado los llame
+    method respuestaInocente() = respuestaNormal
+    method respuestaCulpable() = respuestaEnojada
 
-    method tono(){
-        return tono
+    // Acá definimos si esta opción le sube la presión o lo asusta
+    method afectarSospechoso(unSospechoso) {
+        if (tono == "provocador") {
+            unSospechoso.aumentarPresion(10)
+            unSospechoso.estadoDeAnimo(acorralado) // Si lo bardeas, se acorrala/enoja
+        } else if (tono == "gentil") {
+            unSospechoso.aumentarConfianza(10)
+            unSospechoso.estadoDeAnimo(relajado)
+        }
     }
+}
 
-    method respuesta(){
-        return respuesta
-    }
+// --- Los Estados ---
+object relajado {
+    method imagen(base) = base + "Normal.png" 
+    
+    method reaccionar(pregunta) = pregunta.respuestaInocente()
+}
+
+object acorralado {
+    method imagen(base) = base + "Nervioso.png" 
+    
+    method reaccionar(pregunta) = pregunta.respuestaCulpable()
 }
 class TextoOpcionDialogo {
     const selector

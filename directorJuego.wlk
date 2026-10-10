@@ -5,6 +5,66 @@ import objetos.*
 import restoPersonajes.*
 import cuadroDeTexto.*
 import dialogos.*
+import colisiones.*
+
+class Habitacion {
+    const fondo
+    const personajes
+    const objetos
+    const colisionesHabitacion
+
+    method entrar(){
+        game.boardGround(fondo)
+
+        personajes.forEach({
+            unPersonaje => game.addVisual(unPersonaje)
+        })
+
+        objetos.forEach({
+            unObjeto => unObjeto.mostrar()
+        })
+
+        colisiones.cargar(colisionesHabitacion)
+    }
+
+    method salir(){
+        personajes.forEach({
+            unPersonaje => game.removeVisual(unPersonaje)
+        })
+
+        objetos.forEach({
+            unObjeto => unObjeto.ocultar()
+        })
+
+        colisiones.limpiar()
+    }
+}
+
+// class Puerta {
+//     var property position
+//     const imagen
+//     var destino = null
+//     var posicionDestino = null
+
+//     method image() = imagen
+
+//     method conectar(unaHabitacion,unaPosicion){
+//         destino = unaHabitacion
+//         posicionDestino = unaPosicion
+//     }
+
+//     method interactuar(unDetective){
+//         nivel.irA(destino,posicionDestino)
+//     }
+
+//     method mostrar(){
+//         game.addVisual(self)
+//     }
+
+//     method ocultar(){
+//         game.removeVisual(self)
+//     }
+// }
 
 object nivel {
 
@@ -26,7 +86,9 @@ object nivel {
     dialogos.reiniciar()
     contador.reiniciar()
     }
+
 }
+
 
 object contador {
     var property tiempoRestante = 60
@@ -97,3 +159,5 @@ object contador {
         game.schedule(2000, { game.stop() })
     }
 }
+
+
