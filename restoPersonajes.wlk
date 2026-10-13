@@ -35,12 +35,9 @@ class Sospechoso inherits Persona {
     const opcionesDialogo
     var opcionElegida = null
 
-    
-    // --- NUEVO: ESTADO DE ÁNIMO ---
     var property estadoDeAnimo = relajado 
-    const nombreBaseImagen // Necesario para que el estado sepa qué PNG armar
+    const nombreBaseImagen
 
-    // Hacemos override de image() para que dependa del estado y no de la clase Persona
     override method image() = estadoDeAnimo.imagen(nombreBaseImagen)
 
     method confianza(){
@@ -88,17 +85,12 @@ class Sospechoso inherits Persona {
 
     method recibirRespuesta(unaOpcion){
         opcionElegida = unaOpcion
-        
-        // --- NUEVO: Efecto en la actitud ---
-        // La opción elegida puede afectar la presión, confianza o cambiar el estado directamente
         unaOpcion.afectarSospechoso(self)
         
         self.mostrarRespuesta()
     }
 
     method mostrarRespuesta(){
-        // --- NUEVO: La actitud influye en las respuestas ---
-        // Le pedimos a la opción la respuesta, pero PASÁNDOLE NUESTRO ESTADO
         const textoRespuesta = opcionElegida.respuestaSegunEstado(estadoDeAnimo)
 
         const cuadro = new CuadroDeTexto(
@@ -110,7 +102,7 @@ class Sospechoso inherits Persona {
 
      method reiniciar(){
         opcionElegida = null
-        estadoDeAnimo = relajado // Vuelve a la normalidad al reiniciar
+        estadoDeAnimo = relajado 
     }
 }
 
@@ -141,13 +133,8 @@ class Informacion {
 
 const sospechosoPrueba = new Sospechoso(
     position = game.at(10,5),
-    
-    // Pasamos el nombre base sin el .png, el estado le agrega el resto. 
-    // Asset normal: "sospechozoPruebaNormal.png"
-    // Asset nervioso: "sospechozoPruebaNervioso.png"
     nombreBaseImagen = "sospechozoPrueba", 
-    imagen = "dummy.png", // Solo para cumplir con la clase padre Persona
-    
+    imagen = "dummy.png", 
     texto = "No puedo dejarte pasar.",
     confianza = 0,
     presion = 0,

@@ -1,4 +1,3 @@
-// nivel.wlk
 import wollok.game.*
 import detectives.*
 import objetos.*
@@ -6,87 +5,29 @@ import restoPersonajes.*
 import cuadroDeTexto.*
 import dialogos.*
 import colisiones.*
-
-class Habitacion {
-    const fondo
-    const personajes
-    const objetos
-    const colisionesHabitacion
-
-    method entrar(){
-        game.boardGround(fondo)
-
-        personajes.forEach({
-            unPersonaje => game.addVisual(unPersonaje)
-        })
-
-        objetos.forEach({
-            unObjeto => unObjeto.mostrar()
-        })
-
-        colisiones.cargar(colisionesHabitacion)
-    }
-
-    method salir(){
-        personajes.forEach({
-            unPersonaje => game.removeVisual(unPersonaje)
-        })
-
-        objetos.forEach({
-            unObjeto => unObjeto.ocultar()
-        })
-
-        colisiones.limpiar()
-    }
-}
-
-// class Puerta {
-//     var property position
-//     const imagen
-//     var destino = null
-//     var posicionDestino = null
-
-//     method image() = imagen
-
-//     method conectar(unaHabitacion,unaPosicion){
-//         destino = unaHabitacion
-//         posicionDestino = unaPosicion
-//     }
-
-//     method interactuar(unDetective){
-//         nivel.irA(destino,posicionDestino)
-//     }
-
-//     method mostrar(){
-//         game.addVisual(self)
-//     }
-
-//     method ocultar(){
-//         game.removeVisual(self)
-//     }
-// }
+import inventario.*
+import controles.*
+import habitaciones.*
 
 object nivel {
 
     method iniciarPartida() {
-        game.addVisual(llave)
-        game.addVisual(testigo)
+        mapa.iniciar()                 // carga la habitación inicial con todo lo que tiene
         game.addVisual(patricioJuan)
         game.addVisual(contador)
-        game.addVisual(sospechosoPrueba)
 
         contador.iniciarCronometro()
     }
 
     method reiniciarEstado(){
-    patricioJuan.reiniciar()
-    llave.reiniciar()
-    sospechosoPrueba.reiniciar()
-    cuadros.reiniciar()
-    dialogos.reiniciar()
-    contador.reiniciar()
+        patricioJuan.reiniciar()
+        sospechosoPrueba.reiniciar()
+        mapa.reiniciar()               
+        inventario.vaciar()
+        cuadros.reiniciar()
+        dialogos.reiniciar()
+        contador.reiniciar()
     }
-
 }
 
 
