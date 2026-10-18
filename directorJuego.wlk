@@ -5,14 +5,14 @@ import restoPersonajes.*
 import cuadroDeTexto.*
 import dialogos.*
 import colisiones.*
-import inventario.*
+import menu.*
 import controles.*
 import habitaciones.*
 
 object nivel {
 
     method iniciarPartida() {
-        mapa.iniciar()                 // carga la habitación inicial con todo lo que tiene
+        mapa.iniciar()
         game.addVisual(patricioJuan)
         game.addVisual(contador)
 
@@ -22,8 +22,8 @@ object nivel {
     method reiniciarEstado(){
         patricioJuan.reiniciar()
         sospechosoPrueba.reiniciar()
-        mapa.reiniciar()               
-        inventario.vaciar()
+        mapa.reiniciar()
+        menu.reiniciar()
         cuadros.reiniciar()
         dialogos.reiniciar()
         contador.reiniciar()
@@ -81,9 +81,7 @@ object contador {
     pausado = false
     }
 
-    method contadorEnCero() {
-      self.tiempoRestante() == 0
-    }
+    method contadorEnCero() = tiempoRestante == 0
 
     method descontar(cantidad) {
       tiempoRestante = 0.max(tiempoRestante - cantidad)
@@ -100,5 +98,3 @@ object contador {
         game.schedule(2000, { game.stop() })
     }
 }
-
-

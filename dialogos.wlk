@@ -4,25 +4,18 @@ import cuadroDeTexto.*
 class OpcionDialogo {
     const texto
     const tono
-    
-    // En lugar de una sola "respuesta", ahora tenemos respuestas por estado
     const respuestaNormal
     const respuestaEnojada
-    
-    method texto() = texto
 
-    // Double Dispatch: El estado decide qué respuesta sacar de la opción
+    method texto() = texto
     method respuestaSegunEstado(unEstado) = unEstado.reaccionar(self)
-    
-    // Métodos para que el estado los llame
     method respuestaInocente() = respuestaNormal
     method respuestaCulpable() = respuestaEnojada
 
-    // Acá definimos si esta opción le sube la presión o lo asusta
     method afectarSospechoso(unSospechoso) {
         if (tono == "provocador") {
             unSospechoso.aumentarPresion(10)
-            unSospechoso.estadoDeAnimo(acorralado) // Si lo bardeas, se acorrala/enoja
+            unSospechoso.estadoDeAnimo(acorralado)
         } else if (tono == "gentil") {
             unSospechoso.aumentarConfianza(10)
             unSospechoso.estadoDeAnimo(relajado)
@@ -30,16 +23,15 @@ class OpcionDialogo {
     }
 }
 
-// --- Los Estados ---
 object relajado {
-    method imagen(base) = base + "Normal.png" 
-    
+    method imagen(base) = base + "Normal.png"
+
     method reaccionar(pregunta) = pregunta.respuestaInocente()
 }
 
 object acorralado {
-    method imagen(base) = base + "Nervioso.png" 
-    
+    method imagen(base) = base + "Nervioso.png"
+
     method reaccionar(pregunta) = pregunta.respuestaCulpable()
 }
 class TextoOpcionDialogo {
@@ -57,19 +49,6 @@ class TextoOpcionDialogo {
         }else{
             return "FFFFFFFF"
         }
-    }
-}
-
-class TextoEtiquetaDialogo {
-    const texto
-    var property position
-
-    method text(){
-        return texto
-    }
-
-    method textColor(){
-        return "FFFFFFFF"
     }
 }
 
@@ -109,61 +88,41 @@ class SelectorDialogo {
 class CuadroDeDialogo {
     const texto
     const selector
+    const etiqueta = "Elegir dialogo:"
 
-    var textoPrincipal = null
-    var tituloOpciones = null
-    var visualesOpciones = []
+    var visualesAbiertos = []
 
     method position() = game.at(0,0)
     method image() = "fondoNegroCuadroDeTexto.png"
 
-    method abrir(){
-        textoPrincipal = new TextoDelCuadro(
-        texto = texto,
-        position = game.at(2,4)
-        )
-
-        tituloOpciones = new TextoEtiquetaDialogo(
-            texto = "Elegir dialogo:",
-            position = game.at(2,3)
-        )
-
-        visualesOpciones = [
+    method visuales(){
+        const cantidadDeOpciones = selector.opciones().size()
+        const visualesOpciones = (0 .. cantidadDeOpciones - 1).map({ unIndice =>
             new TextoOpcionDialogo(
                 selector = selector,
-                indice = 0,
-                position = game.at(2,2)
-            ),
-            new TextoOpcionDialogo(
-                selector = selector,
-                indice = 1,
-                position = game.at(2,1)
-            ),
-            new TextoOpcionDialogo(
-                selector = selector,
-                indice = 2,
-                position = game.at(2,0)
+                indice = unIndice,
+                position = game.at(2, 2 - unIndice)
             )
-        ]
+        })
+        return [
+            self,
+            new TextoDelCuadro(texto = texto, position = game.at(2,4)),
+            new TextoDelCuadro(texto = etiqueta, position = game.at(2,3))
+        ] + visualesOpciones
+    }
 
-        game.addVisual(self)
-        game.addVisual(textoPrincipal)
-        game.addVisual(tituloOpciones)
-
-        visualesOpciones.forEach({
+    method abrir(){
+        visualesAbiertos = self.visuales()
+        visualesAbiertos.forEach({
             unVisual => game.addVisual(unVisual)
         })
     }
 
     method cerrar(){
-        game.removeVisual(textoPrincipal)
-        game.removeVisual(tituloOpciones)
-
-        visualesOpciones.forEach({
+        visualesAbiertos.forEach({
             unVisual => game.removeVisual(unVisual)
         })
-
-        game.removeVisual(self)
+        visualesAbiertos = []
     }
 
     method siguiente(){
@@ -209,7 +168,6 @@ object dialogos {
 
     method cerrar(){
         cuadroActual.cerrar()
-
         cuadroActual = null
         personajeActual = null
     }

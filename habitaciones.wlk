@@ -13,9 +13,9 @@ object fondo {
 class Habitacion {
     const nombre
     const imagenDeFondo
-    const personajes = []   
-    const objetos = []      
-    const paredes = []      
+    const personajes = []
+    const objetos = []
+    const paredes = []
 
     method nombre() = nombre
 
@@ -64,8 +64,8 @@ class Habitacion {
 
 class Puerta {
     var property position
-    const destino   // habitación a la que lleva
-    const llegada   // casilla donde aparece Patricio en la habitación destino
+    const destino
+    const llegada
     const imagen = "puerta.png"
 
     method image() = imagen
@@ -100,7 +100,7 @@ object mapa {
     method habitacionActual() = habitacionActual
 
     method iniciar(){
-        game.addVisual(fondo)          
+        game.addVisual(fondo)
         habitacionActual.entrar()
     }
 
@@ -132,7 +132,7 @@ object mapa {
 const oficina = new Habitacion(
     nombre = "oficina",
     imagenDeFondo = "fondoOficina.png",
-    personajes = [testigo],
+    personajes = [testigo, utilero],
     objetos = [cuadroBarco, escritorio, puertaOficinaAPasillo],
     paredes = colisiones.fila(11, 0, 22)
 )

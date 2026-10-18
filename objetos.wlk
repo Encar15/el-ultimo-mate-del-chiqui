@@ -1,6 +1,6 @@
 import wollok.game.*
 import cuadroDeTexto.*
-import inventario.*
+import menu.*
 
 class Pista {
     var property position = game.origin()
@@ -29,8 +29,12 @@ class Pista {
 
     method marcarEncontrada(){
         disponible = false
-        inventario.guardar(self)
+        menu.guardarPista(self)
     }
+
+    method imagenParaMenu() = self.image()
+    method tituloParaMenu() = nombre.toUpperCase()
+    method descripcionParaMenu() = textos.envolver(texto, 40)
 
     method finalizarInteraccion(){
         game.removeVisual(self)
@@ -137,7 +141,7 @@ const llave = new Pista(
 const bombilla = new Pista(
     position = game.at(8,6),
     nombre = "bombilla",
-    texto = "Encontraste una bombilla tirada en el piso."
+    texto = "Es una bombilla de un mate, parece que alguien la uso hace poco"
 )
 
 // ====================== MUEBLES ===========================
@@ -158,6 +162,6 @@ const escritorio = new MuebleConPista(
 
 const matafuego = new Mueble(
     position = game.at(5,10),
-    imagen = "matafuego.png",
+    imagen = "matafuegos.png",
     descripcion = "Un matafuego. Venció en 2019."
 )

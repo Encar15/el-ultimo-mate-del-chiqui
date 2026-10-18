@@ -3,9 +3,10 @@ import wollok.game.*
 class TextoDelCuadro {
     var property texto
     var property position
+    const color = "FFFFFFFF"
 
     method text() = texto
-    method textColor() = "FFFFFFFF"
+    method textColor() = color
 }
 
 class CuadroDeTexto {

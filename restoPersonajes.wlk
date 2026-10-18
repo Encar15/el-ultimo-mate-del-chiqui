@@ -1,6 +1,7 @@
 import wollok.game.*
 import cuadroDeTexto.*
 import dialogos.*
+import menu.*
 
 class Persona {
     var property position
@@ -34,11 +35,18 @@ class Sospechoso inherits Persona {
     const informaciones
     const opcionesDialogo
     var opcionElegida = null
-
-    var property estadoDeAnimo = relajado 
+    var property estadoDeAnimo = relajado
     const nombreBaseImagen
+    const nombre
+    const property esCulpable = false
+    const descripcion = "Todavía no hay pruebas en su contra."
 
     override method image() = estadoDeAnimo.imagen(nombreBaseImagen)
+
+    method nombre() = nombre
+    method imagenParaMenu() = self.image()
+    method tituloParaMenu() = nombre.toUpperCase()
+    method descripcionParaMenu() = textos.envolver(descripcion, 40)
 
     method confianza(){
         return confianza
@@ -63,6 +71,7 @@ class Sospechoso inherits Persona {
     }
 
     override method interactuar(unDetective){
+        menu.guardarSospechoso(self)
         if(opcionElegida == null){
             self.abrirOpciones()
         }else{
@@ -86,7 +95,7 @@ class Sospechoso inherits Persona {
     method recibirRespuesta(unaOpcion){
         opcionElegida = unaOpcion
         unaOpcion.afectarSospechoso(self)
-        
+
         self.mostrarRespuesta()
     }
 
@@ -102,7 +111,7 @@ class Sospechoso inherits Persona {
 
      method reiniciar(){
         opcionElegida = null
-        estadoDeAnimo = relajado 
+        estadoDeAnimo = relajado
     }
 }
 
@@ -133,8 +142,9 @@ class Informacion {
 
 const sospechosoPrueba = new Sospechoso(
     position = game.at(10,5),
-    nombreBaseImagen = "sospechozoPrueba", 
-    imagen = "dummy.png", 
+    nombre = "El guardia",
+    nombreBaseImagen = "guardia",
+    imagen = "dummy.png",
     texto = "No puedo dejarte pasar.",
     confianza = 0,
     presion = 0,
@@ -161,4 +171,41 @@ const respuesta3 = new OpcionDialogo(
     tono = "neutral",
     respuestaNormal = "No te puedo dejar pasar.",
     respuestaEnojada = "Sigo sin poder dejarte pasar. Y me estás molestando."
+)
+
+// ====================== SOSPECHOSO DE EJEMPLO ======================
+
+const utilero = new Sospechoso(
+    position = game.at(17,8),
+    nombre = "presidente de la fifa",
+    esCulpable = true,
+    descripcion = "es el presidente de la fifa y tiene un gran poder de influencia.",
+    nombreBaseImagen = "pelado",
+    imagen = "pelado.png",
+    texto = "¿Qué necesitás? Estoy ocupado.",
+    confianza = 0,
+    presion = 0,
+    informaciones = [],
+    opcionesDialogo = [preguntaPresidente1, preguntaPresidente2, preguntaPresidente3]
+)
+
+const preguntaPresidente1 = new OpcionDialogo(
+    texto = "Disculpá, ¿viste algo raro hoy?",
+    tono = "gentil",
+    respuestaNormal = "Nada raro. Estuve en una reunion toda la tarde.",
+    respuestaEnojada = "¡Ya te dije que estuve en una reunion todo el dia, tomatela!"
+)
+
+const preguntaPresidente2 = new OpcionDialogo(
+    texto = "Vos tenés cara de culpable.",
+    tono = "provocador",
+    respuestaNormal = "¿Qué decís? No hable con la victima en todo el dia!",
+    respuestaEnojada = "¡No me acuses sin pruebas, eh!"
+)
+
+const preguntaPresidente3 = new OpcionDialogo(
+    texto = "¿Conocés bien al Chiqui?",
+    tono = "neutral",
+    respuestaNormal = "Todos lo conocen. Le gusta el mate bien caliente.",
+    respuestaEnojada = "Sí, lo conozco. ¿Y?"
 )
