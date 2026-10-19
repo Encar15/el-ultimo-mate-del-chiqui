@@ -154,21 +154,21 @@ const sospechosoPrueba = new Sospechoso(
 
 const respuesta1 = new OpcionDialogo(
     texto = "Necesito ver a Chiqui urgente por favor.",
-    tono = "gentil",
+    tono = gentil,
     respuestaNormal = "No puedo dejarte pasar si Chiqui no me avisó que venías.",
     respuestaEnojada = "Mirá, flaco, ya te dije que no pasás. Cortala."
 )
 
 const respuesta2 = new OpcionDialogo(
     texto = "Abrime la puerta en este instante.",
-    tono = "provocador",
+    tono = provocador,
     respuestaNormal = "Salí de acá, ¿quién te pensás que sos?",
     respuestaEnojada = "¡Te voy a sacar a patadas si no te vas!"
 )
 
 const respuesta3 = new OpcionDialogo(
     texto = "Necesito pasar.",
-    tono = "neutral",
+    tono = neutral,
     respuestaNormal = "No te puedo dejar pasar.",
     respuestaEnojada = "Sigo sin poder dejarte pasar. Y me estás molestando."
 )
@@ -191,21 +191,21 @@ const utilero = new Sospechoso(
 
 const preguntaPresidente1 = new OpcionDialogo(
     texto = "Disculpá, ¿viste algo raro hoy?",
-    tono = "gentil",
+    tono = gentil,
     respuestaNormal = "Nada raro. Estuve en una reunion toda la tarde.",
     respuestaEnojada = "¡Ya te dije que estuve en una reunion todo el dia, tomatela!"
 )
 
 const preguntaPresidente2 = new OpcionDialogo(
     texto = "Vos tenés cara de culpable.",
-    tono = "provocador",
-    respuestaNormal = "¿Qué decís? No hable con la victima en todo el dia!",
+    tono = provocador,
+    respuestaNormal = "¿Qué decís? ¡No hable con la victima en todo el dia!",
     respuestaEnojada = "¡No me acuses sin pruebas, eh!"
 )
 
 const preguntaPresidente3 = new OpcionDialogo(
     texto = "¿Conocés bien al Chiqui?",
-    tono = "neutral",
+    tono = neutral,
     respuestaNormal = "Todos lo conocen. Le gusta el mate bien caliente.",
-    respuestaEnojada = "Sí, lo conozco. ¿Y?"
+    respuestaEnojada = "Sí, lo conozco, y?."
 )
