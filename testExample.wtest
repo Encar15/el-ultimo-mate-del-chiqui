@@ -1,2 +1,117 @@
+import wollok.game.*
+import detectives.*
+import colisiones.*
+import cuadroDeTexto.*
+import habitaciones.*
+import interacciones.*
+import objetos.*
+import restoPersonajes.*
+import dialogos.*
+import menu.*
 
+describe "Movimiento de Patricio" {
 
+    method initialize(){
+        game.width(23)
+        game.height(12)
+    }
+
+    test "Patricio se mueve a una casilla libre" {
+        patricioJuan.moverDerecha()
+        assert.equals(game.at(1,0), patricioJuan.position())
+    }
+
+    test "Patricio no puede pasar por encima de un mueble" {
+        oficina.entrar()
+        patricioJuan.ubicarEn(game.at(12,6))      // justo abajo del escritorio
+        patricioJuan.moverArriba()
+        assert.equals(game.at(12,6), patricioJuan.position())
+    }
+
+    test "Patricio no se mueve mientras hay un cuadro de texto abierto" {
+        cuadros.abrir(new CuadroDeTexto(texto = "Hola"), testigo)
+        patricioJuan.moverDerecha()
+        assert.equals(game.origin(), patricioJuan.position())
+    }
+}
+
+describe "Habitaciones y puertas" {
+
+    test "al entrar a una habitación sus muebles bloquean el paso pero las pistas no" {
+        pasillo.entrar()
+        assert.that(colisiones.hayColisionEn(matafuego.position()))
+        assert.notThat(colisiones.hayColisionEn(bombilla.position()))
+    }
+
+    test "interactuar al lado de la puerta lleva a Patricio al pasillo" {
+        mapa.iniciar()
+        game.addVisual(patricioJuan)
+        patricioJuan.ubicarEn(game.at(21,5))      // al lado de la puerta de la oficina
+        interacciones.interactuar()
+        assert.equals(pasillo, mapa.habitacionActual())
+        assert.equals(game.at(1,5), patricioJuan.position())
+    }
+}
+
+describe "Pistas y muebles" {
+
+    test "revisar el escritorio guarda la llave en el menú" {
+        escritorio.interactuar(patricioJuan)
+        assert.that(menu.pistas().contains(llave))
+    }
+
+    test "un escritorio ya revisado no vuelve a dar la llave" {
+        escritorio.interactuar(patricioJuan)
+        cuadros.cerrar()
+        escritorio.interactuar(patricioJuan)
+        assert.equals(1, menu.pistas().size())
+    }
+}
+
+describe "Sospechosos y diálogos" {
+
+    test "hablar dos veces con un sospechoso lo agrega una sola vez a la carpeta" {
+        utilero.interactuar(patricioJuan)
+        dialogos.cerrar()
+        utilero.interactuar(patricioJuan)
+        assert.equals([utilero], menu.sospechosos())
+    }
+
+    test "elegir una opción provocadora en el diálogo acorrala al sospechoso" {
+        utilero.interactuar(patricioJuan)
+        dialogos.siguiente()                      // la segunda opción es la provocadora
+        dialogos.confirmar()
+        assert.equals(acorralado, utilero.estadoDeAnimo())
+    }
+
+    test "un sospechoso acorralado contesta con la respuesta enojada" {
+        assert.equals(preguntaPresidente1.respuestaCulpable(), preguntaPresidente1.respuestaSegunEstado(acorralado))
+    }
+}
+
+describe "Menú" {
+
+    test "la carpeta de pistas vuelve a la primera ficha después de la última" {
+        menu.guardarPista(llave)
+        menu.guardarPista(bombilla)
+        carpetaPistas.elegir()
+        carpetaPistas.derecha()
+        carpetaPistas.derecha()
+        assert.equals(llave, carpetaPistas.fichaActual())
+    }
+
+    // La primera imagen que arma el veredicto es la tarjeta del final
+    test "incriminar al culpable termina en caso resuelto" {
+        veredicto.incriminar(utilero)
+        assert.equals("casoResuelto.png", veredicto.armarVisuales().first().image())
+    }
+
+    test "incriminar a un inocente termina en caso fallido" {
+        veredicto.incriminar(sospechosoPrueba)
+        assert.equals("casoFallido.png", veredicto.armarVisuales().first().image())
+    }
+
+    test "un texto largo se corta en renglones sin partir las palabras" {
+        assert.equals("Una llave\nchiquita.\nParece de un\nlocker.", textos.envolver("Una llave chiquita. Parece de un locker.", 15))
+    }
+}

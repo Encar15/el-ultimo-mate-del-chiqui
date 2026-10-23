@@ -81,8 +81,6 @@ object contador {
     pausado = false
     }
 
-    method contadorEnCero() = tiempoRestante == 0
-
     method descontar(cantidad) {
       tiempoRestante = 0.max(tiempoRestante - cantidad)
 

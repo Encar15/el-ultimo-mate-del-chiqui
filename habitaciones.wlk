@@ -11,13 +11,10 @@ object fondo {
 }
 
 class Habitacion {
-    const nombre
     const imagenDeFondo
     const personajes = []
     const objetos = []
     const paredes = []
-
-    method nombre() = nombre
 
     method entrar(){
         fondo.image(imagenDeFondo)
@@ -55,6 +52,8 @@ class Habitacion {
         return personajes.contains(unElemento) || objetos.contains(unElemento)
     }
 
+    method elementosEn(unaPosicion) = (personajes + objetos).filter({ unElemento => unElemento.ocupa(unaPosicion) })
+
     method reiniciar(){
         objetos.forEach({
             unObjeto => unObjeto.reiniciar()
@@ -76,8 +75,7 @@ class Puerta {
         mapa.irA(destino, llegada)
     }
 
-    method finalizarInteraccion(){
-    }
+    method ocupa(unaPosicion) = position == unaPosicion
 
     method mostrar(){
         game.addVisual(self)
@@ -130,7 +128,6 @@ object mapa {
 // ====================== HABITACIONES ======================
 
 const oficina = new Habitacion(
-    nombre = "oficina",
     imagenDeFondo = "fondoOficina.png",
     personajes = [testigo, utilero],
     objetos = [cuadroBarco, escritorio, puertaOficinaAPasillo],
@@ -138,14 +135,12 @@ const oficina = new Habitacion(
 )
 
 const pasillo = new Habitacion(
-    nombre = "pasillo",
     imagenDeFondo = "fondoPasillo.png",
     personajes = [sospechosoPrueba],
     objetos = [matafuego, puertaPasilloAOficina, bombilla],
     paredes = colisiones.fila(11, 0, 22) + colisiones.columna(16, 8, 10)
 )
 // ====================== PUERTAS ======================
-// llegada = la casilla de al lado de la puerta por la que entrás
 
 const puertaOficinaAPasillo = new Puerta(
     position = game.at(22,5),

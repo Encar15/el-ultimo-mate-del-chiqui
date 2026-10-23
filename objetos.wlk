@@ -8,18 +8,11 @@ class Pista {
     const texto
     var disponible = true
 
-    method nombre() = nombre
     method image() = nombre + ".png"
 
-    method texto(){
-        return texto
-    }
-
-    method estaDisponible(){
-        return disponible
-    }
-
     method esSolido() = false
+
+    method ocupa(unaPosicion) = disponible && position == unaPosicion
 
     method interactuar(unDetective){
         self.marcarEncontrada()
@@ -61,11 +54,15 @@ class Mueble {
     var property position
     const imagen
     const descripcion
+    const ancho = 1
+    const alto = 1
 
     method image() = imagen
     method descripcion() = descripcion
 
     method esSolido() = true
+
+    method ocupa(unaPosicion) = unaPosicion.x().between(position.x(), position.x() + ancho - 1) && unaPosicion.y().between(position.y(), position.y() + alto - 1)
 
     method interactuar(unDetective){
         self.decir(descripcion)
@@ -106,8 +103,6 @@ class MuebleConPista inherits Mueble {
         self.decir(textoHallazgo)
     }
 
-    method estaVacio() = estado.estaVacio()
-
     override method reiniciar(){
         estado = conPista
         pista.reiniciar()
@@ -147,7 +142,7 @@ const bombilla = new Pista(
 // ====================== MUEBLES ===========================
 
 const cuadroBarco = new Mueble(
-    position = game.at(4,10),
+    position = game.at(4,11),
     imagen = "cuadroBarco.png",
     descripcion = "Es un cuadro de un barco."
 )
@@ -155,6 +150,8 @@ const cuadroBarco = new Mueble(
 const escritorio = new MuebleConPista(
     position = game.at(12,7),
     imagen = "escritorio.png",
+    ancho = 2,
+    alto = 2,
     descripcion = "El cajón está vacío.",
     pista = llave,
     textoHallazgo = "Encontraste una llave adentro del cajón."

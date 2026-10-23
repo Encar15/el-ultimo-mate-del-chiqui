@@ -14,8 +14,6 @@ object menu {
 
     method pistas() = pistasEncontradas
 
-    method tienePista(unaPista) = pistasEncontradas.contains(unaPista)
-
     method guardarSospechoso(unSospechoso){
         if(!sospechososConocidos.contains(unSospechoso)){
             sospechososConocidos.add(unSospechoso)

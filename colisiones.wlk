@@ -2,6 +2,9 @@ import wollok.game.*
 
 class Colision {
     var property position
+
+    method ocupa(unaPosicion) = position == unaPosicion
+
 }
 
 object colisiones {
@@ -17,7 +20,7 @@ object colisiones {
 
     method hayColisionEn(unaPosicion){
         return solidos.any({
-            unSolido => unSolido.position() == unaPosicion
+            unSolido => unSolido.ocupa(unaPosicion)
         })
     }
 

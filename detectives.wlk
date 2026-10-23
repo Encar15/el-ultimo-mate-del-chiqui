@@ -5,11 +5,9 @@ import dialogos.*
 
 
 object patricioJuan {
-    const nombre = "Patricio Juan"
     var property position = game.origin()
     var image = "patricioFrente.gif"
 
-    method nombre() = nombre
     method image() = image
 
     method moverArriba(){ self.moverA(position.up(1), "patricioEspalda.gif") }

@@ -27,8 +27,7 @@ object interacciones {
 
     method candidatos(unDetective) {
         return self.posicionesAInterrogar(unDetective)
-                   .flatMap({ pos => game.getObjectsIn(pos) })
-                   .filter({ obj => mapa.habitacionActual().contiene(obj) })
+                   .flatMap({ pos => mapa.habitacionActual().elementosEn(pos) })
     }
 
     method posicionesAInterrogar(unDetective) {

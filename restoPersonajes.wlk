@@ -21,6 +21,8 @@ class Persona {
 
     method finalizarInteraccion(){
     }
+
+    method ocupa(unaPosicion) = position == unaPosicion
 }
 
 const testigo = new Persona(
@@ -32,7 +34,6 @@ const testigo = new Persona(
 class Sospechoso inherits Persona {
     var confianza
     var presion
-    const informaciones
     const opcionesDialogo
     var opcionElegida = null
     var property estadoDeAnimo = relajado
@@ -62,12 +63,6 @@ class Sospechoso inherits Persona {
 
     method aumentarPresion(cantidad){
         presion = presion + cantidad
-    }
-
-    method informacionesDisponibles(){
-        return informaciones.filter({
-            unaInformacion => unaInformacion.puedeRevelarse(confianza,presion)
-        })
     }
 
     override method interactuar(unDetective){
@@ -115,31 +110,6 @@ class Sospechoso inherits Persona {
     }
 }
 
-
-
-class Informacion {
-    const texto
-    const confianzaNecesaria
-    const presionNecesaria
-
-    method texto(){
-        return texto
-    }
-
-    method puedeRevelarsePorConfianza(confianza){
-        return confianza >= confianzaNecesaria
-    }
-
-    method puedeRevelarsePorPresion(presion){
-        return presion >= presionNecesaria
-    }
-
-    method puedeRevelarse(confianza,presion){
-        return self.puedeRevelarsePorConfianza(confianza)
-            || self.puedeRevelarsePorPresion(presion)
-    }
-}
-
 const sospechosoPrueba = new Sospechoso(
     position = game.at(10,5),
     nombre = "El guardia",
@@ -148,7 +118,6 @@ const sospechosoPrueba = new Sospechoso(
     texto = "No puedo dejarte pasar.",
     confianza = 0,
     presion = 0,
-    informaciones = [],
     opcionesDialogo = [respuesta1, respuesta2, respuesta3]
 )
 
@@ -185,7 +154,6 @@ const utilero = new Sospechoso(
     texto = "¿Qué necesitás? Estoy ocupado.",
     confianza = 0,
     presion = 0,
-    informaciones = [],
     opcionesDialogo = [preguntaPresidente1, preguntaPresidente2, preguntaPresidente3]
 )
 

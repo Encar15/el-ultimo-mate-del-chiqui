@@ -11,7 +11,6 @@ class TextoDelCuadro {
 
 class CuadroDeTexto {
     var property texto
-    var abierto = false
     var textoVisual = null
 
     method position() = game.at(0,0)
@@ -23,17 +22,11 @@ class CuadroDeTexto {
             position = game.at(2,2))
         game.addVisual(self)
         game.addVisual(textoVisual)
-        abierto = true
     }
 
     method cerrar(){
         game.removeVisual(textoVisual)
         game.removeVisual(self)
-        abierto = false
-    }
-
-    method estaAbierto(){
-        return abierto
     }
 }
 
