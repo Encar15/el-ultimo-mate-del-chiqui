@@ -56,6 +56,8 @@ class Mueble {
     const descripcion
     const ancho = 1
     const alto = 1
+    const requisitos = []                 
+    const textoCerrado = "Está cerrado."
 
     method image() = imagen
     method descripcion() = descripcion
@@ -65,6 +67,14 @@ class Mueble {
     method ocupa(unaPosicion) = unaPosicion.x().between(position.x(), position.x() + ancho - 1) && unaPosicion.y().between(position.y(), position.y() + alto - 1)
 
     method interactuar(unDetective){
+        if(menu.tieneTodas(requisitos)){
+            self.usar(unDetective)
+        }else{
+            self.decir(textoCerrado)
+        }
+    }
+
+   method usar(unDetective){
         self.decir(descripcion)
     }
 
@@ -93,7 +103,7 @@ class MuebleConPista inherits Mueble {
     const textoHallazgo
     var estado = conPista
 
-    override method interactuar(unDetective){
+    override method usar(unDetective){
         estado.revisar(self)
     }
 
@@ -134,7 +144,6 @@ const llave = new Pista(
 )
 
 const bombilla = new Pista(
-    position = game.at(8,6),
     nombre = "bombilla",
     texto = "Es una bombilla de un mate, parece que alguien la uso hace poco"
 )
@@ -161,4 +170,15 @@ const matafuego = new Mueble(
     position = game.at(5,10),
     imagen = "matafuegos.png",
     descripcion = "Un matafuego. Venció en 2019."
+)
+
+const locker = new MuebleConPista(
+    position = game.at(12,9),
+    alto = 2,
+    imagen = "locker.png",
+    descripcion = "Abriste el locker con la llave. Adentro solo hay ropa doblada.",
+    pista = bombilla,
+    textoHallazgo = "Encontraste una bombilla adentro del locker.",
+    requisitos = [llave],
+    textoCerrado = "El locker está cerrado con llave."
 )

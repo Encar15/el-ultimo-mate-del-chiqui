@@ -3,6 +3,9 @@ import colisiones.*
 import detectives.*
 import restoPersonajes.*
 import objetos.*
+import cuadroDeTexto.*
+import menu.*
+
 
 object fondo {
     var property image = "fondoOficina.png"
@@ -66,13 +69,22 @@ class Puerta {
     const destino
     const llegada
     const imagen = "puerta.png"
+    const requisitos = []
+    const textoCerrado = "La puerta está cerrada."
 
     method image() = imagen
 
     method esSolido() = true
 
     method interactuar(unDetective){
-        mapa.irA(destino, llegada)
+        if(menu.tieneTodas(requisitos)){
+            mapa.irA(destino, llegada)
+        }else{
+            cuadros.abrir(new CuadroDeTexto(texto = textoCerrado), self)
+        }
+    }
+
+    method finalizarInteraccion(){
     }
 
     method ocupa(unaPosicion) = position == unaPosicion
@@ -137,7 +149,7 @@ const oficina = new Habitacion(
 const pasillo = new Habitacion(
     imagenDeFondo = "fondoPasillo.png",
     personajes = [sospechosoPrueba],
-    objetos = [matafuego, puertaPasilloAOficina, bombilla],
+    objetos = [matafuego, puertaPasilloAOficina, bombilla, locker],
     paredes = colisiones.fila(11, 0, 22) + colisiones.columna(16, 8, 10)
 )
 // ====================== PUERTAS ======================
