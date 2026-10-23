@@ -13,13 +13,29 @@ class OpcionDialogo {
     method respuestaCulpable() = respuestaEnojada
 
     method afectarSospechoso(unSospechoso) {
-        if (tono == "provocador") {
-            unSospechoso.aumentarPresion(10)
-            unSospechoso.estadoDeAnimo(acorralado)
-        } else if (tono == "gentil") {
-            unSospechoso.aumentarConfianza(10)
-            unSospechoso.estadoDeAnimo(relajado)
-        }
+        tono.afectar(unSospechoso)
+    }
+}
+
+// ====================== TONOS DE DIÁLOGO ======================
+
+object provocador {
+    method afectar(unSospechoso) {
+        unSospechoso.aumentarPresion(10)
+        unSospechoso.estadoDeAnimo(acorralado)
+    }
+}
+
+object gentil {
+    method afectar(unSospechoso) {
+        unSospechoso.aumentarConfianza(10)
+        unSospechoso.estadoDeAnimo(relajado)
+    }
+}
+
+object neutral {
+    method afectar(unSospechoso) {
+        // No altera la confianza, la presión ni el estado de ánimo
     }
 }
 
