@@ -50,6 +50,10 @@ class Pista {
     }
 }
 
+class Dato inherits Pista {
+    override method image() = "papel.png"
+}
+
 class Mueble {
     var property position
     const imagen
@@ -146,6 +150,11 @@ const llave = new Pista(
 const bombilla = new Pista(
     nombre = "bombilla",
     texto = "Es una bombilla de un mate, parece que alguien la uso hace poco"
+)
+
+const informeForense = new Dato(
+    nombre = "informe del forense",
+    texto = "Según el forense, a la víctima la envenenaron con la yerba del mate."
 )
 
 // ====================== MUEBLES ===========================

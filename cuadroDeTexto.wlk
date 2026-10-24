@@ -12,6 +12,7 @@ class TextoDelCuadro {
 class CuadroDeTexto {
     var property texto
     var textoVisual = null
+    const anchoDeLetra = 0.06
 
     method position() = game.at(0,0)
     method image() = "fondoNegroCuadroDeTexto.png"
@@ -19,7 +20,7 @@ class CuadroDeTexto {
     method abrir(){
         textoVisual = new TextoDelCuadro(
             texto = texto,
-            position = game.at(2,2))
+            position = self.posicionDelTexto())
         game.addVisual(self)
         game.addVisual(textoVisual)
     }
@@ -28,6 +29,8 @@ class CuadroDeTexto {
         game.removeVisual(textoVisual)
         game.removeVisual(self)
     }
+
+    method posicionDelTexto() = game.at((0.5 + texto.size() * anchoDeLetra / 2).round(), 2)
 }
 
 object cuadros {
@@ -42,10 +45,11 @@ object cuadros {
 
     method cerrar(){
         if(cuadroActual != null){
+            const objeto = objetoActual
             cuadroActual.cerrar()
-            objetoActual.finalizarInteraccion()
             cuadroActual = null
             objetoActual = null
+            objeto.finalizarInteraccion()
         }
     }
 

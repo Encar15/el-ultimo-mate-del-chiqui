@@ -6,7 +6,6 @@ import objetos.*
 import cuadroDeTexto.*
 import menu.*
 
-
 object fondo {
     var property image = "fondoOficina.png"
 
@@ -148,8 +147,8 @@ const oficina = new Habitacion(
 
 const pasillo = new Habitacion(
     imagenDeFondo = "fondoPasillo.png",
-    personajes = [sospechosoPrueba],
-    objetos = [matafuego, puertaPasilloAOficina, bombilla, locker],
+    personajes = [sospechosoPrueba, forense],
+    objetos = [matafuego, puertaPasilloAOficina, locker],
     paredes = colisiones.fila(11, 0, 22) + colisiones.columna(16, 8, 10)
 )
 // ====================== PUERTAS ======================

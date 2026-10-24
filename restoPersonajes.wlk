@@ -2,6 +2,7 @@ import wollok.game.*
 import cuadroDeTexto.*
 import dialogos.*
 import menu.*
+import objetos.*
 
 class Persona {
     var property position
@@ -110,6 +111,60 @@ class Sospechoso inherits Persona {
     }
 }
 
+class Informante inherits Persona {
+    const pista
+    const textoDespues = "Espero que te sirva la información que te di."
+    var estado = sinHablar
+
+    override method interactuar(unDetective){
+        estado.hablar(self)
+    }
+
+    override method finalizarInteraccion(){
+        estado.terminoDeHablar(self)
+    }
+
+    method contarPista(){
+        estado = contandoPista
+        self.decir(self.texto())
+    }
+
+    method entregarPista(){
+        pista.marcarEncontrada()
+        estado = yaInformo
+        self.decir("Se guardó " + pista.tituloParaMenu() + " como pista en el menú.")
+    }
+
+    method recordar(){
+        self.decir(textoDespues)
+    }
+
+    method decir(unTexto){
+        cuadros.abrir(new CuadroDeTexto(texto = unTexto), self)
+    }
+
+    method reiniciar(){
+        estado = sinHablar
+    }
+}
+
+object sinHablar {
+    method hablar(unInformante){ unInformante.contarPista() }
+    method terminoDeHablar(unInformante){}
+}
+
+object contandoPista {
+    method hablar(unInformante){}
+    method terminoDeHablar(unInformante){ unInformante.entregarPista() }
+}
+
+object yaInformo {
+    method hablar(unInformante){ unInformante.recordar() }
+    method terminoDeHablar(unInformante){}
+}
+
+// ====================== SOSPECHOSOS ======================
+
 const sospechosoPrueba = new Sospechoso(
     position = game.at(10,5),
     nombre = "El guardia",
@@ -141,8 +196,6 @@ const respuesta3 = new OpcionDialogo(
     respuestaNormal = "No te puedo dejar pasar.",
     respuestaEnojada = "Sigo sin poder dejarte pasar. Y me estás molestando."
 )
-
-// ====================== SOSPECHOSO DE EJEMPLO ======================
 
 const utilero = new Sospechoso(
     position = game.at(17,8),
@@ -176,4 +229,13 @@ const preguntaPresidente3 = new OpcionDialogo(
     tono = neutral,
     respuestaNormal = "Todos lo conocen. Le gusta el mate bien caliente.",
     respuestaEnojada = "Sí, lo conozco, y?."
+)
+
+// ====================== INFORMANTES ======================
+
+const forense = new Informante(
+    position = game.at(3,7),
+    imagen = "forense.png",
+    texto = "Terminé con el cuerpo, detective. Lo envenenaron: había veneno en la yerba del mate.",
+    pista = informeForense
 )
