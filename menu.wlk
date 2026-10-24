@@ -231,13 +231,26 @@ object veredicto inherits Pantalla {
 
     method incriminar(unSospechoso){
         contador.detenerCronometro()
-        if(unSospechoso.esCulpable()){
+        if(unSospechoso.puedeIrPreso()){
             imagen = "casoResuelto.png"
             texto = unSospechoso.nombre() + " era el culpable."
+        }else if(unSospechoso.esCulpable()){
+            imagen = "casoFallido.png"
+            texto = unSospechoso.nombre() + " era el culpable, pero no tenías pistas suficientes."
         }else{
             imagen = "casoFallido.png"
             texto = unSospechoso.nombre() + " no era el culpable."
         }
+        self.terminarPartida()
+    }
+
+    method sinTiempo(){
+        imagen = "casoSinTiempo.png"
+        texto = "El culpable sigue suelto."
+        self.terminarPartida()
+    }
+
+    method terminarPartida(){
         menu.irA(self)
         game.schedule(6000, { game.stop() })
     }

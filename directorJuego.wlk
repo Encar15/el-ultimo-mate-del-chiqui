@@ -92,8 +92,6 @@ object contador {
 
     method perderJuego() {
         cronometro.stop()
-
-        game.say(patricioJuan, "¡Se me acabó el tiempo!")
-        game.schedule(2000, { game.stop() })
+        veredicto.sinTiempo()
     }
 }

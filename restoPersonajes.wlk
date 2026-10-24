@@ -41,11 +41,13 @@ class Sospechoso inherits Persona {
     const nombreBaseImagen
     const nombre
     const property esCulpable = false
+    const pistasNecesarias = []
     const descripcion = "Todavía no hay pruebas en su contra."
 
     override method image() = estadoDeAnimo.imagen(nombreBaseImagen)
 
     method nombre() = nombre
+    method puedeIrPreso() = esCulpable && menu.tieneTodas(pistasNecesarias)
     method imagenParaMenu() = self.image()
     method tituloParaMenu() = nombre.toUpperCase()
     method descripcionParaMenu() = textos.envolver(descripcion, 40)
@@ -201,6 +203,7 @@ const utilero = new Sospechoso(
     position = game.at(17,8),
     nombre = "presidente de la fifa",
     esCulpable = true,
+    pistasNecesarias = [bombilla, informeForense],
     descripcion = "es el presidente de la fifa y tiene un gran poder de influencia.",
     nombreBaseImagen = "pelado",
     imagen = "pelado.png",
