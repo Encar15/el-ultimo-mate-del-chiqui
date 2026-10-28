@@ -1,5 +1,6 @@
 import wollok.game.*
 import cuadroDeTexto.*
+import menu.*
 
 class OpcionDialogo {
     const texto
@@ -9,47 +10,58 @@ class OpcionDialogo {
 
     method texto() = texto
     method respuestaSegunEstado(unEstado) = unEstado.reaccionar(self)
-    method respuestaInocente() = respuestaNormal
-    method respuestaCulpable() = respuestaEnojada
+    method respuestaNormal() = respuestaNormal
+    method respuestaEnojada() = respuestaEnojada
 
     method afectarSospechoso(unSospechoso) {
         tono.afectar(unSospechoso)
     }
 }
 
-// ====================== TONOS DE DIÁLOGO ======================
+class Pregunta {
+    const texto 
+    const opciones
+    const requisitos = []
+    method texto() = texto
+    method opciones() = opciones
+    method esPreguntable() = menu.tieneTodas(requisitos)
+}
 
 object provocador {
     method afectar(unSospechoso) {
-        unSospechoso.aumentarPresion(10)
-        unSospechoso.estadoDeAnimo(acorralado)
+        unSospechoso.cambiarHumor(-2)
     }
 }
 
 object gentil {
     method afectar(unSospechoso) {
-        unSospechoso.aumentarConfianza(10)
-        unSospechoso.estadoDeAnimo(relajado)
+        unSospechoso.cambiarHumor(1)
     }
 }
 
 object neutral {
     method afectar(unSospechoso) {
-        // No altera la confianza, la presión ni el estado de ánimo
     }
 }
 
 object relajado {
     method imagen(base) = base + "Normal.png"
-
-    method reaccionar(pregunta) = pregunta.respuestaInocente()
+    method reaccionar(unaOpcion) = unaOpcion.respuestaNormal()
+    method corresponde(unHumor) = unHumor >= 0
 }
 
 object acorralado {
     method imagen(base) = base + "Nervioso.png"
-
-    method reaccionar(pregunta) = pregunta.respuestaCulpable()
+    method reaccionar(unaOpcion) = unaOpcion.respuestaEnojada()
+    method corresponde(unHumor) = unHumor < 0
 }
+
+object estadosDeAnimo {
+    const estados = [relajado, acorralado]
+
+    method segun(unHumor) = estados.find({ unEstado => unEstado.corresponde(unHumor) })
+}
+
 class TextoOpcionDialogo {
     const selector
     const indice

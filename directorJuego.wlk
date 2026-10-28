@@ -22,6 +22,7 @@ object nivel {
     method reiniciarEstado(){
         patricioJuan.reiniciar()
         sospechosoPrueba.reiniciar()
+        utilero.reiniciar()
         forense.reiniciar()
         mapa.reiniciar()
         menu.reiniciar()
