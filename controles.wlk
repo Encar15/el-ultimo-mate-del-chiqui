@@ -3,6 +3,7 @@ import detectives.*
 import interacciones.*
 import dialogos.*
 import menu.*
+import instancias.*
 
 object controles {
 

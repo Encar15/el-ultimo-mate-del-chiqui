@@ -2,6 +2,7 @@ import wollok.game.*
 import cuadroDeTexto.*
 import dialogos.*
 import directorJuego.*
+import instancias.*
 
 object menu {
     const pistasEncontradas = []

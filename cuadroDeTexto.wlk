@@ -1,4 +1,5 @@
 import wollok.game.*
+import instancias.*
 
 class TextoDelCuadro {
     var property texto

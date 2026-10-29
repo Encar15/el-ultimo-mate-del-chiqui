@@ -2,10 +2,11 @@ import wollok.game.*
 import cuadroDeTexto.*
 import colisiones.*
 import dialogos.*
+import instancias.*
 
 
 object patricioJuan {
-    var property position = game.origin()
+    var property position = game.at(7,9)
     var image = "patricioFrente.gif"
 
     method image() = image
@@ -25,7 +26,7 @@ object patricioJuan {
     }
    
     method reiniciar(){
-        position = game.origin()
+        position = game.at(7,9)
         image = "patricioFrente.gif"
     }
 

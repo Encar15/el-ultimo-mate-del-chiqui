@@ -8,6 +8,7 @@ import colisiones.*
 import menu.*
 import controles.*
 import habitaciones.*
+import instancias.*
 
 object nivel {
 
@@ -21,9 +22,6 @@ object nivel {
 
     method reiniciarEstado(){
         patricioJuan.reiniciar()
-        sospechosoPrueba.reiniciar()
-        utilero.reiniciar()
-        forense.reiniciar()
         mapa.reiniciar()
         menu.reiniciar()
         cuadros.reiniciar()

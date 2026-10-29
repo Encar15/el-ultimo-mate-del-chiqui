@@ -1,6 +1,7 @@
 import wollok.game.*
 import directorJuego.*
 import controles.*
+import instancias.*
 
 object debug {
     const activo = true

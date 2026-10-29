@@ -1,6 +1,7 @@
 import wollok.game.*
 import cuadroDeTexto.*
 import menu.*
+import instancias.*
 
 class OpcionDialogo {
     const texto
@@ -22,9 +23,11 @@ class Pregunta {
     const texto 
     const opciones
     const requisitos = []
+    const alResponder = { unSospechoso => }
     method texto() = texto
     method opciones() = opciones
     method esPreguntable() = menu.tieneTodas(requisitos)
+    method responder(unSospechoso){ alResponder.apply(unSospechoso) }
 }
 
 object provocador {

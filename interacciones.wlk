@@ -3,6 +3,7 @@ import detectives.*
 import cuadroDeTexto.*
 import dialogos.*
 import habitaciones.*
+import instancias.*
 
 object interacciones {
 

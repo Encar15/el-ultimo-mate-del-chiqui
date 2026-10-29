@@ -1,14 +1,16 @@
 import wollok.game.*
 import cuadroDeTexto.*
 import menu.*
+import instancias.*
 
 class Pista {
     var property position = game.origin()
     const nombre
     const texto
+    const imagen = nombre + ".png"
     var disponible = true
 
-    method image() = nombre + ".png"
+    method image() = imagen
 
     method esSolido() = false
 
@@ -52,6 +54,10 @@ class Pista {
 
 class Dato inherits Pista {
     override method image() = "papel.png"
+}
+
+class LlaveDeAuto inherits Pista {
+    override method image() = "llaveAuto.png"
 }
 
 class Mueble {
@@ -123,6 +129,37 @@ class MuebleConPista inherits Mueble {
     }
 }
 
+class Escenario inherits Mueble {
+    const entrada
+    var escalera = null
+
+    method initialize(){
+        escalera = new Decoracion(image = "escalera.png", position = entrada.left(1))
+    }
+
+    override method ocupa(unaPosicion) = super(unaPosicion) && self.esBorde(unaPosicion) && unaPosicion != entrada
+
+    method esBorde(unaPosicion) =
+        unaPosicion.y() == position.y()
+        || unaPosicion.x() == position.x()                  
+        || unaPosicion.x() == position.x() + ancho - 1        
+
+    override method mostrar(){
+        super()
+        game.addVisual(escalera)
+    }
+
+    override method ocultar(){
+        super()
+        game.removeVisual(escalera)
+    }
+}
+
+class Decoracion {
+    const property image
+    const property position
+}
+
 object conPista {
     method revisar(unMueble){
         unMueble.entregarPista()
@@ -139,55 +176,3 @@ object vacio {
     method estaVacio() = true
 }
 
-// ====================== PISTAS ======================
-// si no tiene posicion esta dentro de un mueble, si tiene posicion esta en el piso
-
-const llave = new Pista(
-    nombre = "llave",
-    texto = "Una llave chiquita. Parece de un locker."
-)
-
-const bombilla = new Pista(
-    nombre = "bombilla",
-    texto = "Es una bombilla de un mate, parece que alguien la uso hace poco"
-)
-
-const informeForense = new Dato(
-    nombre = "informe del forense",
-    texto = "Según el forense, a la víctima la envenenaron con la yerba del mate."
-)
-
-// ====================== MUEBLES ===========================
-
-const cuadroBarco = new Mueble(
-    position = game.at(4,11),
-    imagen = "cuadroBarco.png",
-    descripcion = "Es un cuadro de un barco."
-)
-
-const escritorio = new MuebleConPista(
-    position = game.at(12,7),
-    imagen = "escritorio.png",
-    ancho = 2,
-    alto = 2,
-    descripcion = "El cajón está vacío.",
-    pista = llave,
-    textoHallazgo = "Encontraste una llave adentro del cajón."
-)
-
-const matafuego = new Mueble(
-    position = game.at(5,10),
-    imagen = "matafuegos.png",
-    descripcion = "Un matafuego. Venció en 2019."
-)
-
-const locker = new MuebleConPista(
-    position = game.at(12,9),
-    alto = 2,
-    imagen = "locker.png",
-    descripcion = "Abriste el locker con la llave. Adentro solo hay ropa doblada.",
-    pista = bombilla,
-    textoHallazgo = "Encontraste una bombilla adentro del locker.",
-    requisitos = [llave],
-    textoCerrado = "El locker está cerrado con llave."
-)

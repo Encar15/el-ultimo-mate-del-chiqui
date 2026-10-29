@@ -5,6 +5,7 @@ import restoPersonajes.*
 import objetos.*
 import cuadroDeTexto.*
 import menu.*
+import instancias.*
 
 object fondo {
     var property image = "fondoOficina.png"
@@ -67,11 +68,11 @@ class Puerta {
     var property position
     const destino
     const llegada
-    const imagen = "puerta.png"
+    const pared = paredDeFrente
     const requisitos = []
     const textoCerrado = "La puerta está cerrada."
 
-    method image() = imagen
+    method image() = pared.imagenDePuerta()
 
     method esSolido() = true
 
@@ -100,10 +101,22 @@ class Puerta {
     }
 }
 
+object paredDeFrente {
+    method imagenDePuerta() = "puerta.png"
+}
+
+object paredIzquierda {
+    method imagenDePuerta() = "puertaIzquierda.png"
+}
+
+object paredDerecha {
+    method imagenDePuerta() = "puertaDerecha.png"
+}
+
 
 object mapa {
-    const habitaciones = [oficina, pasillo]
-    const habitacionInicial = oficina
+    const habitaciones = [oficinaTapia, pasillo, recepcion, banios, oficinaTesorero, areaDescanso, vestuarios, cocina]
+    const habitacionInicial = estacionamiento
     var habitacionActual = habitacionInicial
 
     method habitacionActual() = habitacionActual
@@ -135,32 +148,3 @@ object mapa {
         colisiones.limpiar()
     }
 }
-
-// ====================== HABITACIONES ======================
-
-const oficina = new Habitacion(
-    imagenDeFondo = "fondoOficina.png",
-    personajes = [testigo, utilero],
-    objetos = [cuadroBarco, escritorio, puertaOficinaAPasillo],
-    paredes = colisiones.fila(11, 0, 22)
-)
-
-const pasillo = new Habitacion(
-    imagenDeFondo = "fondoPasillo.png",
-    personajes = [sospechosoPrueba, forense],
-    objetos = [matafuego, puertaPasilloAOficina, locker],
-    paredes = colisiones.fila(11, 0, 22) + colisiones.columna(16, 8, 10)
-)
-// ====================== PUERTAS ======================
-
-const puertaOficinaAPasillo = new Puerta(
-    position = game.at(22,5),
-    destino = pasillo,
-    llegada = game.at(1,5)
-)
-
-const puertaPasilloAOficina = new Puerta(
-    position = game.at(0,5),
-    destino = oficina,
-    llegada = game.at(21,5)
-)

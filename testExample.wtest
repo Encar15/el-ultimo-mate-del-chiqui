@@ -8,6 +8,7 @@ import objetos.*
 import restoPersonajes.*
 import dialogos.*
 import menu.*
+import instancias.*
 
 describe "Movimiento de Patricio" {
 
@@ -22,14 +23,14 @@ describe "Movimiento de Patricio" {
     }
 
     test "Patricio no puede pasar por encima de un mueble" {
-        oficina.entrar()
+        oficinaTapia.entrar()
         patricioJuan.ubicarEn(game.at(12,6))      // justo abajo del escritorio
         patricioJuan.moverArriba()
         assert.equals(game.at(12,6), patricioJuan.position())
     }
 
     test "Patricio no se mueve mientras hay un cuadro de texto abierto" {
-        cuadros.abrir(new CuadroDeTexto(texto = "Hola"), testigo)
+        cuadros.abrir(new CuadroDeTexto(texto = "Hola"), utilero)
         patricioJuan.moverDerecha()
         assert.equals(game.origin(), patricioJuan.position())
     }

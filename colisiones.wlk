@@ -1,4 +1,5 @@
 import wollok.game.*
+import instancias.*
 
 class Colision {
     var property position
