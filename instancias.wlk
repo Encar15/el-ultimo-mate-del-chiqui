@@ -12,25 +12,6 @@ import colisiones.*
 import cuadroDeTexto.*
 import menu.*
 
-// ====================== HABITACIONES ======================
-
-
-
-const oficinaTesorero = new Habitacion(
-    imagenDeFondo = "fondoOficinaTesorero.png",
-    personajes = [],
-    objetos = [puertaTesoreroAPasillo],
-    paredes = colisiones.fila(10, 0, 22) + colisiones.fila(0, 0, 22) + colisiones.columna(0, 1, 9) + colisiones.columna(22, 1, 9)
-)
-
-const vestuarios = new Habitacion(
-    imagenDeFondo = "fondoVestuarios.png",
-    personajes = [],
-    objetos = [puertaVestuariosAPasillo],
-    paredes = colisiones.fila(10, 0, 22) + colisiones.fila(0, 0, 22) + colisiones.columna(0, 1, 9) + colisiones.columna(22, 1, 9)
-)
-
-
 // ====================== PUERTAS ======================
 
 const puertaEstacionamientoARecepcion = new Puerta(position = game.at(11,0), destino = recepcion, llegada = game.at(15,9))
@@ -51,10 +32,10 @@ const puertaDescansoAPasillo = new Puerta(position = game.at(11,0), destino = pa
 const puertaPasilloABanios = new Puerta(position = game.at(15,8), destino = banios, llegada = game.at(11,1))
 const puertaBaniosAPasillo = new Puerta(position = game.at(11,0), destino = pasillo, llegada = game.at(15,7))
 
-const puertaPasilloAVestuarios = new Puerta(position = game.at(5,3), destino = vestuarios, llegada = game.at(11,9))
+const puertaPasilloAVestuarios = new Puerta(position = game.at(5,3), destino = vestuarios, llegada = game.at(11,9), requisitos = [llaveVestuario], textoCerrado = "El vestuario está cerrado con llave.")
 const puertaVestuariosAPasillo = new Puerta(position = game.at(11,10), destino = pasillo, llegada = game.at(5,4))
 
-const puertaPasilloATesorero = new Puerta(position = game.at(15,3), destino = oficinaTesorero, llegada = game.at(11,9))
+const puertaPasilloATesorero = new Puerta(position = game.at(15,3), destino = oficinaTesorero, llegada = game.at(11,9), requisitos = [llaveTesorero], textoCerrado = "La oficina del tesorero está cerrada con llave.")
 const puertaTesoreroAPasillo = new Puerta(position = game.at(11,10), destino = pasillo, llegada = game.at(15,4))
 
 const puertaDescansoACocina = new Puerta(position = game.at(11,10), destino = cocina, llegada = game.at(11,1), requisitos = [permisoCocina], textoCerrado = "Solo personal de cocina. Capaz el chef te deja pasar.")
@@ -196,12 +177,12 @@ const presidenteFifa = new Sospechoso(
     position = game.at(16,6),
     nombre = "Presidente de la JIJA",
     esCulpable = true,
-    pistasNecesarias = [],
+    pistasNecesarias = [termo, conversacionesWhatsapp, informeForense],
     descripcion = "Es el presidente de la JIJA y tiene un gran poder de influencia.",
     nombreBaseImagen = "pelado",
     imagen = "pelado.png",
     texto = "No tengo nada más para decirte. Estoy ocupado.",
-    preguntas = [preguntaPresidente1]
+    preguntas = [preguntaPresidente1, preguntaPresidente2]
 )
 
 const preguntaPresidente1 = new Pregunta(
@@ -228,6 +209,32 @@ const opcionPresidente3 = new OpcionDialogo(
     tono = neutral,
     respuestaNormal = "No hable con el, le paso algo?",
     respuestaEnojada = "no y si supiera no te diria."
+)
+
+const preguntaPresidente2 = new Pregunta(
+    texto = "Que queres ahora?",
+    opciones = [opcionPresidente4, opcionPresidente5, opcionPresidente6]
+)
+
+const opcionPresidente4 = new OpcionDialogo(
+    texto = "tengo cierta informacion, el chiqui murio envenenado, sabes algo de eso?",
+    tono = gentil,
+    respuestaNormal = "RTA 1",
+    respuestaEnojada = "RTA 2"
+)
+
+const opcionPresidente5 = new OpcionDialogo(
+    texto = "El chiqui fue envenado por una toxina suiza, vos sos de ahi, no te parece raro?",
+    tono = provocador,
+    respuestaNormal = "RTA 1",
+    respuestaEnojada = "RTA 2"
+)
+
+const opcionPresidente6 = new OpcionDialogo(
+    texto = "el chiqui fue envenenado",
+    tono = neutral,
+    respuestaNormal = "RTA1",
+    respuestaEnojada = "RTA2"
 )
 
 // ====================== PASILLO ======================
@@ -376,8 +383,23 @@ const termo = new Pista(
 )
 
 const conversacionesWhatsapp = new Dato(
-    nombre = "conversacionesWhatsapp",
+    nombre = "conversaciones de whatsapp",
     texto = "En la computadora del escritorio había varias conversaciones fuertes con Toviggino e Infantino."
+)
+
+const forense = new InformanteConPedido(
+    position = game.at(14,4),
+    imagen = "forense.png",
+    pedido = [bolsa],
+    textoPedido = "Lo que dice el forense cuando te pide plata a cambio del informe",
+    texto = "Lo que dice el forense cuando le das la plata (y te da el informe)",
+    pista = informeForense,
+    textoDespues = "Lo que dice el forense después de darte el informe"
+)
+
+const informeForense = new Dato(
+    nombre = "informe del forense",
+    texto = "Según el informe del forense, a Tapia lo envenenaron con una toxina suiza."
 )
 
 // ====================== ÁREA DE DESCANSO (COMEDOR) ======================
@@ -523,22 +545,223 @@ const empanadas = new Pista(
 
 // ====================== VESTUARIO ======================
 
-const vestuario = new Habitacion(
+const vestuarios = new Habitacion(
     imagenDeFondo = "fondoVestuarios.png",
-    objetos = [puertaVestuarioAPasillo],
+    personajes = [delantero, extremo],
+    objetos = [casillero1, casillero2, casillero3, casillero4, casillero5, casillero6,
+               casillero7, casillero8, casillero9, casillero10, casillero11, casillero12,
+               pizarraTactica, conservadora, cestoRopa, banco1, banco2,
+               botines, pelota, camilla, vallas, conos, bolsaPelotas, puertaVestuariosAPasillo],
     paredes = colisiones.fila(10, 0, 22) + colisiones.fila(0, 0, 22) + colisiones.columna(0, 1, 9) + colisiones.columna(22, 1, 9)
 )
 
-const puertaPasilloAVestuario = new Puerta(
-    position = game.at(5,3),
-    destino = vestuario,
-    llegada = game.at(11,9),
-    requisitos = [llaveVestuario],
-    textoCerrado = "El vestuario está cerrado con llave."
+const casillero1 = new Mueble(position = game.at(1,9), imagen = "casilleroCamiseta.png", descripcion = "Una camiseta colgada y los botines abajo.")
+const casillero2 = new Mueble(position = game.at(2,9), imagen = "casilleroBolso.png", descripcion = "Una toalla y un bolso. Nada raro.")
+const casillero3 = new Mueble(position = game.at(3,9), imagen = "casilleroCamiseta.png", descripcion = "Una camiseta colgada y los botines abajo.")
+const casillero4 = new Mueble(position = game.at(4,9), imagen = "casilleroBolso.png", descripcion = "Una toalla y un bolso. Nada raro.")
+const casillero5 = new Mueble(position = game.at(5,9), imagen = "casilleroCamiseta.png", descripcion = "Una camiseta colgada y los botines abajo.")
+const casillero6 = new Mueble(position = game.at(6,9), imagen = "casilleroBolso.png", descripcion = "Una toalla y un bolso. Nada raro.")
+const casillero7 = new Mueble(position = game.at(16,9), imagen = "casilleroCamiseta.png", descripcion = "Una camiseta colgada y los botines abajo.")
+const casillero8 = new Mueble(position = game.at(17,9), imagen = "casilleroBolso.png", descripcion = "Una toalla y un bolso. Nada raro.")
+const casillero9 = new Mueble(position = game.at(18,9), imagen = "casilleroCamiseta.png", descripcion = "Una camiseta colgada y los botines abajo.")
+const casillero10 = new Mueble(position = game.at(19,9), imagen = "casilleroBolso.png", descripcion = "Una toalla y un bolso. Nada raro.")
+const casillero11 = new Mueble(position = game.at(20,9), imagen = "casilleroCamiseta.png", descripcion = "Una camiseta colgada y los botines abajo.")
+const casillero12 = new Mueble(position = game.at(21,9), imagen = "casilleroBolso.png", descripcion = "Una toalla y un bolso. Nada raro.")
+
+const pizarraTactica = new Mueble(
+    position = game.at(7,9),
+    ancho = 2,
+    imagen = "pizarraTactica.png",
+    descripcion = "La pizarra con la táctica del próximo partido."
 )
 
-const puertaVestuarioAPasillo = new Puerta(
-    position = game.at(11,10),
-    destino = pasillo,
-    llegada = game.at(5,4)
+const conservadora = new Mueble(position = game.at(13,9), imagen = "conservadora.png", descripcion = "El bidón de agua del plantel. Está casi vacío.")
+const cestoRopa = new Mueble(position = game.at(14,9), imagen = "cestoRopa.png", descripcion = "Un cesto lleno de ropa sucia. Mejor no tocar.")
+const banco1 = new Mueble(position = game.at(2,7), ancho = 4, imagen = "banco.png", descripcion = "Un banco con una toalla y una botella.")
+const banco2 = new Mueble(position = game.at(17,7), ancho = 4, imagen = "banco.png", descripcion = "Un banco con una toalla y una botella.")
+const botines = new Mueble(position = game.at(6,6), imagen = "botines.png", descripcion = "Unos botines tirados. Todavía tienen barro.")
+const pelota = new Mueble(position = game.at(10,5), imagen = "pelota.png", descripcion = "Una pelota. Está un poco desinflada.")
+const camilla = new Mueble(position = game.at(2,2), ancho = 2, imagen = "camilla.png", descripcion = "La camilla del kinesiólogo.")
+const vallas = new Mueble(position = game.at(9,2), ancho = 2, imagen = "vallas.png", descripcion = "Vallitas para el entrenamiento.")
+const conos = new Mueble(position = game.at(17,2), imagen = "conos.png", descripcion = "Una pila de conos para el entrenamiento.")
+const bolsaPelotas = new Mueble(position = game.at(20,2), imagen = "bolsaPelotas.png", descripcion = "Una bolsa llena de pelotas.")
+
+const extremo = new Informante(
+    position = game.at(15,5),
+    imagen = "extremo.png",
+    texto = "Lo que dice el 11 cuando le hablás (y te da la llave del tesorero)",
+    pista = llaveTesorero,
+    textoDespues = "Lo que dice el 11 después de darte la llave"
+)
+
+const llaveTesorero = new Pista(
+    nombre = "llave del tesorero",
+    imagen = "llaveTesorero.png",
+    texto = "La llave de la oficina del tesorero. Te la dio el 11 en el vestuario."
+)
+
+const delantero = new Sospechoso(
+    position = game.at(7,4),
+    nombre = "el delantero",
+    nombreBaseImagen = "delantero",
+    imagen = "delanteroNormal.png",
+    texto = "Lo que dice el 9 cuando ya no le quedan preguntas",
+    preguntas = [preguntaDelantero1, preguntaDelantero2]
+)
+
+const preguntaDelantero1 = new Pregunta(
+    texto = "Lo que dice el 9 cuando le hablás",
+    opciones = [opcionDelantero1, opcionDelantero2, opcionDelantero3]
+)
+
+const opcionDelantero1 = new OpcionDialogo(
+    texto = "Lo que le dice Patricio (gentil)",
+    tono = gentil,
+    respuestaNormal = "Respuesta del 9 tranquilo",
+    respuestaEnojada = "Respuesta del 9 enojado"
+)
+
+const opcionDelantero2 = new OpcionDialogo(
+    texto = "Lo que le dice Patricio (provocador)",
+    tono = provocador,
+    respuestaNormal = "Respuesta del 9 tranquilo",
+    respuestaEnojada = "Respuesta del 9 enojado"
+)
+
+const opcionDelantero3 = new OpcionDialogo(
+    texto = "Lo que le dice Patricio (neutral)",
+    tono = neutral,
+    respuestaNormal = "Respuesta del 9 tranquilo",
+    respuestaEnojada = "Respuesta del 9 enojado"
+)
+
+const preguntaDelantero2 = new Pregunta(
+    texto = "Lo que dice el 9 cuando le mostrás las amenazas",
+    requisitos = [amenazas],
+    opciones = [opcionDelantero4, opcionDelantero5, opcionDelantero6]
+)
+
+const opcionDelantero4 = new OpcionDialogo(
+    texto = "Lo que le dice Patricio sobre las amenazas (gentil)",
+    tono = gentil,
+    respuestaNormal = "Respuesta del 9 tranquilo",
+    respuestaEnojada = "Respuesta del 9 enojado"
+)
+
+const opcionDelantero5 = new OpcionDialogo(
+    texto = "Lo que le dice Patricio sobre las amenazas (provocador)",
+    tono = provocador,
+    respuestaNormal = "Respuesta del 9 tranquilo",
+    respuestaEnojada = "Respuesta del 9 enojado"
+)
+
+const opcionDelantero6 = new OpcionDialogo(
+    texto = "Lo que le dice Patricio sobre las amenazas (neutral)",
+    tono = neutral,
+    respuestaNormal = "Respuesta del 9 tranquilo",
+    respuestaEnojada = "Respuesta del 9 enojado"
+)
+
+// ====================== OFICINA DEL TESORERO ======================
+
+const oficinaTesorero = new Habitacion(
+    imagenDeFondo = "fondoOficinaTesorero.png",
+    personajes = [tesorero],
+    objetos = [plantaTesorero1, bibliotecaTesorero, archivero1, archivero2, vitrinaTrofeos, cajasArchivo1, cajaFuerte, plantaTesorero2,
+               sillonTesorero, escritorioTesorero, trituradora, rotafolio, sillon1, mesaRatona, sillon2, cajasArchivo2,
+               puertaTesoreroAPasillo],
+    paredes = colisiones.fila(10, 0, 22) + colisiones.fila(0, 0, 22) + colisiones.columna(0, 1, 9) + colisiones.columna(22, 1, 9)
+)
+
+const plantaTesorero1 = new Mueble(position = game.at(1,9), imagen = "planta.png", descripcion = "Una planta. Es de plástico.")
+const bibliotecaTesorero = new Mueble(position = game.at(2,9), ancho = 2, imagen = "biblioteca.png", descripcion = "Libros de contabilidad y finanzas. Ninguno parece usado.")
+const archivero1 = new Mueble(position = game.at(5,9), imagen = "archivero.png", descripcion = "Carpetas con balances de la AFA.")
+const archivero2 = new Mueble(position = game.at(6,9), imagen = "archivero.png", descripcion = "Facturas y más facturas.")
+const vitrinaTrofeos = new Mueble(position = game.at(14,9), ancho = 2, imagen = "vitrinaTrofeos.png", descripcion = "Una vitrina llena de copas y medallas.")
+const cajasArchivo1 = new Mueble(position = game.at(17,9), imagen = "cajasArchivo.png", descripcion = "Cajas de archivo. Dicen 'balances' en la etiqueta.")
+const plantaTesorero2 = new Mueble(position = game.at(21,9), imagen = "planta.png", descripcion = "Una planta. Es de plástico.")
+const sillonTesorero = new Mueble(position = game.at(10,6), imagen = "sillon.png", descripcion = "El sillón del tesorero. Es de cuero.")
+const trituradora = new Mueble(position = game.at(13,4), imagen = "trituradora.png", descripcion = "Alguien estuvo triturando papeles hace poco.")
+const rotafolio = new Mueble(position = game.at(18,5), imagen = "rotafolio.png", descripcion = "Un gráfico de ganancias. Siempre para arriba.")
+const sillon1 = new Mueble(position = game.at(2,3), imagen = "sillon.png", descripcion = "Un sillón de cuero.")
+const mesaRatona = new Mueble(position = game.at(3,3), imagen = "mesaRatona.png", descripcion = "Revistas viejas y un cenicero con un habano.")
+const sillon2 = new Mueble(position = game.at(4,3), imagen = "sillon.png", descripcion = "Un sillón de cuero.")
+const cajasArchivo2 = new Mueble(position = game.at(20,2), imagen = "cajasArchivo.png", descripcion = "Más cajas de archivo.")
+
+const cajaFuerte = new MuebleConPista(
+    position = game.at(19,9),
+    imagen = "cajaFuerte.png",
+    pista = llaveAutoRojo,
+    textoHallazgo = "La caja fuerte quedó entreabierta. Entre los fajos de billetes había una llave de auto.",
+    descripcion = "Fajos de billetes y un lingote de oro. Nada más."
+)
+
+const escritorioTesorero = new Mueble(
+    position = game.at(10,4),
+    ancho = 2,
+    alto = 2,
+    imagen = "escritorioTesorero.png",
+    descripcion = "Una máquina de contar billetes, una calculadora y pilas de papeles."
+)
+
+const tesorero = new Sospechoso(
+    position = game.at(11,6),
+    nombre = "el tesorero",
+    nombreBaseImagen = "tesorero",
+    imagen = "tesoreroNormal.png",
+    texto = "Lo que dice el tesorero cuando ya no le quedan preguntas",
+    preguntas = [preguntaTesorero1, preguntaTesorero2]
+)
+
+const preguntaTesorero1 = new Pregunta(
+    texto = "Lo que dice el tesorero cuando le hablás",
+    opciones = [opcionTesorero1, opcionTesorero2, opcionTesorero3]
+)
+
+const opcionTesorero1 = new OpcionDialogo(
+    texto = "Lo que le dice Patricio (gentil)",
+    tono = gentil,
+    respuestaNormal = "Respuesta del tesorero tranquilo",
+    respuestaEnojada = "Respuesta del tesorero enojado"
+)
+
+const opcionTesorero2 = new OpcionDialogo(
+    texto = "Lo que le dice Patricio (provocador)",
+    tono = provocador,
+    respuestaNormal = "Respuesta del tesorero tranquilo",
+    respuestaEnojada = "Respuesta del tesorero enojado"
+)
+
+const opcionTesorero3 = new OpcionDialogo(
+    texto = "Lo que le dice Patricio (neutral)",
+    tono = neutral,
+    respuestaNormal = "Respuesta del tesorero tranquilo",
+    respuestaEnojada = "Respuesta del tesorero enojado"
+)
+
+const preguntaTesorero2 = new Pregunta(
+    texto = "Lo que dice el tesorero cuando le mostrás lo que había en el auto rojo",
+    requisitos = [bolsa],
+    opciones = [opcionTesorero4, opcionTesorero5, opcionTesorero6]
+)
+
+const opcionTesorero4 = new OpcionDialogo(
+    texto = "Lo que le dice Patricio sobre la bolsa (gentil)",
+    tono = gentil,
+    respuestaNormal = "Respuesta del tesorero tranquilo",
+    respuestaEnojada = "Respuesta del tesorero enojado"
+)
+
+const opcionTesorero5 = new OpcionDialogo(
+    texto = "Lo que le dice Patricio sobre la bolsa (provocador)",
+    tono = provocador,
+    respuestaNormal = "Respuesta del tesorero tranquilo",
+    respuestaEnojada = "Respuesta del tesorero enojado"
+)
+
+const opcionTesorero6 = new OpcionDialogo(
+    texto = "Lo que le dice Patricio sobre la bolsa (neutral)",
+    tono = neutral,
+    respuestaNormal = "Respuesta del tesorero tranquilo",
+    respuestaEnojada = "Respuesta del tesorero enojado"
 )

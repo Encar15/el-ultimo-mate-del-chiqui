@@ -16,7 +16,6 @@ object nivel {
         mapa.iniciar()
         game.addVisual(patricioJuan)
         game.addVisual(contador)
-
         contador.iniciarCronometro()
     }
 
