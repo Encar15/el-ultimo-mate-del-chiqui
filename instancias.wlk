@@ -213,6 +213,7 @@ const opcionPresidente3 = new OpcionDialogo(
 
 const preguntaPresidente2 = new Pregunta(
     texto = "Que queres ahora?",
+    requisitos = [informeForense],
     opciones = [opcionPresidente4, opcionPresidente5, opcionPresidente6]
 )
 
@@ -352,7 +353,7 @@ const porro = new Pista(
 
 const oficinaTapia = new Habitacion(
     imagenDeFondo = "fondoOficinaTapia.png",
-    objetos = [escritorioTapia, cuerpo, termo, puertaOficinaAPasillo],
+    objetos = [escritorioTapia, cuerpo, termo, puertaOficinaAPasillo, forense],
     paredes = colisiones.fila(10, 0, 22) + colisiones.fila(0, 0, 22) + colisiones.columna(0, 1, 9) + colisiones.columna(22, 1, 9)
 )
 

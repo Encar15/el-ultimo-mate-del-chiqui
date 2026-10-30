@@ -24,7 +24,7 @@ describe "Movimiento de Patricio" {
 
     test "Patricio no puede pasar por encima de un mueble" {
         oficinaTapia.entrar()
-        patricioJuan.ubicarEn(game.at(12,6))      // justo abajo del escritorio
+        patricioJuan.ubicarEn(game.at(12,6))
         patricioJuan.moverArriba()
         assert.equals(game.at(12,6), patricioJuan.position())
     }
@@ -47,7 +47,7 @@ describe "Habitaciones y puertas" {
     test "interactuar al lado de la puerta lleva a Patricio al pasillo" {
         mapa.iniciar()
         game.addVisual(patricioJuan)
-        patricioJuan.ubicarEn(game.at(21,5))      // al lado de la puerta de la oficina
+        patricioJuan.ubicarEn(game.at(21,5))
         interacciones.interactuar()
         assert.equals(pasillo, mapa.habitacionActual())
         assert.equals(game.at(1,5), patricioJuan.position())
@@ -80,7 +80,7 @@ describe "Sospechosos y diálogos" {
 
     test "elegir una opción provocadora en el diálogo acorrala al sospechoso" {
         utilero.interactuar(patricioJuan)
-        dialogos.siguiente()                      // la segunda opción es la provocadora
+        dialogos.siguiente()
         dialogos.confirmar()
         assert.equals(acorralado, utilero.estadoDeAnimo())
     }
@@ -101,7 +101,6 @@ describe "Menú" {
         assert.equals(llave, carpetaPistas.fichaActual())
     }
 
-    // La primera imagen que arma el veredicto es la tarjeta del final
     test "incriminar al culpable termina en caso resuelto" {
         veredicto.incriminar(utilero)
         assert.equals("casoResuelto.png", veredicto.armarVisuales().first().image())
