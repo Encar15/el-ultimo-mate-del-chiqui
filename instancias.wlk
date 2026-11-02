@@ -735,35 +735,35 @@ const opcionTesorero2 = new OpcionDialogo(
 )
 
 const opcionTesorero3 = new OpcionDialogo(
-    texto = "Lo que le dice Patricio (neutral)",
+    texto = "Vengo a revisar el balance de la tesorería de este año.",
     tono = neutral,
-    respuestaNormal = "Respuesta del tesorero tranquilo",
-    respuestaEnojada = "Respuesta del tesorero enojado"
+    respuestaNormal = "El balance da perfecto como siempre, todo en regla y blindado. Si querés mirar carpetas, avisale a mi secretaria.",
+    respuestaEnojada = "¿Revisar números acá? Rajá de acá antes de que te arme una causa por usurpación."
 )
 
 const preguntaTesorero2 = new Pregunta(
-    texto = "Lo que dice el tesorero cuando le mostrás lo que había en el auto rojo",
+    texto = "Pará un poco... ¿de dónde sacaste esa bolsa? ¡Eso estaba en mi baúl!",
     requisitos = [bolsa],
     opciones = [opcionTesorero4, opcionTesorero5, opcionTesorero6]
 )
 
 const opcionTesorero4 = new OpcionDialogo(
-    texto = "Lo que le dice Patricio sobre la bolsa (gentil)",
+    texto = "Encontré un dineral, un arma y una denuncia penal en su auto rojo. Explíqueme esto con calma.",
     tono = gentil,
-    respuestaNormal = "Respuesta del tesorero tranquilo",
-    respuestaEnojada = "Respuesta del tesorero enojado"
+    respuestaNormal = "Esa plata es para pagar los premios del ascenso de Santiago del Estero... y el fierro es por seguridad personal, ¿viste cómo está la calle?",
+    respuestaEnojada = "¡No tengo que explicarte un carajo a vos! Dejá esa guita donde estaba o no salís vivo de este predio."
 )
 
 const opcionTesorero5 = new OpcionDialogo(
-    texto = "Lo que le dice Patricio sobre la bolsa (provocador)",
+    texto = "Bolsos con guita negra, un revólver y una causa por lavado. Te descubrí el negocio, delincuente.",
     tono = provocador,
-    respuestaNormal = "Respuesta del tesorero tranquilo",
-    respuestaEnojada = "Respuesta del tesorero enojado"
+    respuestaNormal = "¿Guita negra? Son aportes de sponsors del interior, nene. Chiqui estaba al tanto de cada centavo.",
+    respuestaEnojada = "¡A MÍ NO ME APRETÁS, DETECTIVE DE CARTÓN! ¡CON ESTO ME LIMPIO EL TRASTE Y A VOS TE HAGO DESAPARECER DEL MAPA!"
 )
 
 const opcionTesorero6 = new OpcionDialogo(
-    texto = "Lo que le dice Patricio sobre la bolsa (neutral)",
+    texto = "Esta bolsa lo compromete directamente con desvío de fondos y amenazas.",
     tono = neutral,
-    respuestaNormal = "Respuesta del tesorero tranquilo",
-    respuestaEnojada = "Respuesta del tesorero enojado"
+    respuestaNormal = "Mirá, te aconsejo que te guardes eso. En este país el que escarba donde no debe termina mal parado.",
+    respuestaEnojada = "Hacé la denuncia que quieras en Comodoro Py. Sabés bien quién maneja la justicia deportiva acá."
 )

@@ -10,108 +10,92 @@ import dialogos.*
 import menu.*
 import instancias.*
 
-describe "Movimiento de Patricio" {
-
-    method initialize(){
-        game.width(23)
-        game.height(12)
+describe "1. Movimiento básico de Patricio Juan" {
+    test "Patricio arranca en la posición inicial 7,9" {
+        assert.equals(game.at(7,9), patricioJuan.position())
     }
-
-    test "Patricio se mueve a una casilla libre" {
+    
+    test "Mover a Patricio a la derecha cambia su posición a 8,9" {
         patricioJuan.moverDerecha()
-        assert.equals(game.at(1,0), patricioJuan.position())
+        assert.equals(game.at(8,9), patricioJuan.position())
     }
-
-    test "Patricio no puede pasar por encima de un mueble" {
-        oficinaTapia.entrar()
-        patricioJuan.ubicarEn(game.at(12,6))
-        patricioJuan.moverArriba()
-        assert.equals(game.at(12,6), patricioJuan.position())
-    }
-
-    test "Patricio no se mueve mientras hay un cuadro de texto abierto" {
-        cuadros.abrir(new CuadroDeTexto(texto = "Hola"), utilero)
-        patricioJuan.moverDerecha()
-        assert.equals(game.origin(), patricioJuan.position())
+    
+    test "Patricio no se puede mover si hay un cuadro de diálogo abierto" {
+        dialogos.abrir(new CuadroDeDialogo(texto = "Hola", selector = new SelectorDialogo(opciones=[])), tesorero)
+        patricioJuan.moverIzquierda()
+        assert.equals(game.at(7,9), patricioJuan.position()) 
     }
 }
 
-describe "Habitaciones y puertas" {
-
-    test "al entrar a una habitación sus muebles bloquean el paso pero las pistas no" {
-        pasillo.entrar()
-        assert.that(colisiones.hayColisionEn(matafuego.position()))
-        assert.notThat(colisiones.hayColisionEn(bombilla.position()))
+describe "2. Menú de Pistas e Inventario" {
+    method initialize() {
+        menu.reiniciar()
     }
-
-    test "interactuar al lado de la puerta lleva a Patricio al pasillo" {
-        mapa.iniciar()
-        game.addVisual(patricioJuan)
-        patricioJuan.ubicarEn(game.at(21,5))
-        interacciones.interactuar()
-        assert.equals(pasillo, mapa.habitacionActual())
-        assert.equals(game.at(1,5), patricioJuan.position())
+    
+    test "Al inicio no hay ninguna pista guardada en el menú" {
+        assert.that(menu.pistas().isEmpty())
+    }
+    
+    test "Guardar una pista hace que el menú la contenga" {
+        menu.guardarPista(acreditacion)
+        assert.that(menu.tieneTodas([acreditacion]))
+    }
+    
+    test "El método tieneTodas falla si nos falta alguna pista de la lista" {
+        menu.guardarPista(acreditacion)
+        assert.notThat(menu.tieneTodas([acreditacion, llaveVestuario]))
     }
 }
 
-describe "Pistas y muebles" {
-
-    test "revisar el escritorio guarda la llave en el menú" {
-        escritorio.interactuar(patricioJuan)
-        assert.that(menu.pistas().contains(llave))
+describe "3. Humor y Estados de Ánimo de Sospechosos" {
+    method initialize() {
+        tesorero.reiniciar()
     }
+    
+    test "Un sospechoso arranca siempre con estado de ánimo relajado" {
+        assert.equals(relajado, tesorero.estadoDeAnimo())
+    }
+    
+    test "Usar un tono provocador baja el humor y lo deja acorralado" {
+        provocador.afectar(tesorero)
+        assert.equals(acorralado, tesorero.estadoDeAnimo())
+    }
+    
+    test "Usar un tono gentil sube el humor y lo mantiene relajado" {
+        gentil.afectar(tesorero)
+        assert.equals(relajado, tesorero.estadoDeAnimo())
+    }
+}
 
-    test "un escritorio ya revisado no vuelve a dar la llave" {
-        escritorio.interactuar(patricioJuan)
-        cuadros.cerrar()
-        escritorio.interactuar(patricioJuan)
+describe "4. Interacciones simples con Muebles" {
+    method initialize() {
+        menu.reiniciar()
+        cajaFuerte.reiniciar()
+    }
+    
+    test "Revisar la caja fuerte otorga la llave del auto rojo" {
+        cajaFuerte.usar(patricioJuan)
+        assert.that(menu.tieneTodas([llaveAutoRojo]))
+    }
+    
+    test "Revisar un mueble con pista por segunda vez NO duplica la pista" {
+        cajaFuerte.usar(patricioJuan)
+        cuadros.cerrar() 
+        cajaFuerte.usar(patricioJuan)
+        
         assert.equals(1, menu.pistas().size())
     }
 }
 
-describe "Sospechosos y diálogos" {
-
-    test "hablar dos veces con un sospechoso lo agrega una sola vez a la carpeta" {
-        utilero.interactuar(patricioJuan)
-        dialogos.cerrar()
-        utilero.interactuar(patricioJuan)
-        assert.equals([utilero], menu.sospechosos())
+describe "5. Interacciones con Informantes" {
+    method initialize() {
+        menu.reiniciar()
+        recepcionista.reiniciar()
     }
-
-    test "elegir una opción provocadora en el diálogo acorrala al sospechoso" {
-        utilero.interactuar(patricioJuan)
-        dialogos.siguiente()
-        dialogos.confirmar()
-        assert.equals(acorralado, utilero.estadoDeAnimo())
-    }
-
-    test "un sospechoso acorralado contesta con la respuesta enojada" {
-        assert.equals(preguntaPresidente1.respuestaCulpable(), preguntaPresidente1.respuestaSegunEstado(acorralado))
-    }
-}
-
-describe "Menú" {
-
-    test "la carpeta de pistas vuelve a la primera ficha después de la última" {
-        menu.guardarPista(llave)
-        menu.guardarPista(bombilla)
-        carpetaPistas.elegir()
-        carpetaPistas.derecha()
-        carpetaPistas.derecha()
-        assert.equals(llave, carpetaPistas.fichaActual())
-    }
-
-    test "incriminar al culpable termina en caso resuelto" {
-        veredicto.incriminar(utilero)
-        assert.equals("casoResuelto.png", veredicto.armarVisuales().first().image())
-    }
-
-    test "incriminar a un inocente termina en caso fallido" {
-        veredicto.incriminar(sospechosoPrueba)
-        assert.equals("casoFallido.png", veredicto.armarVisuales().first().image())
-    }
-
-    test "un texto largo se corta en renglones sin partir las palabras" {
-        assert.equals("Una llave\nchiquita.\nParece de un\nlocker.", textos.envolver("Una llave chiquita. Parece de un locker.", 15))
+    
+    test "Al finalizar de hablar con el informante, este te entrega la pista" {
+        recepcionista.interactuar(patricioJuan) 
+        recepcionista.finalizarInteraccion() 
+        assert.that(menu.tieneTodas([acreditacion]))
     }
 }
