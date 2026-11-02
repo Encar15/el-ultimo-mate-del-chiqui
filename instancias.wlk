@@ -607,7 +607,7 @@ const delantero = new Sospechoso(
     nombre = "delantero",
     nombreBaseImagen = "delantero",
     imagen = "delanteroNormal.png",
-    texto = "",
+    texto = "No es serio que pienses que fui yo",
     preguntas = [preguntaDelantero1, preguntaDelantero2]
 )
 
@@ -638,30 +638,30 @@ const opcionDelantero3 = new OpcionDialogo(
 )
 
 const preguntaDelantero2 = new Pregunta(
-    texto = "Lo que dice el 9 cuando le mostrás las amenazas",
+    texto = "Cómo encontraste estos chats??",
     requisitos = [amenazas],
     opciones = [opcionDelantero4, opcionDelantero5, opcionDelantero6]
 )
 
 const opcionDelantero4 = new OpcionDialogo(
-    texto = "Lo que le dice Patricio sobre las amenazas (gentil)",
+    texto = "Se ve que estuvieron discutiendo últimamente, querés decir algo?",
     tono = gentil,
-    respuestaNormal = "Respuesta del 9 tranquilo",
-    respuestaEnojada = "Respuesta del 9 enojado"
+    respuestaNormal = "Me duele que ese haya sido mi último contacto con él",
+    respuestaEnojada = "Discutimos porque era un mafioso, un provocador, y más feo que bailar con tu hermana. NADIE SE METE CON RIVER"
 )
 
 const opcionDelantero5 = new OpcionDialogo(
-    texto = "Lo que le dice Patricio sobre las amenazas (provocador)",
+    texto = "Creo que encontré a mi principal sospechoso",
     tono = provocador,
-    respuestaNormal = "Respuesta del 9 tranquilo",
-    respuestaEnojada = "Respuesta del 9 enojado"
+    respuestaNormal = "Dale hermano, date cuenta que hay gente muy poderosa que lo quería desaparecer del mapa en este establecimiento",
+    respuestaEnojada = "YO NO LO MATÉ PERO ME ALEGRÉ MAS QUE EN EL 9 DE DICIEMBRE, A JODER CON RIVER AL CIELO SALUDOS"
 )
 
 const opcionDelantero6 = new OpcionDialogo(
-    texto = "Lo que le dice Patricio sobre las amenazas (neutral)",
+    texto = "Dame una buena razón para no pensar que fuiste vos",
     tono = neutral,
-    respuestaNormal = "Respuesta del 9 tranquilo",
-    respuestaEnojada = "Respuesta del 9 enojado"
+    respuestaNormal = "Estuvo metido en cosas muy turbias con Toviggino, y tuvo problemas con el Presidente de la Fifa",
+    respuestaEnojada = "Porque estaba ocupado agarrándome a tu hermana, te duele Qatar secanucas"
 )
 
 // ====================== OFICINA DEL TESORERO ======================
@@ -711,27 +711,27 @@ const tesorero = new Sospechoso(
     nombre = "el tesorero",
     nombreBaseImagen = "tesorero",
     imagen = "tesoreroNormal.png",
-    texto = "Lo que dice el tesorero cuando ya no le quedan preguntas",
+    texto = "",
     preguntas = [preguntaTesorero1, preguntaTesorero2]
 )
 
 const preguntaTesorero1 = new Pregunta(
-    texto = "Lo que dice el tesorero cuando le hablás",
+    texto = "Que haces pibe, quién te dio permiso para que entraras",
     opciones = [opcionTesorero1, opcionTesorero2, opcionTesorero3]
 )
 
 const opcionTesorero1 = new OpcionDialogo(
-    texto = "Lo que le dice Patricio (gentil)",
+    texto = "Toviggino tengo unas preguntas que hacerle, sabe algo de la muerte de su socio?",
     tono = gentil,
-    respuestaNormal = "Respuesta del tesorero tranquilo",
-    respuestaEnojada = "Respuesta del tesorero enojado"
+    respuestaNormal = "Él no era mi socio, él era mi amigo, si habremos hecho matufias juntos!!!. Lo voy a extrañar mucho",
+    respuestaEnojada = "Andate de mi oficina, no te voy a responder nada sin una órden"
 )
 
 const opcionTesorero2 = new OpcionDialogo(
-    texto = "Lo que le dice Patricio (provocador)",
+    texto = "Toviggino vayamos al grano, ámbos sabemos que usted es un corrupto y el que está hecho un fiambre no era ningún santo tampoco. Sé que usted tenía razones para silenciarlo",
     tono = provocador,
-    respuestaNormal = "Respuesta del tesorero tranquilo",
-    respuestaEnojada = "Respuesta del tesorero enojado"
+    respuestaNormal = "A vos te parece acusarme de algo así en este momento, no ves que estoy pasando por un duelo. Andate ya y no revises mis cosas",
+    respuestaEnojada = "USTED NO PUEDE ACUSARME DE ESTO, LLÁMESE A SILENCIO O LO MANDO A SILENCIAR"
 )
 
 const opcionTesorero3 = new OpcionDialogo(
