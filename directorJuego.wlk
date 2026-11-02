@@ -76,7 +76,7 @@ object contador {
 
     method reiniciar(){
     cronometro.stop()
-    tiempoRestante = 60
+    tiempoRestante = 10000
     pausado = false
     }
 

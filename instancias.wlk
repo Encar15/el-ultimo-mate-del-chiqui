@@ -208,7 +208,7 @@ const opcionPresidente3 = new OpcionDialogo(
     texto = "¿Sabes que le paso al chiqui?",
     tono = neutral,
     respuestaNormal = "No hable con el, le paso algo?",
-    respuestaEnojada = "no y si supiera no te diria."
+    respuestaEnojada = "No y si supiera no te diria."
 )
 
 const preguntaPresidente2 = new Pregunta(
@@ -220,22 +220,22 @@ const preguntaPresidente2 = new Pregunta(
 const opcionPresidente4 = new OpcionDialogo(
     texto = "tengo cierta informacion, el chiqui murio envenenado, sabes algo de eso?",
     tono = gentil,
-    respuestaNormal = "RTA 1",
-    respuestaEnojada = "RTA 2"
+    respuestaNormal = "Oh no!, my poor Chiqui, I love him so much, rest in peace",
+    respuestaEnojada = "Naaaaaa no me diga posho, y bueno estaba hasta las manos el gordo"
 )
 
 const opcionPresidente5 = new OpcionDialogo(
-    texto = "El chiqui fue envenado por una toxina suiza, vos sos de ahi, no te parece raro?",
+    texto = "El chiqui fue envenado por una toxina proveniente de Europa, vos sos de por ahi, no te parece raro?",
     tono = provocador,
-    respuestaNormal = "RTA 1",
-    respuestaEnojada = "RTA 2"
+    respuestaNormal = "Me parece una falta de respeto que me quieras acusar de algo tan grave, vos no sabés con quién estás hablando?",
+    respuestaEnojada = "Me volves a preguntar algo y te van a encontrar flotando en el río Luján, me escuchaste?"
 )
 
 const opcionPresidente6 = new OpcionDialogo(
     texto = "el chiqui fue envenenado",
     tono = neutral,
-    respuestaNormal = "RTA1",
-    respuestaEnojada = "RTA2"
+    respuestaNormal = "jajajaj",
+    respuestaEnojada = "na re palida"
 )
 
 // ====================== PASILLO ======================
@@ -353,7 +353,8 @@ const porro = new Pista(
 
 const oficinaTapia = new Habitacion(
     imagenDeFondo = "fondoOficinaTapia.png",
-    objetos = [escritorioTapia, cuerpo, termo, puertaOficinaAPasillo, forense],
+    personajes = [forense],
+    objetos = [escritorioTapia, cuerpo, termo, puertaOficinaAPasillo],
     paredes = colisiones.fila(10, 0, 22) + colisiones.fila(0, 0, 22) + colisiones.columna(0, 1, 9) + colisiones.columna(22, 1, 9)
 )
 
@@ -363,7 +364,7 @@ const escritorioTapia = new MuebleConPista(
     alto = 2,
     imagen = "escritorioTapia.png",
     pista = conversacionesWhatsapp,
-    textoHallazgo = "En la computadora del escritorio había varias conversaciones fuertes con Toviggino e Infantino.",
+    textoHallazgo = "En la computadora del escritorio había varias conversaciones fuertes con gente presente en el predio.",
     descripcion = "El escritorio del Chiqui. El mate está frío y la computadora sigue prendida."
 )
 
@@ -385,29 +386,29 @@ const termo = new Pista(
 
 const conversacionesWhatsapp = new Dato(
     nombre = "conversaciones de whatsapp",
-    texto = "En la computadora del escritorio había varias conversaciones fuertes con Toviggino e Infantino."
+    texto = "En la computadora del escritorio había varias conversaciones fuertes con gente presente en el predio."
 )
 
 const forense = new InformanteConPedido(
     position = game.at(14,4),
     imagen = "forense.png",
     pedido = [bolsa],
-    textoPedido = "Lo que dice el forense cuando te pide plata a cambio del informe",
-    texto = "Lo que dice el forense cuando le das la plata (y te da el informe)",
+    textoPedido = "Así que vos sos el detective, yo te puedo dar algo que te podría servir, pero viste que está difícil llegar a fin de mes...",
+    texto = "No te voy a preguntar de dónde sacaste esto, acá tenés el informe preeliminar",
     pista = informeForense,
-    textoDespues = "Lo que dice el forense después de darte el informe"
+    textoDespues = "Ya te dí el informe, no te voy a devolver la guita"
 )
 
 const informeForense = new Dato(
     nombre = "informe del forense",
-    texto = "Según el informe del forense, a Tapia lo envenenaron con una toxina suiza."
+    texto = "Según el informe del forense, a Tapia lo envenenaron con una toxina proveniente de Europa."
 )
 
 // ====================== ÁREA DE DESCANSO (COMEDOR) ======================
 
 const areaDescanso = new Habitacion(
     imagenDeFondo = "fondoAreaDescanso.png",
-    personajes = [chef, jugador, mozo],
+    personajes = [chef, jugador, mozo, arquero],
     objetos = [mesaLarga, buffet, heladera, planta1, planta2, tele, puertaDescansoAPasillo, puertaDescansoACocina],
     paredes = colisiones.fila(10, 0, 22) + colisiones.fila(0, 0, 22) + colisiones.columna(0, 1, 9) + colisiones.columna(22, 1, 9)
 )
@@ -472,7 +473,7 @@ const mozo = new Persona(
 
 const cocina = new Habitacion(
     imagenDeFondo = "fondoCocina.png",
-    personajes = [arquero],
+    personajes = [],
     objetos = [estanteria1, horno1, horno2, horno3, horno4, pava, mesadaPileta, heladeraCocina, estanteria2,
                mesaDeTrabajo, mesaEmplatado, hornoBarro, tacho, bolsasPapas, cajonVerduras, puertaCocinaADescanso],
     paredes = colisiones.fila(10, 0, 22) + colisiones.fila(0, 0, 22) + colisiones.columna(0, 1, 9) + colisiones.columna(22, 1, 9)
@@ -590,9 +591,9 @@ const bolsaPelotas = new Mueble(position = game.at(20,2), imagen = "bolsaPelotas
 const extremo = new Informante(
     position = game.at(15,5),
     imagen = "extremo.png",
-    texto = "Lo que dice el 11 cuando le hablás (y te da la llave del tesorero)",
+    texto = "No me puedo creer lo del Chiqui, yo lo amaba, me dió una copa en una combi y se cansó de regalarme penales. Tomá la llave de la oficina de Toviggino, él puede tener algo que ver",
     pista = llaveTesorero,
-    textoDespues = "Lo que dice el 11 después de darte la llave"
+    textoDespues = "La tenía porque se la olvidó en casa el otro día que nos juntamos a comer asado, cuando perdió Estudiantes jajajajajajajajajajaja que alegría"
 )
 
 const llaveTesorero = new Pista(
@@ -603,37 +604,37 @@ const llaveTesorero = new Pista(
 
 const delantero = new Sospechoso(
     position = game.at(7,4),
-    nombre = "el delantero",
+    nombre = "delantero",
     nombreBaseImagen = "delantero",
     imagen = "delanteroNormal.png",
-    texto = "Lo que dice el 9 cuando ya no le quedan preguntas",
+    texto = "",
     preguntas = [preguntaDelantero1, preguntaDelantero2]
 )
 
 const preguntaDelantero1 = new Pregunta(
-    texto = "Lo que dice el 9 cuando le hablás",
+    texto = "Me enteré lo del Chiqui, el fideo se puso muy triste",
     opciones = [opcionDelantero1, opcionDelantero2, opcionDelantero3]
 )
 
 const opcionDelantero1 = new OpcionDialogo(
-    texto = "Lo que le dice Patricio (gentil)",
+    texto = "Y a vos no te puso triste?",
     tono = gentil,
-    respuestaNormal = "Respuesta del 9 tranquilo",
-    respuestaEnojada = "Respuesta del 9 enojado"
+    respuestaNormal = "Obvio como no, pero la realidad es que no teníamos una buena relación",
+    respuestaEnojada = "Qué te pasa chabón, vos moriste en Madrid me parece"
 )
 
 const opcionDelantero2 = new OpcionDialogo(
-    texto = "Lo que le dice Patricio (provocador)",
+    texto = "La gente dice que se llevaban muy mal, sos sospechoso sabelo",
     tono = provocador,
-    respuestaNormal = "Respuesta del 9 tranquilo",
-    respuestaEnojada = "Respuesta del 9 enojado"
+    respuestaNormal = "Es verdad, pero nunca le desearía algo así a nadie, soy más bueno que el pan",
+    respuestaEnojada = "Y la verdad que me puso contento, para qué carajo mentirte, destrozó el fútbol argentino el caradura"
 )
 
 const opcionDelantero3 = new OpcionDialogo(
-    texto = "Lo que le dice Patricio (neutral)",
+    texto = "Sabes quién podría querer hacerle algo así?",
     tono = neutral,
-    respuestaNormal = "Respuesta del 9 tranquilo",
-    respuestaEnojada = "Respuesta del 9 enojado"
+    respuestaNormal = "No me gusta hablar sin saber, pero en este edificio hay gente con la que tuvo varios conflictos, de plata principalmente",
+    respuestaEnojada = "Siempre fue un hijo de puta, estoy seguro que mucha gente estará feliz"
 )
 
 const preguntaDelantero2 = new Pregunta(
