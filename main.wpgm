@@ -8,6 +8,7 @@ import dialogos.*
 import controles.*
 import debug.*
 import instancias.*
+import animaciones.*
 
 
 program juego {
@@ -16,10 +17,7 @@ program juego {
     game.width(23)
     game.height(12)
 
-    nivel.iniciarPartida()
-
-    controles.configurar()
-    debug.configurar()
+    cinematicas.comenzar()
 
     game.start()
 }

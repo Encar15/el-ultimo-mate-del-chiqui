@@ -231,7 +231,6 @@ object veredicto inherits Pantalla {
     var texto = ""
 
     method incriminar(unSospechoso){
-        contador.detenerCronometro()
         if(unSospechoso.puedeIrPreso()){
             imagen = "casoResuelto.png"
             texto = unSospechoso.nombre() + " era el culpable."
@@ -242,12 +241,6 @@ object veredicto inherits Pantalla {
             imagen = "casoFallido.png"
             texto = unSospechoso.nombre() + " no era el culpable."
         }
-        self.terminarPartida()
-    }
-
-    method sinTiempo(){
-        imagen = "casoSinTiempo.png"
-        texto = "El culpable sigue suelto."
         self.terminarPartida()
     }
 

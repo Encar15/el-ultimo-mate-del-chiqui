@@ -8,14 +8,6 @@ object debug {
 
     method configurar(){
         if(activo){
-            keyboard.p().onPressDo({
-                contador.alternarPausa()
-            })
-
-            keyboard.o().onPressDo({
-                contador.reiniciarCronometro()
-            })
-
             keyboard.r().onPressDo({
                 self.reiniciarJuego()
             })
