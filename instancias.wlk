@@ -440,7 +440,7 @@ const planta2 = new Mueble(position = game.at(21,9), imagen = "planta.png", desc
 const tele = new Mueble(
     position = game.at(6,10),
     imagen = "tele.png",
-    descripcion = "Están pasando Chacarita Chicago."
+    descripcion = "Descendio chicago."
 )
 
 const chef = new Informante(

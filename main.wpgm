@@ -5,7 +5,7 @@ import interacciones.*
 import restoPersonajes.*
 import directorJuego.*
 import dialogos.*
-import controles.*
+import controles.* 
 import debug.*
 import instancias.*
 import animaciones.*
