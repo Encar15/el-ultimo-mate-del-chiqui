@@ -86,6 +86,9 @@ class TextoOpcionDialogo {
             return "FFFFFFFF"
         }
     }
+
+    method textSize() = estiloDeTexto.tamanio()
+
 }
 
 class SelectorDialogo {
@@ -132,18 +135,20 @@ class CuadroDeDialogo {
     method image() = "fondoNegroCuadroDeTexto.png"
 
     method visuales(){
+        const medio = estiloDeTexto.columnaDelMedio()
+        const tamanio = estiloDeTexto.tamanio()
         const cantidadDeOpciones = selector.opciones().size()
         const visualesOpciones = (0 .. cantidadDeOpciones - 1).map({ unIndice =>
             new TextoOpcionDialogo(
                 selector = selector,
                 indice = unIndice,
-                position = game.at(2, 2 - unIndice)
+                position = game.at(medio, 2 - unIndice)
             )
         })
         return [
             self,
-            new TextoDelCuadro(texto = texto, position = game.at(2,4)),
-            new TextoDelCuadro(texto = etiqueta, position = game.at(2,3))
+            new TextoDelCuadro(texto = texto, position = game.at(medio, 4), tamanioDeLetra = tamanio),
+            new TextoDelCuadro(texto = etiqueta, position = game.at(medio, 3), tamanioDeLetra = tamanio)
         ] + visualesOpciones
     }
 

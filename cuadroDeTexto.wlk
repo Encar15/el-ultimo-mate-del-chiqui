@@ -6,7 +6,9 @@ class TextoDelCuadro {
     var property texto
     var property position
     const color = "FFFFFFFF"
-
+    const tamanioDeLetra = 40
+    
+    method textSize() = tamanioDeLetra
     method text() = texto
     method textColor() = color
 }
@@ -16,10 +18,14 @@ class Imagen {
     const property position = game.origin()
 }
 
+object estiloDeTexto {
+    method tamanio() = 40
+    method columnaDelMedio() = game.width().div(2)
+}
+
 class CuadroDeTexto {
     var property texto
-    const anchoDeLetra = 0.06
-    const textoVisual = new TextoDelCuadro(texto = texto, position = self.posicionDelTexto())
+    const textoVisual = new TextoDelCuadro(texto = texto, position = self.posicionDelTexto(), tamanioDeLetra = estiloDeTexto.tamanio())
 
     method position() = game.at(0,0)
     method image() = "fondoNegroCuadroDeTexto.png"
@@ -34,7 +40,7 @@ class CuadroDeTexto {
         game.removeVisual(self)
     }
 
-    method posicionDelTexto() = game.at((0.5 + texto.size() * anchoDeLetra / 2).round(), 2)
+    method posicionDelTexto() = game.at(estiloDeTexto.columnaDelMedio(), 2)
 }
 
 object cuadros {
