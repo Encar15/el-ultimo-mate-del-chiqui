@@ -5,17 +5,14 @@ import interacciones.*
 import restoPersonajes.*
 import directorJuego.*
 import dialogos.*
-import controles.* 
+import controles.*
 import debug.*
 import instancias.*
 import animaciones.*
 
 
 program juego {
-    game.title("El Ultimo Mate del Chiqui Tapia")
-    game.cellSize(100)
-    game.width(23)
-    game.height(12)
+    configuracion.configurarCanvas()
 
     cinematicas.comenzar()
 

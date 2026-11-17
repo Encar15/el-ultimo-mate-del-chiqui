@@ -2,6 +2,7 @@ import wollok.game.*
 import directorJuego.*
 import controles.*
 import debug.*
+import cuadroDeTexto.*
 
 object cinematicas {
     const escenas = [pantallaDeCarga, intro, pantallaTitulo, pantallaControles, historieta, transicionAlJuego]
@@ -28,14 +29,8 @@ object cinematicas {
     }
 
     method empezarJuego(){
-        controles.configurar()
-        debug.configurar()
+        configuracion.configurarTeclado()
     }
-}
-
-class Imagen {
-    const property image
-    const property position = game.origin()
 }
 
 class Escena {

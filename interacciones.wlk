@@ -1,23 +1,9 @@
 import wollok.game.*
 import detectives.*
-import cuadroDeTexto.*
-import dialogos.*
 import habitaciones.*
 import instancias.*
 
 object interacciones {
-
-    method interactuar() {
-    if(dialogos.hayDialogoAbierto()){
-        dialogos.confirmar()
-    }else{
-        if(cuadros.hayCuadroAbierto()){
-            cuadros.cerrar()
-        }else{
-            self.interactuarConCercano()
-        }
-    }
-}
 
     method interactuarConCercano() {
         const detectiveActual = patricioJuan

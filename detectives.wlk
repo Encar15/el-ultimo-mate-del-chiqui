@@ -1,7 +1,5 @@
 import wollok.game.*
-import cuadroDeTexto.*
 import colisiones.*
-import dialogos.*
 import instancias.*
 
 
@@ -11,17 +9,11 @@ object patricioJuan {
 
     method image() = image
 
-    method moverArriba(){ self.moverA(position.up(1), "patricioEspalda.gif") }
-    method moverAbajo(){ self.moverA(position.down(1), "patricioFrente.gif") }
-    method moverIzquierda(){ self.moverA(position.left(1), "patricioIzquierda.gif") }
-    method moverDerecha(){ self.moverA(position.right(1), "patricioDerecha.gif") }
-
-    method moverA(nuevaPosicion, imagenNueva){
-        if(!cuadros.hayCuadroAbierto() && !dialogos.hayDialogoAbierto()){
-            image = imagenNueva
-            if(self.casillaDisponible(nuevaPosicion)){
-                position = nuevaPosicion
-            }
+    method mover(unaDireccion){
+        image = unaDireccion.imagenDelDetective()
+        const nuevaPosicion = unaDireccion.siguiente(position)
+        if(self.casillaDisponible(nuevaPosicion)){
+            position = nuevaPosicion
         }
     }
    
@@ -41,4 +33,32 @@ object patricioJuan {
     method ubicarEn(unaPosicion){
     position = unaPosicion
     }
+}
+
+object arriba {
+    method siguiente(unaPosicion) = unaPosicion.up(1)
+    method imagenDelDetective() = "patricioEspalda.gif"
+    method enPantalla(unaPantalla){ unaPantalla.arriba() }
+    method enDialogo(unDialogo){ unDialogo.anterior() }
+}
+
+object abajo {
+    method siguiente(unaPosicion) = unaPosicion.down(1)
+    method imagenDelDetective() = "patricioFrente.gif"
+    method enPantalla(unaPantalla){ unaPantalla.abajo() }
+    method enDialogo(unDialogo){ unDialogo.siguiente() }
+}
+
+object izquierda {
+    method siguiente(unaPosicion) = unaPosicion.left(1)
+    method imagenDelDetective() = "patricioIzquierda.gif"
+    method enPantalla(unaPantalla){ unaPantalla.izquierda() }
+    method enDialogo(unDialogo){}
+}
+
+object derecha {
+    method siguiente(unaPosicion) = unaPosicion.right(1)
+    method imagenDelDetective() = "patricioDerecha.gif"
+    method enPantalla(unaPantalla){ unaPantalla.derecha() }
+    method enDialogo(unDialogo){}
 }

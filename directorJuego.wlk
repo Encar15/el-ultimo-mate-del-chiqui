@@ -9,6 +9,22 @@ import menu.*
 import controles.*
 import habitaciones.*
 import instancias.*
+import estados.*
+import debug.*
+
+object configuracion {
+    method configurarCanvas(){
+        game.title("El Ultimo Mate del Chiqui Tapia")
+        game.cellSize(100)
+        game.width(23)
+        game.height(12)
+    }
+
+    method configurarTeclado(){
+        controles.configurar()
+        debug.configurar()
+    }
+}
 
 object nivel {
 
@@ -23,5 +39,6 @@ object nivel {
         menu.reiniciar()
         cuadros.reiniciar()
         dialogos.reiniciar()
+        estadoDelJuego.reiniciar()
     }
 }

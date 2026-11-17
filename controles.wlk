@@ -4,6 +4,7 @@ import interacciones.*
 import dialogos.*
 import menu.*
 import instancias.*
+import estados.*
 
 object controles {
     const esperaInicial = 250
@@ -14,13 +15,13 @@ object controles {
 
     method configurar(){
         flechasApretadas.clear()
-        self.configurarFlecha(keyboard.right(), haciaLaDerecha)
-        self.configurarFlecha(keyboard.left(), haciaLaIzquierda)
-        self.configurarFlecha(keyboard.up(), haciaArriba)
-        self.configurarFlecha(keyboard.down(), haciaAbajo)
+        self.configurarFlecha(keyboard.right(), derecha)
+        self.configurarFlecha(keyboard.left(), izquierda)
+        self.configurarFlecha(keyboard.up(), arriba)
+        self.configurarFlecha(keyboard.down(), abajo)
         keyboard.z().onPressDo({ self.confirmar() })
         keyboard.x().onPressDo({ self.cancelar() })
-        keyboard.c().onPressDo({ menu.alternar() })
+        keyboard.c().onPressDo({ self.alternarMenu() })
     }
 
         method configurarFlecha(unaTecla, unaDireccion){
@@ -29,7 +30,7 @@ object controles {
     }
 
     method apretarFlecha(unaDireccion){
-        unaDireccion.apretar()
+        self.flecha(unaDireccion)
         flechasApretadas.remove(unaDireccion)
         flechasApretadas.add(unaDireccion)
         self.repetirDespuesDe(esperaInicial)
@@ -69,78 +70,11 @@ object controles {
     }
 
     method darUnPaso(){
-        if(!menu.estaAbierto() && self.hayFlechaApretada()){
-            flechasApretadas.last().caminar()
-        }
+        estadoDelJuego.actual().caminar(flechasApretadas.last())
     }
 
-    method derecha(){
-        if(menu.estaAbierto()){
-            menu.derecha()
-        }else{
-            patricioJuan.moverDerecha()
-        }
-    }
-
-    method izquierda(){
-        if(menu.estaAbierto()){
-            menu.izquierda()
-        }else{
-            patricioJuan.moverIzquierda()
-        }
-    }
-
-    method arriba(){
-        if(menu.estaAbierto()){
-            menu.arriba()
-        }else if(dialogos.hayDialogoAbierto()){
-            dialogos.anterior()
-        }else{
-            patricioJuan.moverArriba()
-        }
-    }
-
-    method abajo(){
-        if(menu.estaAbierto()){
-            menu.abajo()
-        }else if(dialogos.hayDialogoAbierto()){
-            dialogos.siguiente()
-        }else{
-            patricioJuan.moverAbajo()
-        }
-    }
-
-    method confirmar(){
-        if(menu.estaAbierto()){
-            menu.confirmar()
-        }else{
-            interacciones.interactuar()
-        }
-    }
-
-    method cancelar(){
-        if(menu.estaAbierto()){
-            menu.volver()
-        }
-    }
-}
-
-object haciaLaDerecha {
-    method apretar(){ controles.derecha() }
-    method caminar(){ patricioJuan.moverDerecha() }
-}
-
-object haciaLaIzquierda {
-    method apretar(){ controles.izquierda() }
-    method caminar(){ patricioJuan.moverIzquierda() }
-}
-
-object haciaArriba {
-    method apretar(){ controles.arriba() }
-    method caminar(){ patricioJuan.moverArriba() }
-}
-
-object haciaAbajo {
-    method apretar(){ controles.abajo() }
-    method caminar(){ patricioJuan.moverAbajo() }
+    method flecha(unaDireccion){ estadoDelJuego.actual().flecha(unaDireccion) }
+    method confirmar(){ estadoDelJuego.actual().confirmar() }
+    method cancelar(){ estadoDelJuego.actual().cancelar() }
+    method alternarMenu(){ estadoDelJuego.actual().alternarMenu() }
 }

@@ -2,6 +2,7 @@ import wollok.game.*
 import cuadroDeTexto.*
 import menu.*
 import instancias.*
+import estados.*
 
 class OpcionDialogo {
     const texto
@@ -28,6 +29,10 @@ class Pregunta {
     method opciones() = opciones
     method esPreguntable() = menu.tieneTodas(requisitos)
     method responder(unSospechoso){ alResponder.apply(unSospechoso) }
+}
+
+object sinPregunta {
+    method responder(unSospechoso){}
 }
 
 object provocador {
@@ -170,14 +175,15 @@ class CuadroDeDialogo {
 }
 
 object dialogos {
-    var cuadroActual = null
-    var personajeActual = null
+    var cuadroActual = sinCuadro
+    var personajeActual = sinPersonaje
 
     method abrir(unCuadro,unPersonaje){
         cuadroActual = unCuadro
         personajeActual = unPersonaje
 
         cuadroActual.abrir()
+        estadoDelJuego.cambiarA(enDialogo)
     }
 
     method siguiente(){
@@ -191,24 +197,22 @@ object dialogos {
     method confirmar(){
     const opcionElegida = cuadroActual.opcionSeleccionada()
     const personaje = personajeActual
-
     self.cerrar()
-
     personaje.recibirRespuesta(opcionElegida)
     }
 
     method cerrar(){
         cuadroActual.cerrar()
-        cuadroActual = null
-        personajeActual = null
-    }
-
-    method hayDialogoAbierto(){
-        return cuadroActual != null
+        self.reiniciar()
+        estadoDelJuego.cambiarA(explorando)
     }
 
     method reiniciar(){
-    cuadroActual = null
-    personajeActual = null
+        cuadroActual = sinCuadro
+        personajeActual = sinPersonaje
     }
+}
+
+object sinPersonaje {
+    method recibirRespuesta(unaOpcion){}
 }

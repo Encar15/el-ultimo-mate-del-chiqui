@@ -1,5 +1,6 @@
 import wollok.game.*
 import instancias.*
+import estados.*
 
 class TextoDelCuadro {
     var property texto
@@ -10,18 +11,20 @@ class TextoDelCuadro {
     method textColor() = color
 }
 
+class Imagen {
+    const property image
+    const property position = game.origin()
+}
+
 class CuadroDeTexto {
     var property texto
-    var textoVisual = null
     const anchoDeLetra = 0.06
+    const textoVisual = new TextoDelCuadro(texto = texto, position = self.posicionDelTexto())
 
     method position() = game.at(0,0)
     method image() = "fondoNegroCuadroDeTexto.png"
 
     method abrir(){
-        textoVisual = new TextoDelCuadro(
-            texto = texto,
-            position = self.posicionDelTexto())
         game.addVisual(self)
         game.addVisual(textoVisual)
     }
@@ -35,31 +38,37 @@ class CuadroDeTexto {
 }
 
 object cuadros {
-    var cuadroActual = null
-    var objetoActual = null
+    var cuadroActual = sinCuadro
+    var objetoActual = sinObjeto
 
     method abrir(unCuadro, unObjeto){
         cuadroActual = unCuadro
         objetoActual = unObjeto
         cuadroActual.abrir()
+        estadoDelJuego.cambiarA(enCuadro)
     }
 
     method cerrar(){
-        if(cuadroActual != null){
-            const objeto = objetoActual
-            cuadroActual.cerrar()
-            cuadroActual = null
-            objetoActual = null
-            objeto.finalizarInteraccion()
-        }
-    }
-
-    method hayCuadroAbierto(){
-        return cuadroActual != null
+        const objeto = objetoActual
+        cuadroActual.cerrar()
+        self.reiniciar()
+        estadoDelJuego.cambiarA(explorando)
+        objeto.finalizarInteraccion()
     }
 
     method reiniciar(){
-    cuadroActual = null
-    objetoActual = null
+        cuadroActual = sinCuadro
+        objetoActual = sinObjeto
     }
+}
+
+object sinCuadro {
+    method abrir(){}
+    method cerrar(){}
+    method siguiente(){}
+    method anterior(){}
+}
+
+object sinObjeto {
+    method finalizarInteraccion(){}
 }

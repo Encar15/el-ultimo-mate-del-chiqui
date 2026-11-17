@@ -52,14 +52,6 @@ class Pista {
     }
 }
 
-class Dato inherits Pista {
-    override method image() = "papel.png"
-}
-
-class LlaveDeAuto inherits Pista {
-    override method image() = "llaveAuto.png"
-}
-
 class Mueble {
     var property position
     const imagen
@@ -131,11 +123,7 @@ class MuebleConPista inherits Mueble {
 
 class Escenario inherits Mueble {
     const entrada
-    var escalera = null
-
-    method initialize(){
-        escalera = new Decoracion(image = "escalera.png", position = entrada.left(1))
-    }
+    const escalera = new Imagen(image = "escalera.png", position = entrada.left(1))
 
     override method ocupa(unaPosicion) = super(unaPosicion) && self.esBorde(unaPosicion) && unaPosicion != entrada
 
@@ -153,11 +141,6 @@ class Escenario inherits Mueble {
         super()
         game.removeVisual(escalera)
     }
-}
-
-class Decoracion {
-    const property image
-    const property position
 }
 
 object conPista {

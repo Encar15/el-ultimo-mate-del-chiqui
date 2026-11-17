@@ -58,9 +58,8 @@ class Habitacion {
     method elementosEn(unaPosicion) = (personajes + objetos).filter({ unElemento => unElemento.ocupa(unaPosicion) })
 
     method reiniciar(){
-        objetos.forEach({
-            unObjeto => unObjeto.reiniciar()
-        })
+        personajes.forEach({ unPersonaje => unPersonaje.reiniciar() })
+        objetos.forEach({ unObjeto => unObjeto.reiniciar() })
     }
 }
 
@@ -115,8 +114,7 @@ object paredDerecha {
 
 
 object mapa {
-    const habitaciones = [oficinaTapia, pasillo, recepcion, banios, oficinaTesorero, areaDescanso, vestuarios, cocina]
-    const habitacionInicial = estacionamiento
+    const habitaciones = [estacionamiento, salaDePrensa, oficinaTapia, pasillo, recepcion, banios, oficinaTesorero, areaDescanso, vestuarios, cocina]    const habitacionInicial = estacionamiento
     var habitacionActual = habitacionInicial
 
     method habitacionActual() = habitacionActual

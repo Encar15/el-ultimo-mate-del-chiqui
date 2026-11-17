@@ -3,11 +3,12 @@ import cuadroDeTexto.*
 import dialogos.*
 import directorJuego.*
 import instancias.*
+import estados.*
 
 object menu {
     const pistasEncontradas = []
     const sospechososConocidos = []
-    var pantallaActual = null
+    var pantallaActual = sinPantalla
 
     method guardarPista(unaPista){
         pistasEncontradas.add(unaPista)
@@ -25,36 +26,26 @@ object menu {
 
     method sospechosos() = sospechososConocidos
 
-    method estaAbierto() = pantallaActual != null
-
-    method alternar(){
-        if(self.estaAbierto()){
-            self.cerrar()
-        }else{
-            self.abrir()
-        }
-    }
-
     method abrir(){
-        if(!cuadros.hayCuadroAbierto() && !dialogos.hayDialogoAbierto()){
-            self.irA(menuPrincipal)
-        }
+        self.irA(menuPrincipal)
     }
 
     method cerrar(){
-        if(self.estaAbierto() && pantallaActual.sePuedeCerrar()){
+        if(pantallaActual.sePuedeCerrar()){
             pantallaActual.ocultar()
-            pantallaActual = null
+            pantallaActual = sinPantalla
+            estadoDelJuego.cambiarA(explorando)
         }
     }
 
     method irA(unaPantalla){
-        if(self.estaAbierto()){
-            pantallaActual.ocultar()
-        }
+        pantallaActual.ocultar()
         pantallaActual = unaPantalla
         pantallaActual.mostrar()
+        estadoDelJuego.cambiarA(enMenu)
     }
+
+    method flecha(unaDireccion){ unaDireccion.enPantalla(pantallaActual) }
 
     method confirmar(){ pantallaActual.confirmar() }
     method volver(){ pantallaActual.volver() }
@@ -66,10 +57,16 @@ object menu {
     method reiniciar(){
         pistasEncontradas.clear()
         sospechososConocidos.clear()
-        pantallaActual = null
+        pantallaActual = sinPantalla
         carpetaPistas.reiniciar()
         carpetaSospechosos.reiniciar()
     }
+}
+
+object sinPantalla {
+    method mostrar(){}
+    method ocultar(){}
+    method sePuedeCerrar() = true
 }
 
 class Pantalla {
@@ -106,12 +103,12 @@ class Pantalla {
 }
 
 class PantallaConOpciones inherits Pantalla {
-    var property cuadro = null
+    method cuadro()
 
-    override method armarVisuales() = cuadro.visuales()
-    override method arriba(){ cuadro.anterior() }
-    override method abajo(){ cuadro.siguiente() }
-    override method confirmar(){ cuadro.opcionSeleccionada().elegir() }
+    override method armarVisuales() = self.cuadro().visuales()
+    override method arriba(){ self.cuadro().anterior() }
+    override method abajo(){ self.cuadro().siguiente() }
+    override method confirmar(){ self.cuadro().opcionSeleccionada().elegir() }
 }
 
 class Opcion {
@@ -121,34 +118,38 @@ class Opcion {
     method elegir(){ accion.apply() }
 }
 
-object menuPrincipal inherits PantallaConOpciones(
-    cuadro = new CuadroDeDialogo(
+object menuPrincipal inherits PantallaConOpciones{
+    const cuadro = new CuadroDeDialogo(
         texto = "MENÚ",
         etiqueta = "Z: elegir     X / C: cerrar",
         selector = new SelectorDialogo(opciones = [carpetaPistas, carpetaSospechosos])
     )
-) {
+
+    override method cuadro() = cuadro
     override method volver(){ menu.cerrar() }
 }
 
 object confirmacion inherits PantallaConOpciones {
-    var sospechoso = null
+    var cuadro = self.preguntaParaIncriminar()
 
-    method preguntarPor(unSospechoso){
-        sospechoso = unSospechoso
-        self.cuadro(new CuadroDeDialogo(
-            texto = "¿Querés incriminar a este sospechoso?",
-            etiqueta = "Z: confirmar     X: cancelar",
-            selector = new SelectorDialogo(
-                opciones = [
-                    new Opcion(texto = "Sí", accion = { veredicto.incriminar(sospechoso) }),
-                    new Opcion(texto = "No", accion = { self.volver() })
-                ],
-                indiceSeleccionado = 1 
-            )
-        ))
-        menu.irA(self)
+    override method cuadro() = cuadro
+
+    override method mostrar(){
+        cuadro = self.preguntaParaIncriminar()
+        super()
     }
+
+    method preguntaParaIncriminar() = new CuadroDeDialogo(
+        texto = "¿Querés incriminar a este sospechoso?",
+        etiqueta = "Z: confirmar     X: cancelar",
+        selector = new SelectorDialogo(
+            opciones = [
+                new Opcion(texto = "Sí", accion = { veredicto.incriminar(carpetaSospechosos.fichaActual()) }),
+                new Opcion(texto = "No", accion = { self.volver() })
+            ],
+            indiceSeleccionado = 1
+        )
+    )
 
     override method armarVisuales() = carpetaSospechosos.armarVisuales() + super()
 
@@ -171,7 +172,7 @@ class Carpeta inherits Pantalla {
     method fichaActual() = self.fichas().get(indice)
 
     override method armarVisuales(){
-        const carpeta = new ImagenDeMenu(image = imagenCarpeta, position = game.at(3,1))
+        const carpeta = new Imagen(image = imagenCarpeta, position = game.at(3,1))
         if(!self.hayFichas()){
             return [carpeta, self.textoSobrePapel(textoSinFichas, game.at(14,6))]
         }
@@ -179,7 +180,7 @@ class Carpeta inherits Pantalla {
         const numeroDeFicha = nombreFicha + " " + (indice + 1).toString() + " de " + self.fichas().size().toString()
         return [
             carpeta,
-            new ImagenDeMenu(image = ficha.imagenParaMenu(), position = game.at(6,5)),
+            new Imagen(image = ficha.imagenParaMenu(), position = game.at(6,5)),
             self.textoSobrePapel(numeroDeFicha, game.at(6,3)),
             self.textoSobrePapel(ficha.tituloParaMenu(), game.at(14,8)),
             self.textoSobrePapel(ficha.descripcionParaMenu(), game.at(14,6))
@@ -221,7 +222,7 @@ object carpetaSospechosos inherits Carpeta(
 
     override method confirmar(){
         if(self.hayFichas()){
-            confirmacion.preguntarPor(self.fichaActual())
+            menu.irA(confirmacion)
         }
     }
 }
@@ -250,16 +251,11 @@ object veredicto inherits Pantalla {
     }
 
     override method armarVisuales() = [
-        new ImagenDeMenu(image = imagen, position = game.at(5,3)),
+        new Imagen(image = imagen, position = game.at(5,3)),
         self.textoSobrePapel(texto, game.at(11,5))
     ]
 
     override method sePuedeCerrar() = false
-}
-
-class ImagenDeMenu {
-    const property image
-    const property position
 }
 
 object textos {

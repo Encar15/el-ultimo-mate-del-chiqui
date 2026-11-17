@@ -21,7 +21,6 @@ object debug {
         nivel.reiniciarEstado()
         nivel.iniciarPartida()
 
-        controles.configurar()
-        self.configurar()
+        configuracion.configurarTeclado()   
     }
 }

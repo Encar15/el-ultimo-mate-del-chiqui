@@ -24,6 +24,9 @@ class Persona {
     method finalizarInteraccion(){
     }
 
+    method reiniciar(){
+    }
+
     method ocupa(unaPosicion) = position == unaPosicion
 
     method moverseA(unaPosicion){
@@ -34,7 +37,7 @@ class Persona {
 class Sospechoso inherits Persona {
     const preguntas
     var preguntasPendientes = []
-    var preguntaActual = null
+    var preguntaActual = sinPregunta
     const posicionInicial = position
     const humorInicial = 0
     var humor = 0
@@ -87,7 +90,7 @@ class Sospechoso inherits Persona {
         preguntaActual.responder(self)
     }
 
-    method reiniciar(){
+    override method reiniciar(){
         humor = humorInicial
         preguntasPendientes = preguntas.copy()
         self.moverseA(posicionInicial)
@@ -126,7 +129,7 @@ class Informante inherits Persona {
         cuadros.abrir(new CuadroDeTexto(texto = unTexto), self)
     }
 
-    method reiniciar(){
+    override method reiniciar(){
         estado = sinHablar
     }
 }

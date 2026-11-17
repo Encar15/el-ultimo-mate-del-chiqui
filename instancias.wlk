@@ -45,8 +45,8 @@ const puertaCocinaADescanso = new Puerta(position = game.at(11,0), destino = are
 
 const estacionamiento = new Habitacion(
     imagenDeFondo = "fondoEstacionamiento.png"  ,
-    personajes = [puertaEstacionamientoARecepcion, autoPatricio, autoTapia, autoRojo],
-    objetos = [],
+    personajes = [],
+    objetos = [puertaEstacionamientoARecepcion, autoPatricio, autoTapia, autoRojo],
     paredes = colisiones.fila(10, 0, 22) + colisiones.fila(0, 0, 22) + colisiones.columna(0, 1, 9) + colisiones.columna(22, 1, 9)
 )
 
@@ -79,10 +79,11 @@ const autoRojo = new MuebleConPista(
     descripcion = "Ahora entiendo cómo se compró el auto."
 )
 
-const llaveAutoTapia = new LlaveDeAuto(nombre = "llave del auto de Tapia", texto = "La llave de un auto azul oscuro.")
-const llaveAutoRojo = new LlaveDeAuto(nombre = "llave del auto rojo", texto = "La llave de un auto. El llavero parece de una marca carísima.")
+const llaveAutoTapia = new Pista(imagen = "llaveAuto.png", nombre = "llave del auto de Tapia", texto = "La llave de un auto azul oscuro.")
+const llaveAutoRojo = new Pista(imagen = "llaveAuto.png", nombre = "llave del auto rojo", texto = "La llave de un auto. El llavero parece de una marca carísima.")
 
-const amenazas = new Dato(
+const amenazas = new Pista(
+    imagen = "papel.png", 
     nombre = "amenazas",
     texto = "Un papel con varias amenazas escritas hacia el presidente de la AFA. Estaba en el auto de Tapia."
 )
@@ -384,7 +385,8 @@ const termo = new Pista(
     texto = "El termo del Chiqui, tirado en el piso. Tiene un olor raro."
 )
 
-const conversacionesWhatsapp = new Dato(
+const conversacionesWhatsapp = new Pista(
+    imagen = "papel.png", 
     nombre = "conversaciones de whatsapp",
     texto = "En la computadora del escritorio había varias conversaciones fuertes con gente presente en el predio."
 )
@@ -399,7 +401,8 @@ const forense = new InformanteConPedido(
     textoDespues = "Ya te dí el informe, no te voy a devolver la guita"
 )
 
-const informeForense = new Dato(
+const informeForense = new Pista(
+    imagen = "papel.png", 
     nombre = "informe del forense",
     texto = "Según el informe del forense, a Tapia lo envenenaron con una toxina proveniente de Europa."
 )
