@@ -143,8 +143,10 @@ const sansevieriaRecepcion = new Mueble(position = game.at(17,3), imagen = "sans
 
 const salaDePrensa = new Habitacion(
     imagenDeFondo = "fondoSalaPrensa.png",
-    personajes = [camarografo,empleadoAfa, periodista, presidenteFifa],
-    objetos = [puertaSalaDePrensaARecepcion, escenario, estrado, camaraTV1, camaraTV2],
+    personajes = [camarografo, empleadoAfa, periodista, presidenteFifa,
+                  periodistaMicrofonoSala, periodistaLibretaSala, fotografoSala, periodistaEspalda1Sala, periodistaEspalda2Sala],
+    objetos = [puertaSalaDePrensaARecepcion, escenario, estrado, camaraTV1, camaraTV2,
+               camaraTripodeSala, camaraFotoSala, reflector1Sala, reflector2Sala],
     paredes = colisiones.fila(9, 0, 22) + colisiones.fila(0, 0, 22) + colisiones.columna(0, 1, 8) + colisiones.columna(22, 1, 8)
 )
 
@@ -159,14 +161,14 @@ const estrado = new MuebleConPista(
     position = game.at(11,7),
     imagen = "estrado.png",
     pista = tarjetaTrabajador,
-    textoHallazgo = "Adentro del estrado había una tarjeta de trabajador de la FAFA.",
+    textoHallazgo = "Adentro del estrado había una tarjeta de trabajador de la AFA.",
     descripcion = "El estrado está vacío."
 )
 
 const tarjetaTrabajador = new Pista(
     nombre = "tarjeta de trabajador",
     imagen = "tarjetaTrabajador.png",
-    texto = "Una tarjeta de trabajador de la FAFA. Estaba escondida en el estrado de la sala de prensa."
+    texto = "Una tarjeta de trabajador de la AFA. Estaba escondida en el estrado de la sala de prensa."
 )
 
 const periodista = new Persona(
@@ -254,6 +256,16 @@ const opcionPresidente6 = new OpcionDialogo(
     respuestaNormal = "Jajajaj",
     respuestaEnojada = "Na re pálida"
 )
+
+const periodistaMicrofonoSala = new Persona(position = game.at(4,3), imagen = "periodistaMicrofono.png", texto = "COMPLETAR")
+const periodistaLibretaSala = new Persona(position = game.at(19,3), imagen = "periodistaLibreta.png", texto = "COMPLETAR")
+const fotografoSala = new Persona(position = game.at(19,7), imagen = "fotografo.png", texto = "COMPLETAR")
+const periodistaEspalda1Sala = new Persona(position = game.at(8,3), imagen = "periodistaEspalda1.png", texto = "COMPLETAR")
+const periodistaEspalda2Sala = new Persona(position = game.at(14,3), imagen = "periodistaEspalda2.png", texto = "COMPLETAR")
+const camaraTripodeSala = new Mueble(position = game.at(4,1), imagen = "camaraTripode.png", descripcion = "Una cámara filmando a la periodista.")
+const camaraFotoSala = new Mueble(position = game.at(11,1), imagen = "camaraFotoTripode.png", descripcion = "Una cámara de fotos apuntando al estrado.")
+const reflector1Sala = new Mueble(position = game.at(3,8), imagen = "reflector.png", descripcion = "Un reflector apuntando al escenario.")
+const reflector2Sala = new Mueble(position = game.at(20,8), imagen = "reflector.png", descripcion = "Un reflector apuntando al escenario.")
 
 // ====================== PASILLO ======================
 
@@ -385,8 +397,10 @@ const porro = new Pista(
 
 const oficinaTapia = new Habitacion(
     imagenDeFondo = "fondoOficinaTapia.png",
-    personajes = [forense],
-    objetos = [escritorioTapia, cuerpo, termo, puertaOficinaAPasillo],
+    personajes = [forense, peritoOficina],
+    objetos = [escritorioTapia, cuerpo, termo, puertaOficinaAPasillo,
+               monsteraOficina1, estanteOficina, globoOficina, banderaOficina, lamparaOficina, sofaOficina, bonsaiOficina,
+               mapaOficina, ventanalOficina, placasOficina, monsteraOficina2, evidencia1Oficina, evidencia2Oficina],
     paredes = colisiones.fila(10, 0, 22) + colisiones.fila(0, 0, 22) + colisiones.columna(0, 1, 9) + colisiones.columna(22, 1, 9)
 )
 
@@ -435,8 +449,24 @@ const forense = new InformanteConPedido(
 const informeForense = new Pista(
     imagen = "papel.png", 
     nombre = "informe del forense",
-    texto = "Según el informe del forense, a Tapia lo envenenaron con una toxina proveniente de Europa."
+    texto = "Según el informe del forense, a Tapia lo envenenaron con una toxina proveniente de Europa.
+    Despues no se encontro ni un pelo"
 )
+
+const peritoOficina = new Persona(position = game.at(10,2), imagen = "perito.png", texto = "Le saque una foto al fiambre de tapia, esta va para un museo")
+const monsteraOficina1 = new Mueble(position = game.at(1,9), imagen = "monstera.png", descripcion = "Una planta enorme. Las hojas tienen agujeros.")
+const estanteOficina = new Mueble(position = game.at(3,9), ancho = 2, imagen = "estanteTrofeos.png", descripcion = "Un estante con copas, libros y una pelota.")
+const globoOficina = new Mueble(position = game.at(8,9), imagen = "globoTerraqueo.png", descripcion = "Un globo terráqueo, Tapia lo usaba para elegir al azar un amistoso")
+const banderaOficina = new Mueble(position = game.at(10,9), imagen = "banderaArgentina.png", descripcion = "La bandera argentina.")
+const lamparaOficina = new Mueble(position = game.at(16,9), imagen = "lamparaPie.png", descripcion = "Una lámpara de pie.")
+const sofaOficina = new Mueble(position = game.at(17,9), ancho = 2, imagen = "sofaChester.png", descripcion = "Un sillón de cuero. Se nota que es caro.")
+const bonsaiOficina = new Mueble(position = game.at(19,9), imagen = "bonsai.png", descripcion = "Un bonsái muy bien cuidado.")
+const mapaOficina = new Mueble(position = game.at(6,10), imagen = "mapaArgentina.png", descripcion = "Un mapa de la Argentina con alfileres.")
+const ventanalOficina = new Mueble(position = game.at(11,10), ancho = 2, imagen = "ventanal.png", descripcion = "Desde acá se ve toda la ciudad.")
+const placasOficina = new Mueble(position = game.at(14,10), imagen = "placasHonor.png", descripcion = "Placas de reconocimiento a nombre del Chiqui.")
+const monsteraOficina2 = new Mueble(position = game.at(1,1), imagen = "monstera.png", descripcion = "Una planta enorme. Las hojas tienen agujeros.")
+const evidencia1Oficina = new Mueble(position = game.at(8,4), imagen = "marcadorEvidencia1.png", descripcion = "Un marcador de evidencia con el número 1.")
+const evidencia2Oficina = new Mueble(position = game.at(13,3), imagen = "marcadorEvidencia2.png", descripcion = "Un marcador de evidencia con el número 2.")
 
 // ====================== ÁREA DE DESCANSO (COMEDOR) ======================
 

@@ -3,9 +3,10 @@ import directorJuego.*
 import controles.*
 import debug.*
 import cuadroDeTexto.*
+import musica.*
 
 object cinematicas {
-    const escenas = [pantallaDeCarga, intro, pantallaTitulo, pantallaControles, historieta, transicionAlJuego]
+    const escenas = [pantallaDeCarga, intro, pantallaTitulo, pantallaControles, historieta, pantallaObjetivo, transicionAlJuego]
     var indice = 0
 
     method comenzar(){
@@ -121,6 +122,7 @@ object pantallaTitulo inherits Escena {
     override method empezar(){
         super()
         flashes.empezar()
+        musicaDelMenu.reproducir()
     }
 
     override method terminar(){
@@ -225,6 +227,13 @@ object historieta inherits Escena {
     }
 }
 
+object pantallaObjetivo inherits Escena {
+    override method visualesIniciales() = [
+        new Imagen(image = "fondoObjetivo.png"),
+        new Imagen(image = "pulsaZParaContinuar.gif", position = game.at(9,0))
+    ]
+}
+
 object transicionAlJuego inherits EscenaConDuracion(
     cantidadDeFrames = 18,
     duracionDeFrame = 100,
@@ -238,6 +247,7 @@ object transicionAlJuego inherits EscenaConDuracion(
     ]
 
     override method empezar(){
+        musicaDelMenu.detener()
         nivel.iniciarPartida()
         super()
     }

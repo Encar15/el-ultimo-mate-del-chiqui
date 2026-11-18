@@ -49,10 +49,6 @@ object menu {
 
     method confirmar(){ pantallaActual.confirmar() }
     method volver(){ pantallaActual.volver() }
-    method arriba(){ pantallaActual.arriba() }
-    method abajo(){ pantallaActual.abajo() }
-    method izquierda(){ pantallaActual.izquierda() }
-    method derecha(){ pantallaActual.derecha() }
 
     method reiniciar(){
         pistasEncontradas.clear()
@@ -98,8 +94,10 @@ class Pantalla {
 
     method sePuedeCerrar() = true
 
+    method tamanioDeLetra() = estiloDeTexto.tamanioMenu()
+
     method textoSobrePapel(unTexto, unaPosicion) =
-        new TextoDelCuadro(texto = unTexto, position = unaPosicion, color = "222222FF")
+        new TextoDelCuadro(texto = unTexto, position = unaPosicion, color = "222222FF", tamanioDeLetra = self.tamanioDeLetra())
 }
 
 class PantallaConOpciones inherits Pantalla {
@@ -122,7 +120,8 @@ object menuPrincipal inherits PantallaConOpciones{
     const cuadro = new CuadroDeDialogo(
         texto = "MENÚ",
         etiqueta = "Z: elegir     X / C: cerrar",
-        selector = new SelectorDialogo(opciones = [carpetaPistas, carpetaSospechosos])
+        selector = new SelectorDialogo(opciones = [carpetaPistas, carpetaSospechosos]),
+        tamanioDeLetra = self.tamanioDeLetra()
     )
 
     override method cuadro() = cuadro
@@ -139,6 +138,8 @@ object confirmacion inherits PantallaConOpciones {
         super()
     }
 
+    override method tamanioDeLetra() = estiloDeTexto.tamanioSospechosos()
+
     method preguntaParaIncriminar() = new CuadroDeDialogo(
         texto = "¿Querés incriminar a este sospechoso?",
         etiqueta = "Z: confirmar     X: cancelar",
@@ -148,7 +149,8 @@ object confirmacion inherits PantallaConOpciones {
                 new Opcion(texto = "No", accion = { self.volver() })
             ],
             indiceSeleccionado = 1
-        )
+        ),
+        tamanioDeLetra = self.tamanioDeLetra()
     )
 
     override method armarVisuales() = carpetaSospechosos.armarVisuales() + super()
@@ -210,6 +212,8 @@ object carpetaPistas inherits Carpeta(
     textoSinFichas = "Todavía no encontraste pistas."
 ) {
     override method fichas() = menu.pistas()
+
+    override method tamanioDeLetra() = estiloDeTexto.tamanioPistas()
 }
 
 object carpetaSospechosos inherits Carpeta(
@@ -225,6 +229,8 @@ object carpetaSospechosos inherits Carpeta(
             menu.irA(confirmacion)
         }
     }
+
+    override method tamanioDeLetra() = estiloDeTexto.tamanioSospechosos()
 }
 
 object veredicto inherits Pantalla {
@@ -256,6 +262,8 @@ object veredicto inherits Pantalla {
     ]
 
     override method sePuedeCerrar() = false
+
+    override method tamanioDeLetra() = estiloDeTexto.tamanioVeredicto()
 }
 
 object textos {

@@ -20,7 +20,11 @@ class Imagen {
 }
 
 object estiloDeTexto {
-    method tamanio() = 36
+    method tamanioInteracciones() = 40
+    method tamanioMenu() = 40
+    method tamanioPistas() = 30
+    method tamanioSospechosos() = 30
+    method tamanioVeredicto() = 30
     method columnaDelMedio() = game.width().div(2)
 }
 
@@ -29,8 +33,8 @@ class CuadroDeTexto {
     const textoVisual = new TextoDelCuadro(
     texto = texto,
     position = self.posicionDelTexto(),
-    tamanioDeLetra = estiloDeTexto.tamanio()
-)
+    tamanioDeLetra = estiloDeTexto.tamanioInteracciones()
+    )
 
     method position() = game.at(0,0)
     method image() = "fondoNegroCuadroDeTexto.png"

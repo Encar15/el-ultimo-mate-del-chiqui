@@ -74,6 +74,7 @@ class TextoOpcionDialogo {
     const selector
     const indice
     var property position
+    const tamanioDeLetra
 
     method text(){
         return selector.opciones().get(indice).texto()
@@ -87,7 +88,7 @@ class TextoOpcionDialogo {
         }
     }
 
-    method textSize() = estiloDeTexto.tamanio()
+    method textSize() = tamanioDeLetra
 
 }
 
@@ -128,27 +129,28 @@ class CuadroDeDialogo {
     const texto
     const selector
     const etiqueta = "Elegir dialogo:"
+    const tamanioDeLetra = estiloDeTexto.tamanioInteracciones()
 
     var visualesAbiertos = []
 
     method position() = game.at(0,0)
     method image() = "fondoNegroCuadroDeTexto.png"
 
-    method visuales(){
+        method visuales(){
         const medio = estiloDeTexto.columnaDelMedio()
-        const tamanio = estiloDeTexto.tamanio()
         const cantidadDeOpciones = selector.opciones().size()
         const visualesOpciones = (0 .. cantidadDeOpciones - 1).map({ unIndice =>
             new TextoOpcionDialogo(
                 selector = selector,
                 indice = unIndice,
-                position = game.at(medio, 2 - unIndice)
+                position = game.at(medio, 2 - unIndice),
+                tamanioDeLetra = tamanioDeLetra
             )
         })
         return [
             self,
-            new TextoDelCuadro(texto = texto, position = game.at(medio, 4), tamanioDeLetra = tamanio),
-            new TextoDelCuadro(texto = etiqueta, position = game.at(medio, 3), tamanioDeLetra = tamanio)
+            new TextoDelCuadro(texto = texto, position = game.at(medio, 4), tamanioDeLetra = tamanioDeLetra),
+            new TextoDelCuadro(texto = etiqueta, position = game.at(medio, 3), tamanioDeLetra = tamanioDeLetra)
         ] + visualesOpciones
     }
 

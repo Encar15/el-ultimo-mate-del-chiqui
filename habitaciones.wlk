@@ -55,10 +55,6 @@ class Habitacion {
         })
     }
 
-    method contiene(unElemento){
-        return personajes.contains(unElemento) || objetos.contains(unElemento)
-    }
-
     method elementosEn(unaPosicion) = (personajes + objetos).filter({ unElemento => unElemento.ocupa(unaPosicion) })
 
     method reiniciar(){
