@@ -4,6 +4,7 @@ import dialogos.*
 import directorJuego.*
 import instancias.*
 import estados.*
+import musica.*
 
 object menu {
     const pistasEncontradas = []
@@ -167,7 +168,10 @@ class Carpeta inherits Pantalla {
 
     method fichas()
 
-    method elegir(){ menu.irA(self) }
+    method elegir(){
+        menu.irA(self)
+        sonidos.cambioDePantalla()
+    }
 
     method hayFichas() = !self.fichas().isEmpty()
 
@@ -192,14 +196,16 @@ class Carpeta inherits Pantalla {
     override method izquierda(){ self.pasarFicha(-1) }
     override method derecha(){ self.pasarFicha(1) }
 
+    method hayVariasFichas() = self.fichas().size() > 1
+
     method pasarFicha(cuanto){
-        if(self.hayFichas()){
+        if(self.hayVariasFichas()){
             const cantidad = self.fichas().size()
             indice = (indice + cuanto + cantidad) % cantidad
             self.actualizar()
+            sonidos.cambioDePantalla()
         }
     }
-
     override method volver(){ menu.irA(menuPrincipal) }
 
     method reiniciar(){ indice = 0 }
@@ -234,36 +240,48 @@ object carpetaSospechosos inherits Carpeta(
 }
 
 object veredicto inherits Pantalla {
-    var imagen = "casoFallido.png"
+    var resultado = casoFallido
     var texto = ""
 
     method incriminar(unSospechoso){
         if(unSospechoso.puedeIrPreso()){
-            imagen = "casoResuelto.png"
+            resultado = casoResuelto
             texto = unSospechoso.nombre() + " era el culpable."
         }else if(unSospechoso.esCulpable()){
-            imagen = "casoFallido.png"
+            resultado = casoFallido
             texto = unSospechoso.nombre() + " era el culpable, pero no tenías pistas suficientes."
         }else{
-            imagen = "casoFallido.png"
+            resultado = casoFallido
             texto = unSospechoso.nombre() + " no era el culpable."
         }
         self.terminarPartida()
     }
 
     method terminarPartida(){
+        musicaDeFondo.detener()
+        sonidos.reproducir(resultado.musica())
         menu.irA(self)
-        game.schedule(6000, { game.stop() })
+        game.schedule(600000, { game.stop() })
     }
 
     override method armarVisuales() = [
-        new Imagen(image = imagen, position = game.at(5,3)),
+        new Imagen(image = resultado.imagen(), position = game.at(5,3)),
         self.textoSobrePapel(texto, game.at(11,5))
     ]
 
     override method sePuedeCerrar() = false
 
     override method tamanioDeLetra() = estiloDeTexto.tamanioVeredicto()
+}
+
+object casoResuelto {
+    method imagen() = "casoResuelto.png"
+    method musica() = "musicaVictoria.mp3"
+}
+
+object casoFallido {
+    method imagen() = "casoFallido.png"
+    method musica() = "musicaDerrota.mp3"
 }
 
 object textos {

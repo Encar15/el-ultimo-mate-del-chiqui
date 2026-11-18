@@ -186,6 +186,11 @@ object pantallaControles inherits Escena {
         new Imagen(image = "teclas.gif", position = game.at(1,5)),
         new Imagen(image = "pulsaZParaContinuar.gif", position = game.at(9,0))
     ]
+
+    override method empezar(){
+        super()
+        sonidos.cambioDePantalla()
+    }    
 }
 
 object historieta inherits Escena {
@@ -206,6 +211,7 @@ object historieta inherits Escena {
 
     override method empezar(){
         super()
+        sonidos.cambioDePantalla()
         mostradas = 0
         self.mostrarSiguienteVineta()
     }
@@ -232,6 +238,11 @@ object pantallaObjetivo inherits Escena {
         new Imagen(image = "fondoObjetivo.png"),
         new Imagen(image = "pulsaZParaContinuar.gif", position = game.at(9,0))
     ]
+
+    override method empezar(){
+        super()
+        sonidos.cambioDePantalla()
+    }
 }
 
 object transicionAlJuego inherits EscenaConDuracion(
@@ -263,16 +274,6 @@ object transicionAlJuego inherits EscenaConDuracion(
         self.sacarTodo()
         self.mostrar(new Imagen(image = "transicionAgrandar.gif"))
         sonidos.reproducir("transicion.mp3")
-    }
-}
-
-// ===================================================================
-//   SONIDOS
-// ===================================================================
-
-object sonidos {
-    method reproducir(unArchivo){
-        game.sound(unArchivo).play()
     }
 }
 

@@ -46,3 +46,11 @@ object sinMusica {
 object silencio {
     method reproducir(){}
 }
+
+object sonidos {
+    method reproducir(unArchivo){
+        game.sound(unArchivo).play()
+    }
+
+    method cambioDePantalla(){ self.reproducir("sonidoTransicion.mp3") }
+}

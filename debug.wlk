@@ -4,7 +4,7 @@ import controles.*
 import instancias.*
 
 object debug {
-    const activo = true
+    const activo = false
 
     method configurar(){
         if(activo){
