@@ -7,7 +7,7 @@ class TextoDelCuadro {
     var property texto
     var property position
     const color = "FFFFFFFF"
-    const tamanioDeLetra = 40
+    const tamanioDeLetra = 36
     
     method textSize() = tamanioDeLetra
     method text() = texto
@@ -20,7 +20,7 @@ class Imagen {
 }
 
 object estiloDeTexto {
-    method tamanio() = 40
+    method tamanio() = 36
     method columnaDelMedio() = game.width().div(2)
 }
 

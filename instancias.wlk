@@ -65,7 +65,7 @@ const autoTapia = new MuebleConPista(
     requisitos = [llaveAutoTapia],
     textoCerrado = "Creo que es el auto de Tapia.",
     pista = amenazas,
-    textoHallazgo = "Adentro hay un papel con varias amenazas escritas hacia el presidente de la FAFA.",
+    textoHallazgo = "Adentro hay un papel con varias amenazas escritas hacia el presidente de la AFA.",
     descripcion = "Ahora es un auto sin dueño."
 )
 
@@ -74,7 +74,7 @@ const autoRojo = new MuebleConPista(
     alto = 2,
     imagen = "autoRojo.png",
     requisitos = [llaveAutoRojo],
-    textoCerrado = "Un auto rojo, parece bastante caro.",
+    textoCerrado = "Un auto rojo, parece bastante caro. Tiene algo dentro, necesito la llave",
     pista = bolsa,
     textoHallazgo = "Había una bolsa llena de guita, un arma y un papel que parece ser una denuncia. Está hasta las manos.",
     descripcion = "Ahora entiendo cómo se compró el auto."
@@ -99,7 +99,7 @@ const bolsa = new Pista(
 const recepcion = new Habitacion(
     imagenDeFondo = "fondoRecepcion.png",
     sonidoAlEntrar = musicaDeFondo,
-    personajes = [recepcionista, hinchaRecepcion, empresarioRecepcion, cadeteRecepcion],
+    personajes = [recepcionista, hinchaRecepcion, empresarioRecepcion],
     objetos = [puertaRecepcionAEstacionamiento, puertaRecepcionAPasillo, puertaRecepcionASalaDePrensa, mostrador,
                palmeraRecepcion, sillonRecepcion, mesitaRecepcion, cuadroEstadioRecepcion, teleRecepcion, relojRecepcion,
                percheroRecepcion, pedestalRecepcion, sansevieriaRecepcion],
@@ -127,17 +127,16 @@ const acreditacion = new Pista(
     texto = "Una acreditación de prensa. Con esto te dejan entrar a la sala de prensa."
 )
 
-const hinchaRecepcion = new Persona(position = game.at(3,4), imagen = "hincha.png", texto = "COMPLETAR")
-const empresarioRecepcion = new Persona(position = game.at(7,5), imagen = "empresario.png", texto = "COMPLETAR")
-const cadeteRecepcion = new Persona(position = game.at(13,5), imagen = "cadete.png", texto = "COMPLETAR")
+const hinchaRecepcion = new Persona(position = game.at(3,4), imagen = "hincha.png", texto = "A este no lo dejan pasar por lo de Nico Paz")
+const empresarioRecepcion = new Persona(position = game.at(7,5), imagen = "empresario.png", texto = "Soy de TN, no me dejan pasar a la conferencia")
 const palmeraRecepcion = new Mueble(position = game.at(1,6), imagen = "palmeraMaceta.png", descripcion = "Una palmera en una maceta gigante.")
 const sillonRecepcion = new Mueble(position = game.at(3,6), ancho = 2, imagen = "sillonDoble.png", descripcion = "Un sillón para las visitas. Parece cómodo.")
 const mesitaRecepcion = new Mueble(position = game.at(5,6), imagen = "mesitaRevistas.png", descripcion = "Una mesita con revistas viejas.")
 const cuadroEstadioRecepcion = new Mueble(position = game.at(2,7), imagen = "cuadroEstadio.png", descripcion = "Un cuadro de un estadio lleno.")
-const teleRecepcion = new Mueble(position = game.at(6,7), ancho = 2, imagen = "televisorPared.png", descripcion = "Están pasando un partido.")
+const teleRecepcion = new Mueble(position = game.at(6,7), ancho = 2, imagen = "televisorPared.png", descripcion = "Están pasando Luzu contra 412.")
 const relojRecepcion = new Mueble(position = game.at(8,7), imagen = "relojPared.png", descripcion = "Un reloj de pared.")
 const percheroRecepcion = new Mueble(position = game.at(14,9), imagen = "perchero.png", descripcion = "Un perchero con un piloto, una bufanda y un sombrero.")
-const pedestalRecepcion = new Mueble(position = game.at(17,9), imagen = "pedestalPelota.png", descripcion = "Una pelota dorada en una vitrina.")
+const pedestalRecepcion = new Mueble(position = game.at(17,9), imagen = "pedestalPelota.png", descripcion = "Un balón de oro en una vitrina, grande enano.")
 const sansevieriaRecepcion = new Mueble(position = game.at(17,3), imagen = "sansevieria.png", descripcion = "Una planta con hojas largas y puntiagudas.")
 
 // ====================== SALA DE PRENSA ======================
@@ -193,10 +192,10 @@ const camaraTV2 = new Mueble(position = game.at(16,3), imagen = "camaraTV.png", 
 
 const presidenteFifa = new Sospechoso(
     position = game.at(16,6),
-    nombre = "Presidente de la JIJA",
+    nombre = "Presidente de la FIFA",
     esCulpable = true,
     pistasNecesarias = [termo, conversacionesWhatsapp, informeForense],
-    descripcion = "Es el presidente de la JIJA y tiene un gran poder de influencia.",
+    descripcion = "Es el presidente de la FIFA y tiene un gran poder de influencia.",
     nombreBaseImagen = "pelado",
     imagen = "pelado.png",
     texto = "No tengo nada más para decirte. Estoy ocupado.",
@@ -236,7 +235,7 @@ const preguntaPresidente2 = new Pregunta(
 )
 
 const opcionPresidente4 = new OpcionDialogo(
-    texto = "tengo cierta informacion, el chiqui murio envenenado, sabes algo de eso?",
+    texto = "Tengo cierta informacion, el chiqui murio envenenado, sabes algo de eso?",
     tono = gentil,
     respuestaNormal = "Oh no!, my poor Chiqui, I love him so much, rest in peace",
     respuestaEnojada = "Naaaaaa no me diga posho, y bueno estaba hasta las manos el gordo"
@@ -245,15 +244,15 @@ const opcionPresidente4 = new OpcionDialogo(
 const opcionPresidente5 = new OpcionDialogo(
     texto = "El chiqui fue envenado por una toxina proveniente de Europa, vos sos de por ahi, no te parece raro?",
     tono = provocador,
-    respuestaNormal = "Me parece una falta de respeto que me quieras acusar de algo tan grave, vos no sabés con quién estás hablando?",
+    respuestaNormal = "Es una falta de respeto que me quieras acusar de algo tan grave, no sabés con quién estás hablando?",
     respuestaEnojada = "Me volves a preguntar algo y te van a encontrar flotando en el río Luján, me escuchaste?"
 )
 
 const opcionPresidente6 = new OpcionDialogo(
-    texto = "el chiqui fue envenenado",
+    texto = "El chiqui fue envenenado",
     tono = neutral,
-    respuestaNormal = "jajajaj",
-    respuestaEnojada = "na re palida"
+    respuestaNormal = "Jajajaj",
+    respuestaEnojada = "Na re pálida"
 )
 
 // ====================== PASILLO ======================
@@ -263,7 +262,7 @@ const pasillo = new Habitacion(
     personajes = [guardia, utileroPasillo, secretariaPasillo, tecnicoPasillo],
     objetos = [puertaPasilloAOficina, puertaPasilloABanios, puertaPasilloARecepcion, puertaPasilloADescanso, puertaPasilloAVestuarios, puertaPasilloATesorero,
                ficusPasillo, sillasPasillo, dispenserPasillo, maquinaCafePasillo, cuadroCopaPasillo, carteleraPasillo, cuadroCamisetaPasillo,
-               paragueroPasillo, matafuegosPasillo, cactusPasillo],
+               paragueroPasillo, cactusPasillo],
     paredes = colisiones.fila(8, 0, 22) + colisiones.fila(3, 0, 22) + colisiones.columna(0, 4, 7) + colisiones.columna(22, 4, 7)
 )
 
@@ -325,17 +324,16 @@ const opcionGuardiaPorro2 = new OpcionDialogo(
 )
 
 const utileroPasillo = new Persona(position = game.at(13,6), imagen = "utilero.png", texto = "Que pena lo del chiqui, hacia buenos mates")
-const secretariaPasillo = new Persona(position = game.at(19,6), imagen = "secretaria.png", texto = "hay un olor raro en el baño, nose que sera")
-const tecnicoPasillo = new Persona(position = game.at(11,4), imagen = "tecnico.png", texto = "me llamaron porque se habia roto algo y ahora no me dejan irme")
+const secretariaPasillo = new Persona(position = game.at(19,7), imagen = "secretaria.png", texto = "Hay un olor raro en el baño, nose que sera")
+const tecnicoPasillo = new Persona(position = game.at(11,4), imagen = "tecnico.png", texto = "Me llamaron porque se habia roto algo y ahora no me dejan irme")
 const ficusPasillo = new Mueble(position = game.at(3,7), imagen = "ficusAlto.png", descripcion = "Un arbol bastante grande.")
 const sillasPasillo = new Mueble(position = game.at(7,7), ancho = 2, imagen = "sillasEspera.png", descripcion = "Sillas de espera. Alguien se olvidó un diario.")
-const dispenserPasillo = new Mueble(position = game.at(17,7), imagen = "dispenserAgua.png", descripcion = "refrescante")
+const dispenserPasillo = new Mueble(position = game.at(17,7), imagen = "dispenserAgua.png", descripcion = "Refrescante")
 const maquinaCafePasillo = new Mueble(position = game.at(18,7), imagen = "maquinaCafe.png", descripcion = "Una máquina de café.")
 const cuadroCopaPasillo = new Mueble(position = game.at(10,8), imagen = "cuadroCopa.png", descripcion = "Un cuadro con una copa dorada.")
 const carteleraPasillo = new Mueble(position = game.at(12,8), imagen = "cartelera.png", descripcion = "Una cartelera llena de papelitos.")
 const cuadroCamisetaPasillo = new Mueble(position = game.at(20,8), imagen = "cuadroCamiseta.png", descripcion = "Una camiseta enmarcada con el número 10.")
 const paragueroPasillo = new Mueble(position = game.at(3,4), imagen = "paraguero.png", descripcion = "Un paragüero con dos paraguas.")
-const matafuegosPasillo = new Mueble(position = game.at(8,4), imagen = "matafuegos.png", descripcion = "Un matafuegos.")
 const cactusPasillo = new Mueble(position = game.at(19,4), imagen = "cactusMaceta.png", descripcion = "Un cactus con una flor rosa.")
 
 // ====================== BAÑOS ======================
@@ -571,7 +569,7 @@ const arquero = new InformanteConPedido(
     imagen = "arquero.png",
     pedido = [empanadas],
     textoPedido = "Tengo un hambre que me muero. El chef dejó algo en el horno, pero a mí no me deja entrar.",
-    texto = "¡Empanadas! Sos un crack. Tomá, la llave del vestuario, a mí no me hace falta.",
+    texto = "¡Empanadas! Sos un crack. Tomá, la llave del vestuario, los chicos capaz saben algo",
     pista = llaveVestuario,
     textoDespues = "El vestuario es la puerta de abajo a la izquierda del pasillo."
 )
@@ -610,7 +608,7 @@ const pizarraTactica = new Mueble(
     position = game.at(7,9),
     ancho = 2,
     imagen = "pizarraTactica.png",
-    descripcion = "La pizarra con la táctica del próximo partido."
+    descripcion = "La pizarra con la táctica del próximo partido. Siempre pone 5 volantes"
 )
 
 const conservadora = new Mueble(position = game.at(13,9), imagen = "conservadora.png", descripcion = "El bidón de agua del plantel. Está casi vacío.")
@@ -627,24 +625,26 @@ const bolsaPelotas = new Mueble(position = game.at(20,2), imagen = "bolsaPelotas
 const extremo = new Informante(
     position = game.at(15,5),
     imagen = "extremo.png",
-    texto = "No me puedo creer lo del Chiqui, yo lo amaba, me dió una copa en una combi y se cansó de regalarme penales. Tomá la llave de la oficina de Toviggino, él puede tener algo que ver",
+    texto = "No me puedo creer lo del Chiqui, yo lo amaba, me dió una copa en una combi y se cansó de regalarme penales.
+    Tomá la llave de la oficina de Toviggino, él puede tener algo que ver",
     pista = llaveTesorero,
-    textoDespues = "La tenía porque se la olvidó en casa el otro día que nos juntamos a comer asado, cuando perdió Estudiantes jajajajajajajajajajaja que alegría"
+    textoDespues = "La tenía porque se la olvidó cuando vimos perder a Estudiante, que alegría"
 )
 
 const llaveTesorero = new Pista(
     nombre = "llave del tesorero",
     imagen = "llaveTesorero.png",
-    texto = "La llave de la oficina del tesorero. Te la dio el 11 en el vestuario."
+    texto = "La llave de la oficina del tesorero. Te la dio el Fideo en el vestuario."
 )
 
 const delantero = new Sospechoso(
     position = game.at(7,4),
-    nombre = "delantero",
+    nombre = "Julián",
     nombreBaseImagen = "delantero",
     imagen = "delanteroNormal.png",
     texto = "No es serio que pienses que fui yo",
-    preguntas = [preguntaDelantero1, preguntaDelantero2]
+    preguntas = [preguntaDelantero1, preguntaDelantero2],
+    descripcion = "Julián, el delantero de la selección, se llevaba mal con Tapia"
 )
 
 const preguntaDelantero1 = new Pregunta(
@@ -669,7 +669,7 @@ const opcionDelantero2 = new OpcionDialogo(
 const opcionDelantero3 = new OpcionDialogo(
     texto = "Sabes quién podría querer hacerle algo así?",
     tono = neutral,
-    respuestaNormal = "No me gusta hablar sin saber, pero en este edificio hay gente con la que tuvo varios conflictos, de plata principalmente",
+    respuestaNormal = "No me gusta hablar sin saber, pero en este edificio hay gente con la que tuvo varios conflictos",
     respuestaEnojada = "Siempre fue un hijo de puta, estoy seguro que mucha gente estará feliz"
 )
 
@@ -689,14 +689,14 @@ const opcionDelantero4 = new OpcionDialogo(
 const opcionDelantero5 = new OpcionDialogo(
     texto = "Creo que encontré a mi principal sospechoso",
     tono = provocador,
-    respuestaNormal = "Dale hermano, date cuenta que hay gente muy poderosa que lo quería desaparecer del mapa en este establecimiento",
+    respuestaNormal = "Dale hermano, date cuenta que hay gente muy poderosa que lo quería desaparecer del mapa en este lugar",
     respuestaEnojada = "YO NO LO MATÉ PERO ME ALEGRÉ MAS QUE EN EL 9 DE DICIEMBRE, A JODER CON RIVER AL CIELO SALUDOS"
 )
 
 const opcionDelantero6 = new OpcionDialogo(
     texto = "Dame una buena razón para no pensar que fuiste vos",
     tono = neutral,
-    respuestaNormal = "Estuvo metido en cosas muy turbias con Toviggino, y tuvo problemas con el Presidente de la Fifa",
+    respuestaNormal = "Estuvo metido en cosas muy turbias con Toviggino, y tuvo problemas con el Presidente de la FIFA",
     respuestaEnojada = "Porque estaba ocupado agarrándome a tu hermana, te duele Qatar secanucas"
 )
 
@@ -744,11 +744,12 @@ const escritorioTesorero = new Mueble(
 
 const tesorero = new Sospechoso(
     position = game.at(11,6),
-    nombre = "el tesorero",
+    nombre = "El tesorero",
     nombreBaseImagen = "tesorero",
     imagen = "tesoreroNormal.png",
-    texto = "Ya te respondí todo lo que sé, salí de mi oficina.",
-    preguntas = [preguntaTesorero1, preguntaTesorero2]
+    texto = "Seguí jodiendo y te entierro en la cancha de Central Córdoba.",
+    preguntas = [preguntaTesorero1, preguntaTesorero2],
+    descripcion = "Toviggino, el tesorero de la AFA, mano derecha de Tapia"
 )
 
 const preguntaTesorero1 = new Pregunta(
@@ -764,16 +765,16 @@ const opcionTesorero1 = new OpcionDialogo(
 )
 
 const opcionTesorero2 = new OpcionDialogo(
-    texto = "Toviggino vayamos al grano, ámbos sabemos que usted es un corrupto y el que está hecho un fiambre no era ningún santo tampoco. Sé que usted tenía razones para silenciarlo",
+    texto = "Ámbos sabemos que usted es un corrupto y el que está hecho un fiambre lo mismo. Usted tenía razones para silenciarlo",
     tono = provocador,
-    respuestaNormal = "A vos te parece acusarme de algo así en este momento, no ves que estoy pasando por un duelo. Andate ya y no revises mis cosas",
+    respuestaNormal = "No ves que estoy pasando por un duelo. Andate ya y no revises mis cosas",
     respuestaEnojada = "USTED NO PUEDE ACUSARME DE ESTO, LLÁMESE A SILENCIO O LO MANDO A SILENCIAR"
 )
 
 const opcionTesorero3 = new OpcionDialogo(
     texto = "Vengo a revisar el balance de la tesorería de este año.",
     tono = neutral,
-    respuestaNormal = "El balance da perfecto como siempre, todo en regla y blindado. Si querés mirar carpetas, avisale a mi secretaria.",
+    respuestaNormal = "El balance da perfecto como siempre, todo en regla y blindado. A llorar a la iglesia",
     respuestaEnojada = "¿Revisar números acá? Rajá de acá antes de que te arme una causa por usurpación."
 )
 
@@ -786,7 +787,7 @@ const preguntaTesorero2 = new Pregunta(
 const opcionTesorero4 = new OpcionDialogo(
     texto = "Encontré un dineral, un arma y una denuncia penal en su auto rojo. Explíqueme esto con calma.",
     tono = gentil,
-    respuestaNormal = "Esa plata es para pagar los premios del ascenso de Santiago del Estero... y el fierro es por seguridad personal, ¿viste cómo está la calle?",
+    respuestaNormal = "Esa plata es para pagar los premios del ascenso de Santiago del Estero... y el fierro es por seguridad personal",
     respuestaEnojada = "¡No tengo que explicarte un carajo a vos! Dejá esa guita donde estaba o no salís vivo de este predio."
 )
 
@@ -794,7 +795,7 @@ const opcionTesorero5 = new OpcionDialogo(
     texto = "Bolsos con guita negra, un revólver y una causa por lavado. Te descubrí el negocio, delincuente.",
     tono = provocador,
     respuestaNormal = "¿Guita negra? Son aportes de sponsors del interior, nene. Chiqui estaba al tanto de cada centavo.",
-    respuestaEnojada = "¡A MÍ NO ME APRETÁS, DETECTIVE DE CARTÓN! ¡CON ESTO ME LIMPIO EL TRASTE Y A VOS TE HAGO DESAPARECER DEL MAPA!"
+    respuestaEnojada = "¡A MÍ NO ME APRETÁS, DETECTIVE DE CARTÓN! ¡CON ESTO ME LIMPIO EL TRASTE Y A VOS TE DESAPAREZCO!"
 )
 
 const opcionTesorero6 = new OpcionDialogo(

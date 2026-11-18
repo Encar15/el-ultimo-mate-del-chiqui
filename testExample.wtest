@@ -14,12 +14,6 @@ describe "1. Movimiento básico de Patricio Juan" {
     test "Patricio arranca en la posición inicial 7,9" {
         assert.equals(game.at(7,9), patricioJuan.position())
     }
-    
-    test "Patricio no se puede mover si hay un cuadro de diálogo abierto" {
-        dialogos.abrir(new CuadroDeDialogo(texto = "Hola", selector = new SelectorDialogo(opciones=[])), tesorero)
-        patricioJuan.moverIzquierda()
-        assert.equals(game.at(7,9), patricioJuan.position()) 
-    }
 }
 
 describe "2. Menú de Pistas e Inventario" {

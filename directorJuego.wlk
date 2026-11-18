@@ -11,6 +11,7 @@ import habitaciones.*
 import instancias.*
 import estados.*
 import debug.*
+import musica.*
 
 object configuracion {
     method configurarCanvas(){
@@ -34,6 +35,7 @@ object nivel {
     }
 
     method reiniciarEstado(){
+        musicaDeFondo.detener()
         patricioJuan.reiniciar()
         mapa.reiniciar()
         menu.reiniciar()
