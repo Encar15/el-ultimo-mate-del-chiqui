@@ -4,6 +4,8 @@ import controles.*
 import debug.*
 import cuadroDeTexto.*
 import musica.*
+import estados.*
+import objetos.*
 
 object cinematicas {
     const escenas = [pantallaDeCarga, intro, pantallaTitulo, pantallaControles, historieta, pantallaObjetivo, transicionAlJuego]
@@ -88,7 +90,7 @@ class EscenaConDuracion inherits Escena {
 }
 
 object pantallaDeCarga inherits EscenaConDuracion(
-    cantidadDeFrames = 32,           // 3,2 segundos
+    cantidadDeFrames = 32,
     duracionDeFrame = 100,
     nombreDelTick = "esperaDeCarga"
 ) {
@@ -304,4 +306,54 @@ class CadaTanto {
             self.programarSiguiente()
         }
     }
+}
+
+
+object screamer {
+    const duracionMs = 2000
+    const imagen = new Imagen(image = "screamer.png")   
+    var ruido = sinMusica
+
+    method asustar(){
+        const estadoAnterior = estadoDelJuego.actual()
+        estadoDelJuego.cambiarA(asustado)
+        game.addVisual(imagen)
+        ruido = game.sound("screamer.mp3")
+        ruido.play()
+        game.schedule(duracionMs, { self.terminar(estadoAnterior) })
+    }
+
+    method terminar(unEstado){
+        game.removeVisual(imagen)
+        ruido.stop()
+        ruido = sinMusica
+        estadoDelJuego.cambiarA(unEstado)
+    }
+}
+
+object asustado inherits Estado {}
+
+class MuebleConScreamer inherits Mueble {
+    var estado = conSusto
+
+    override method usar(unDetective){
+        estado.revisar(self)
+    }
+
+    method asustar(){
+        estado = yaAsusto
+        screamer.asustar()
+    }
+
+    override method reiniciar(){
+        estado = conSusto
+    }
+}
+
+object conSusto {
+    method revisar(unMueble){ unMueble.asustar() }
+}
+
+object yaAsusto {
+    method revisar(unMueble){ unMueble.decir(unMueble.descripcion()) }
 }

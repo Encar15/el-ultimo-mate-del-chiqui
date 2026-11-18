@@ -12,6 +12,7 @@ import colisiones.*
 import cuadroDeTexto.*
 import menu.*
 import musica.*
+import animaciones.*
 
 // ====================== PUERTAS ======================
 
@@ -584,7 +585,7 @@ const hornoBarro = new Mueble(
     descripcion = "Un horno de barro. Está prendido, pero adentro no hay nada."
 )
 
-const tacho = new Mueble(position = game.at(4,1), imagen = "tacho.png", descripcion = "El tacho de basura. Mejor no revolver.")
+const tacho = new MuebleConScreamer(position = game.at(4,1), imagen = "tacho.png", descripcion = "El tacho de basura. Mejor no revolver.")
 const bolsasPapas = new Mueble(position = game.at(20,1), imagen = "bolsasPapas.png", descripcion = "Bolsas de papas. Para el puré de mañana.")
 const cajonVerduras = new Mueble(position = game.at(21,1), imagen = "cajonVerduras.png", descripcion = "Un cajón de tomates y lechuga.")
 
