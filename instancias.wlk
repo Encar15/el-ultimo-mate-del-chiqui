@@ -354,7 +354,7 @@ const cactusPasillo = new Mueble(position = game.at(19,4), imagen = "cactusMacet
 const banios = new Habitacion(
     imagenDeFondo = "fondoBanios.png",
     personajes = [senoraLimpieza, tuca],
-    objetos = [puertaBaniosAPasillo, inodoro1, inodoro2, inodoro3, lavamanos1, lavamanos2, lavamanos3, ducha1, ducha2, ventanaBanio],
+    objetos = [puertaBaniosAPasillo, inodoro1, inodoro2, inodoro3, lavamanos1, lavamanos2, lavamanos3, ducha1, ducha2, ventanaBanio, cuadroGenio],
     paredes = colisiones.fila(10, 0, 22) + colisiones.fila(0, 0, 22) + colisiones.columna(0, 1, 9) + colisiones.columna(22, 1, 9)
 )
 
@@ -392,6 +392,13 @@ const tuca = new Informante(
 const porro = new Pista(
     nombre = "porro",
     texto = "Un porro que te dio Tuca para que no digas nada. Al guardia le puede interesar."
+)
+
+const cuadroGenio = new MuebleConSonido(
+    position = game.at(7,10),
+    imagen = "cuadroGenio.png",
+    descripcion = "Un cuadro que dice GENIO.",
+    audios = ["genio1.mp3", "genio2.mp3", "genio3.mp3"]
 )
 
 // ====================== OFICINA DE TAPIA ======================
@@ -474,7 +481,7 @@ const evidencia2Oficina = new Mueble(position = game.at(13,3), imagen = "marcado
 const areaDescanso = new Habitacion(
     imagenDeFondo = "fondoAreaDescanso.png",
     personajes = [chef, jugador, mozo, arquero],
-    objetos = [mesaLarga, buffet, heladera, planta1, planta2, tele, puertaDescansoAPasillo, puertaDescansoACocina],
+    objetos = [mesaLarga, buffet, heladera, planta1, planta2, tele, puertaDescansoAPasillo, puertaDescansoACocina, cuadroDiLollo],
     paredes = colisiones.fila(10, 0, 22) + colisiones.fila(0, 0, 22) + colisiones.columna(0, 1, 9) + colisiones.columna(22, 1, 9)
 )
 
@@ -532,6 +539,13 @@ const mozo = new Persona(
     position = game.at(8,2),
     imagen = "mozo.png",
     texto = "¿Le sirvo algo, detective? Hoy hay milanesas con puré."
+)
+
+const cuadroDiLollo = new MuebleConSonido(
+    position = game.at(3,10),
+    imagen = "cuadroDiLollo.png",
+    descripcion = "Una foto de un jugador.",
+    audios = ["dilollo1.mp3", "dilollo2.mp3", "dilollo3.mp3"]
 )
 
 // ====================== COCINA ======================

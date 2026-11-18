@@ -2,6 +2,8 @@ import wollok.game.*
 import cuadroDeTexto.*
 import menu.*
 import instancias.*
+import musica.*
+
 
 class Pista {
     var property position = game.origin()
@@ -118,6 +120,14 @@ class MuebleConPista inherits Mueble {
     override method reiniciar(){
         estado = conPista
         pista.reiniciar()
+    }
+}
+
+class MuebleConSonido inherits Mueble {
+    const audios = []
+
+    override method usar(unDetective){
+        sonidos.reproducir(audios.anyOne())
     }
 }
 
