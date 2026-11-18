@@ -6,6 +6,7 @@ import objetos.*
 import cuadroDeTexto.*
 import menu.*
 import instancias.*
+import musica.*
 
 object fondo {
     var property image = "fondoOficina.png"
@@ -18,6 +19,7 @@ class Habitacion {
     const personajes = []
     const objetos = []
     const paredes = []
+    const sonidoAlEntrar = silencio
 
     method entrar(){
         fondo.image(imagenDeFondo)
@@ -31,6 +33,8 @@ class Habitacion {
         })
 
         colisiones.cargar(self.solidos())
+
+        sonidoAlEntrar.reproducir()
     }
 
     method salir(){

@@ -19,12 +19,6 @@ object interacciones {
 
     method posicionesAInterrogar(unDetective) {
         const pos = unDetective.position()
-        return [
-            pos,
-            pos.up(1),
-            pos.down(1),
-            pos.left(1),
-            pos.right(1)
-        ]
+        return [pos, unDetective.direccion().siguiente(pos)]
     }
 }

@@ -1,6 +1,7 @@
 import wollok.game.*
 import instancias.*
 import estados.*
+import dialogos.*
 
 class TextoDelCuadro {
     var property texto
@@ -25,7 +26,11 @@ object estiloDeTexto {
 
 class CuadroDeTexto {
     var property texto
-    const textoVisual = new TextoDelCuadro(texto = texto, position = self.posicionDelTexto(), tamanioDeLetra = estiloDeTexto.tamanio())
+    const textoVisual = new TextoDelCuadro(
+    texto = texto,
+    position = self.posicionDelTexto(),
+    tamanioDeLetra = estiloDeTexto.tamanio()
+)
 
     method position() = game.at(0,0)
     method image() = "fondoNegroCuadroDeTexto.png"

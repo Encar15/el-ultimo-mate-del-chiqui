@@ -11,6 +11,7 @@ import habitaciones.*
 import colisiones.*
 import cuadroDeTexto.*
 import menu.*
+import musica.*
 
 // ====================== PUERTAS ======================
 
@@ -97,8 +98,11 @@ const bolsa = new Pista(
 
 const recepcion = new Habitacion(
     imagenDeFondo = "fondoRecepcion.png",
-    personajes = [recepcionista],
-    objetos = [puertaRecepcionAEstacionamiento, puertaRecepcionAPasillo, puertaRecepcionASalaDePrensa, mostrador],
+    sonidoAlEntrar = musicaDeFondo,
+    personajes = [recepcionista, hinchaRecepcion, empresarioRecepcion, cadeteRecepcion],
+    objetos = [puertaRecepcionAEstacionamiento, puertaRecepcionAPasillo, puertaRecepcionASalaDePrensa, mostrador,
+               palmeraRecepcion, sillonRecepcion, mesitaRecepcion, cuadroEstadioRecepcion, teleRecepcion, relojRecepcion,
+               percheroRecepcion, pedestalRecepcion, sansevieriaRecepcion],
     paredes = colisiones.fila(10, 13, 18) + colisiones.fila(7, 0, 13) + colisiones.fila(2, 0, 18) + colisiones.columna(0, 3, 6) + colisiones.columna(13, 8, 9) + colisiones.columna(18, 3, 9)
 )
 
@@ -122,6 +126,19 @@ const acreditacion = new Pista(
     imagen = "acreditacion.png",
     texto = "Una acreditación de prensa. Con esto te dejan entrar a la sala de prensa."
 )
+
+const hinchaRecepcion = new Persona(position = game.at(3,4), imagen = "hincha.png", texto = "COMPLETAR")
+const empresarioRecepcion = new Persona(position = game.at(7,5), imagen = "empresario.png", texto = "COMPLETAR")
+const cadeteRecepcion = new Persona(position = game.at(13,5), imagen = "cadete.png", texto = "COMPLETAR")
+const palmeraRecepcion = new Mueble(position = game.at(1,6), imagen = "palmeraMaceta.png", descripcion = "Una palmera en una maceta gigante.")
+const sillonRecepcion = new Mueble(position = game.at(3,6), ancho = 2, imagen = "sillonDoble.png", descripcion = "Un sillón para las visitas. Parece cómodo.")
+const mesitaRecepcion = new Mueble(position = game.at(5,6), imagen = "mesitaRevistas.png", descripcion = "Una mesita con revistas viejas.")
+const cuadroEstadioRecepcion = new Mueble(position = game.at(2,7), imagen = "cuadroEstadio.png", descripcion = "Un cuadro de un estadio lleno.")
+const teleRecepcion = new Mueble(position = game.at(6,7), ancho = 2, imagen = "televisorPared.png", descripcion = "Están pasando un partido.")
+const relojRecepcion = new Mueble(position = game.at(8,7), imagen = "relojPared.png", descripcion = "Un reloj de pared.")
+const percheroRecepcion = new Mueble(position = game.at(14,9), imagen = "perchero.png", descripcion = "Un perchero con un piloto, una bufanda y un sombrero.")
+const pedestalRecepcion = new Mueble(position = game.at(17,9), imagen = "pedestalPelota.png", descripcion = "Una pelota dorada en una vitrina.")
+const sansevieriaRecepcion = new Mueble(position = game.at(17,3), imagen = "sansevieria.png", descripcion = "Una planta con hojas largas y puntiagudas.")
 
 // ====================== SALA DE PRENSA ======================
 
@@ -243,8 +260,10 @@ const opcionPresidente6 = new OpcionDialogo(
 
 const pasillo = new Habitacion(
     imagenDeFondo = "fondoPasillo.png",
-    personajes = [guardia],
-    objetos = [puertaPasilloAOficina, puertaPasilloABanios, puertaPasilloARecepcion, puertaPasilloADescanso, puertaPasilloAVestuarios, puertaPasilloATesorero],
+    personajes = [guardia, utileroPasillo, secretariaPasillo, tecnicoPasillo],
+    objetos = [puertaPasilloAOficina, puertaPasilloABanios, puertaPasilloARecepcion, puertaPasilloADescanso, puertaPasilloAVestuarios, puertaPasilloATesorero,
+               ficusPasillo, sillasPasillo, dispenserPasillo, maquinaCafePasillo, cuadroCopaPasillo, carteleraPasillo, cuadroCamisetaPasillo,
+               paragueroPasillo, matafuegosPasillo, cactusPasillo],
     paredes = colisiones.fila(8, 0, 22) + colisiones.fila(3, 0, 22) + colisiones.columna(0, 4, 7) + colisiones.columna(22, 4, 7)
 )
 
@@ -304,6 +323,20 @@ const opcionGuardiaPorro2 = new OpcionDialogo(
     respuestaNormal = "Uhh lo re necesitaba, dale pasá pero no digas nada",
     respuestaEnojada = "Me lo fumo y después te peleo"
 )
+
+const utileroPasillo = new Persona(position = game.at(13,6), imagen = "utilero.png", texto = "Que pena lo del chiqui, hacia buenos mates")
+const secretariaPasillo = new Persona(position = game.at(19,6), imagen = "secretaria.png", texto = "hay un olor raro en el baño, nose que sera")
+const tecnicoPasillo = new Persona(position = game.at(11,4), imagen = "tecnico.png", texto = "me llamaron porque se habia roto algo y ahora no me dejan irme")
+const ficusPasillo = new Mueble(position = game.at(3,7), imagen = "ficusAlto.png", descripcion = "Un arbol bastante grande.")
+const sillasPasillo = new Mueble(position = game.at(7,7), ancho = 2, imagen = "sillasEspera.png", descripcion = "Sillas de espera. Alguien se olvidó un diario.")
+const dispenserPasillo = new Mueble(position = game.at(17,7), imagen = "dispenserAgua.png", descripcion = "refrescante")
+const maquinaCafePasillo = new Mueble(position = game.at(18,7), imagen = "maquinaCafe.png", descripcion = "Una máquina de café.")
+const cuadroCopaPasillo = new Mueble(position = game.at(10,8), imagen = "cuadroCopa.png", descripcion = "Un cuadro con una copa dorada.")
+const carteleraPasillo = new Mueble(position = game.at(12,8), imagen = "cartelera.png", descripcion = "Una cartelera llena de papelitos.")
+const cuadroCamisetaPasillo = new Mueble(position = game.at(20,8), imagen = "cuadroCamiseta.png", descripcion = "Una camiseta enmarcada con el número 10.")
+const paragueroPasillo = new Mueble(position = game.at(3,4), imagen = "paraguero.png", descripcion = "Un paragüero con dos paraguas.")
+const matafuegosPasillo = new Mueble(position = game.at(8,4), imagen = "matafuegos.png", descripcion = "Un matafuegos.")
+const cactusPasillo = new Mueble(position = game.at(19,4), imagen = "cactusMaceta.png", descripcion = "Un cactus con una flor rosa.")
 
 // ====================== BAÑOS ======================
 
@@ -388,7 +421,7 @@ const termo = new Pista(
 const conversacionesWhatsapp = new Pista(
     imagen = "papel.png", 
     nombre = "conversaciones de whatsapp",
-    texto = "En la computadora del escritorio había varias conversaciones fuertes con gente presente en el predio."
+    texto = "Hay amenazas de jugadores de la seleccion y alguien agendado como `Pela` le reclama plata."
 )
 
 const forense = new InformanteConPedido(
@@ -642,7 +675,7 @@ const opcionDelantero3 = new OpcionDialogo(
 
 const preguntaDelantero2 = new Pregunta(
     texto = "Cómo encontraste estos chats??",
-    requisitos = [amenazas],
+    requisitos = [conversacionesWhatsapp],
     opciones = [opcionDelantero4, opcionDelantero5, opcionDelantero6]
 )
 
@@ -714,7 +747,7 @@ const tesorero = new Sospechoso(
     nombre = "el tesorero",
     nombreBaseImagen = "tesorero",
     imagen = "tesoreroNormal.png",
-    texto = "",
+    texto = "Ya te respondí todo lo que sé, salí de mi oficina.",
     preguntas = [preguntaTesorero1, preguntaTesorero2]
 )
 

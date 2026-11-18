@@ -5,12 +5,13 @@ import instancias.*
 
 object patricioJuan {
     var property position = game.at(7,9)
-    var image = "patricioFrente.gif"
+    var direccion = abajo
 
-    method image() = image
+    method image() = direccion.imagenDelDetective()
+    method direccion() = direccion
 
     method mover(unaDireccion){
-        image = unaDireccion.imagenDelDetective()
+        direccion = unaDireccion 
         const nuevaPosicion = unaDireccion.siguiente(position)
         if(self.casillaDisponible(nuevaPosicion)){
             position = nuevaPosicion
@@ -19,7 +20,7 @@ object patricioJuan {
    
     method reiniciar(){
         position = game.at(7,9)
-        image = "patricioFrente.gif"
+        direccion = abajo
     }
 
     method casillaDisponible(nuevaPosicion){
