@@ -8,8 +8,7 @@ import estados.*
 import objetos.*
 
 object cinematicas {
-    const escenas = [pantallaDeCarga, intro, pantallaTitulo, pantallaControles, historieta, pantallaObjetivo, transicionAlJuego]
-    var indice = 0
+    const escenas = [pantallaDeCarga, intro, pantallaCreditos, pantallaTitulo, pantallaControles, historieta, pantallaObjetivo, transicionAlJuego]    var indice = 0
 
     method comenzar(){
         indice = 0
@@ -113,6 +112,10 @@ object intro inherits EscenaGifUnaVez(
     duracionDeFrame = 100,
     nombreDelTick = "framesDeLaIntro"
 ) {}
+
+object pantallaCreditos inherits Escena {
+    override method visualesIniciales() = [new Imagen(image = "creditos.png")]
+}
 
 object pantallaTitulo inherits Escena {
     override method visualesIniciales() = [

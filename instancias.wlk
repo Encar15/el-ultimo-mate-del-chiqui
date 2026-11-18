@@ -258,11 +258,11 @@ const opcionPresidente6 = new OpcionDialogo(
     respuestaEnojada = "Na re pálida"
 )
 
-const periodistaMicrofonoSala = new Persona(position = game.at(4,3), imagen = "periodistaMicrofono.png", texto = "COMPLETAR")
-const periodistaLibretaSala = new Persona(position = game.at(19,3), imagen = "periodistaLibreta.png", texto = "COMPLETAR")
-const fotografoSala = new Persona(position = game.at(19,7), imagen = "fotografo.png", texto = "COMPLETAR")
-const periodistaEspalda1Sala = new Persona(position = game.at(8,3), imagen = "periodistaEspalda1.png", texto = "COMPLETAR")
-const periodistaEspalda2Sala = new Persona(position = game.at(14,3), imagen = "periodistaEspalda2.png", texto = "COMPLETAR")
+const periodistaMicrofonoSala = new Persona(position = game.at(4,4), imagen = "periodistaMicrofono.png", texto = "Al fin vamos a tener un torneo como la gente")
+const periodistaLibretaSala = new Persona(position = game.at(19,2), imagen = "periodistaLibreta.png", texto = "Ruggeri se cree que es ejemplo")
+const fotografoSala = new Persona(position = game.at(19,7), imagen = "fotografo.png", texto = "Ahora a que le saco fotos")
+const periodistaEspalda1Sala = new Persona(position = game.at(8,2), imagen = "periodistaEspalda1.png", texto = "Gracias a dios")
+const periodistaEspalda2Sala = new Persona(position = game.at(14,3), imagen = "periodistaEspalda2.png", texto = "Lo mando a matar alguno de clarin seguramente")
 const camaraTripodeSala = new Mueble(position = game.at(4,1), imagen = "camaraTripode.png", descripcion = "Una cámara filmando a la periodista.")
 const camaraFotoSala = new Mueble(position = game.at(11,1), imagen = "camaraFotoTripode.png", descripcion = "Una cámara de fotos apuntando al estrado.")
 const reflector1Sala = new Mueble(position = game.at(3,8), imagen = "reflector.png", descripcion = "Un reflector apuntando al escenario.")
