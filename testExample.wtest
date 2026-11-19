@@ -9,82 +9,96 @@ import restoPersonajes.*
 import dialogos.*
 import menu.*
 import instancias.*
+import estados.*
+import directorJuego.*
 
-describe "1. Movimiento básico de Patricio Juan" {
-    test "Patricio arranca en la posición inicial 7,9" {
+describe "1. Movimiento y Colisiones" {
+    method initialize() {
+        nivel.reiniciarEstado()
+        estacionamiento.entrar()
+    }
+
+    test "Patricio arranca en (7,9) mirando hacia abajo" {
+        assert.equals(game.at(7,9), patricioJuan.position())
+        assert.equals(abajo, patricioJuan.direccion())
+    }
+
+    test "Patricio no atraviesa paredes ni bordes del mapa" {
+        patricioJuan.mover(arriba) // (7,10) es pared en estacionamiento
         assert.equals(game.at(7,9), patricioJuan.position())
     }
-}
 
-describe "2. Menú de Pistas e Inventario" {
-    method initialize() {
-        menu.reiniciar()
-    }
-    
-    test "Al inicio no hay ninguna pista guardada en el menú" {
-        assert.that(menu.pistas().isEmpty())
-    }
-    
-    test "Guardar una pista hace que el menú la contenga" {
-        menu.guardarPista(acreditacion)
-        assert.that(menu.tieneTodas([acreditacion]))
-    }
-    
-    test "El método tieneTodas falla si nos falta alguna pista de la lista" {
-        menu.guardarPista(acreditacion)
-        assert.notThat(menu.tieneTodas([acreditacion, llaveVestuario]))
+    test "El escenario bloquea sus bordes pero permite entrar por la escalera" {
+        assert.that(escenario.ocupa(game.at(9,5)))
+        assert.notThat(escenario.ocupa(game.at(8,8))) // entrada de la escalera
     }
 }
 
-describe "3. Humor y Estados de Ánimo de Sospechosos" {
+describe "2. Puertas, Requisitos e Informantes con Pedido" {
     method initialize() {
-        tesorero.reiniciar()
+        nivel.reiniciarEstado()
+        recepcion.entrar()
     }
-    
-    test "Un sospechoso arranca siempre con estado de ánimo relajado" {
-        assert.equals(relajado, tesorero.estadoDeAnimo())
+
+    test "Con la acreditación obtenida de la recepcionista se habilita la sala de prensa" {
+        recepcionista.interactuar(patricioJuan)
+        recepcionista.finalizarInteraccion()
+        puertaRecepcionASalaDePrensa.interactuar(patricioJuan)
+        assert.equals(salaDePrensa, mapa.habitacionActual())
     }
-    
-    test "Usar un tono provocador baja el humor y lo deja acorralado" {
-        provocador.afectar(tesorero)
-        assert.equals(acorralado, tesorero.estadoDeAnimo())
-    }
-    
-    test "Usar un tono gentil sube el humor y lo mantiene relajado" {
-        gentil.afectar(tesorero)
-        assert.equals(relajado, tesorero.estadoDeAnimo())
+
+    test "Un informante con pedido no entrega su pista hasta recibir el ítem" {
+        forense.interactuar(patricioJuan)
+        forense.finalizarInteraccion()
+        assert.notThat(menu.tieneTodas([informeForense]))
+
+        menu.guardarPista(bolsa)
+        forense.interactuar(patricioJuan)
+        forense.finalizarInteraccion()
+        assert.that(menu.tieneTodas([informeForense]))
     }
 }
 
-describe "4. Interacciones simples con Muebles" {
+describe "3. Interrogatorios, Humor y Consecuencias en el Mapa" {
     method initialize() {
-        menu.reiniciar()
-        cajaFuerte.reiniciar()
+        nivel.reiniciarEstado()
     }
-    
-    test "Revisar la caja fuerte otorga la llave del auto rojo" {
-        cajaFuerte.usar(patricioJuan)
-        assert.that(menu.tieneTodas([llaveAutoRojo]))
+
+    test "Las preguntas con requisitos no están disponibles hasta encontrar la pista" {
+        assert.notThat(preguntaPresidente2.esPreguntable())
+        menu.guardarPista(informeForense)
+        assert.that(preguntaPresidente2.esPreguntable())
     }
-    
-    test "Revisar un mueble con pista por segunda vez NO duplica la pista" {
-        cajaFuerte.usar(patricioJuan)
-        cuadros.cerrar() 
-        cajaFuerte.usar(patricioJuan)
-        
-        assert.equals(1, menu.pistas().size())
+
+    test "Darle el porro al guardia hace que se corra de la puerta de la oficina" {
+        assert.equals(game.at(1,5), guardia.position())
+        preguntaGuardiaPorro.responder(guardia)
+        assert.equals(game.at(1,7), guardia.position())
     }
 }
 
-describe "5. Interacciones con Informantes" {
+describe "4. Condiciones de Victoria y Veredicto" {
     method initialize() {
-        menu.reiniciar()
-        recepcionista.reiniciar()
+        nivel.reiniciarEstado()
     }
-    
-    test "Al finalizar de hablar con el informante, este te entrega la pista" {
-        recepcionista.interactuar(patricioJuan) 
-        recepcionista.finalizarInteraccion() 
-        assert.that(menu.tieneTodas([acreditacion]))
+
+    test "El culpable no puede ir preso si faltan pistas necesarias" {
+        menu.guardarPista(termo)
+        assert.notThat(presidenteFifa.puedeIrPreso())
+    }
+
+    test "El culpable va preso únicamente cuando se reúnen las tres pruebas clave" {
+        menu.guardarPista(termo)
+        menu.guardarPista(conversacionesWhatsapp)
+        menu.guardarPista(informeForense)
+        assert.that(presidenteFifa.puedeIrPreso())
+    }
+
+    test "Un sospechoso inocente nunca puede ir preso aunque estén todas las pistas" {
+        menu.guardarPista(termo)
+        menu.guardarPista(conversacionesWhatsapp)
+        menu.guardarPista(informeForense)
+        assert.notThat(tesorero.puedeIrPreso())
+        assert.notThat(delantero.puedeIrPreso())
     }
 }
