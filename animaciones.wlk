@@ -113,7 +113,11 @@ object intro inherits EscenaGifUnaVez(
     nombreDelTick = "framesDeLaIntro"
 ) {}
 
-object pantallaCreditos inherits Escena {
+object pantallaCreditos inherits EscenaConDuracion(
+    cantidadDeFrames = 35, // 3.5 segundos en pantalla
+    duracionDeFrame = 100,
+    nombreDelTick = "framesDeCreditos"
+) {
     override method visualesIniciales() = [new Imagen(image = "creditos.png")]
 }
 
