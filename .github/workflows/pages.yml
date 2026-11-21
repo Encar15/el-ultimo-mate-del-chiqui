@@ -15,7 +15,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: uqbar-project/wollok-web-tools@main
+      - uses: uqbar-project/wollok-web-tools@578d124db4401fab29f7e3818e2fdd65da4bfb68
+
+      - name: wollok-web-tools con textSize
+        run: |
+          npm install @tfloxolodeiro/wollok-web-tools@2.1.2
+          cp node_modules/@tfloxolodeiro/wollok-web-tools/dist/web/game-index.js ./game-index.js
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
