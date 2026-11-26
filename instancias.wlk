@@ -87,12 +87,12 @@ const llaveAutoRojo = new Pista(imagen = "llaveAuto.png", nombre = "llave del au
 const amenazas = new Pista(
     imagen = "papel.png", 
     nombre = "amenazas",
-    texto = "Un papel con varias amenazas escritas hacia el presidente de la AFA. Estaba en el auto de Tapia."
+    texto = "Un papel con varias amenazas escritas hacia el presidente de la AFA. Alguien estaba enojado por desfavorecer a su club."
 )
 
 const bolsa = new Pista(
     nombre = "bolsa",
-    texto = "Una bolsa con mucho efectivo, un arma y una denuncia que le hizo el gobierno. Estaba en el auto rojo."
+    texto = "Una bolsa con mucho efectivo, un arma y una denuncia que le hizo el gobierno. Estaba en el auto rojo. El efectivo puede servir"
 )
 
 // ====================== RECEPCIÓN ======================
@@ -441,7 +441,7 @@ const termo = new Pista(
 const conversacionesWhatsapp = new Pista(
     imagen = "papel.png", 
     nombre = "conversaciones de whatsapp",
-    texto = "Hay amenazas de jugadores de la seleccion y alguien agendado como `Pela` le reclama plata."
+    texto = "Se ve que discutió fuertemente con un socio por plata, también con alguien por algo relacionado al Mundial."
 )
 
 const forense = new InformanteConPedido(
@@ -458,7 +458,7 @@ const informeForense = new Pista(
     imagen = "papel.png", 
     nombre = "informe del forense",
     texto = "Según el informe del forense, a Tapia lo envenenaron con una toxina proveniente de Europa.
-    Despues no se encontro ni un pelo"
+    No se encontro ni un pelo en la escena"
 )
 
 const peritoOficina = new Persona(position = game.at(10,2), imagen = "perito.png", texto = "Le saque una foto al fiambre de tapia, esta va para un museo")
