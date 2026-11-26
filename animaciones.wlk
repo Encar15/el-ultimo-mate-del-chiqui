@@ -13,12 +13,15 @@ object cinematicas {
     method comenzar(){
         indice = 0
         keyboard.z().onPressDo({ if(self.enCurso()) self.escenaActual().apretarZ() })
+        keyboard.i().onPressDo({ self.escenaActiva().apretarI() })
         self.escenaActual().empezar()
     }
 
-    method enCurso() = indice < escenas.size()
+   method enCurso() = indice < escenas.size()
 
     method escenaActual() = escenas.get(indice)
+
+    method escenaActiva() = if (self.enCurso()) self.escenaActual() else enPartida
 
     method siguiente(){
         self.escenaActual().terminar()
@@ -32,6 +35,12 @@ object cinematicas {
 
     method empezarJuego(){
         configuracion.configurarTeclado()
+    }
+}
+
+object enPartida {
+    method apretarI() {
+        menuInstrucciones.alternar()
     }
 }
 
@@ -61,6 +70,8 @@ class Escena {
     method apretarZ(){
         cinematicas.siguiente()
     }
+
+    method apretarI() {}
 }
 
 class EscenaConDuracion inherits Escena {
@@ -86,6 +97,13 @@ class EscenaConDuracion inherits Escena {
         game.removeTickEvent(nombreDelTick)
         super()
     }
+}
+
+object cartelInstrucciones {
+    method position() = game.at(11, 0)
+    method text() = "[I] INSTRUCCIONES"
+    method textColor() = "FFD700FF"
+    method textSize() = 48
 }
 
 object pantallaDeCarga inherits EscenaConDuracion(
@@ -125,7 +143,8 @@ object pantallaTitulo inherits Escena {
     override method visualesIniciales() = [
         new Imagen(image = "fondoTitulo.png"),
         new Imagen(image = "tituloJuego.gif", position = game.at(4,9)),
-        new Imagen(image = "pulsaZParaJugar.gif", position = game.at(6,1))
+        new Imagen(image = "pulsaZParaJugar.gif", position = game.at(6,1)),
+        cartelInstrucciones
     ]
 
     override method empezar(){
@@ -135,8 +154,17 @@ object pantallaTitulo inherits Escena {
     }
 
     override method terminar(){
+        menuInstrucciones.cerrar()
         flashes.terminar()
         super()
+    }
+
+    override method apretarI(){
+        menuInstrucciones.alternar()
+    }
+
+    override method apretarZ(){
+        menuInstrucciones.apretarZEnTitulo()
     }
 }
 
@@ -364,3 +392,54 @@ object conSusto {
 object yaAsusto {
     method revisar(unMueble){ unMueble.decir(unMueble.descripcion()) }
 }
+
+object menuInstrucciones {
+    const imagen = new Imagen(image = "instrucciones.png")
+    var estado = instruccionesCerradas
+    var estadoPrevio = null
+
+    method alternar() {
+        estado.alternar(self)
+    }
+
+    method abrir() {
+        estado.abrir(self)
+    }
+
+    method cerrar() {
+        estado.cerrar(self)
+    }
+
+    method apretarZEnTitulo() {
+        estado.apretarZEnTitulo()
+    }
+
+    method mostrarPantalla() {
+        estadoPrevio = estadoDelJuego.actual()
+        estadoDelJuego.cambiarA(leyendoInstrucciones)
+        game.addVisual(imagen)
+        estado = instruccionesAbiertas
+    }
+
+    method ocultarPantalla() {
+        game.removeVisual(imagen)
+        estadoDelJuego.cambiarA(estadoPrevio)
+        estado = instruccionesCerradas
+    }
+}
+
+object instruccionesCerradas {
+    method alternar(unMenu) { unMenu.abrir() }
+    method abrir(unMenu) { unMenu.mostrarPantalla() }
+    method cerrar(unMenu) {}
+    method apretarZEnTitulo() { cinematicas.siguiente() }
+}
+
+object instruccionesAbiertas {
+    method alternar(unMenu) { unMenu.cerrar() }
+    method abrir(unMenu) {}
+    method cerrar(unMenu) { unMenu.ocultarPantalla() }
+    method apretarZEnTitulo() {}
+}
+
+object leyendoInstrucciones inherits Estado {}
