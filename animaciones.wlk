@@ -101,9 +101,9 @@ class EscenaConDuracion inherits Escena {
 
 object cartelInstrucciones {
     method position() = game.at(11, 0)
-    method text() = "[I] INSTRUCCIONES"
+    method text() = "‘ I ’ INSTRUCCIONES"
     method textColor() = "FFD700FF"
-    method textSize() = 48
+    method textSize() = 36
 }
 
 object pantallaDeCarga inherits EscenaConDuracion(

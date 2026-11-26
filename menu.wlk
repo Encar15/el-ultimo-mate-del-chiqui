@@ -120,7 +120,7 @@ class Opcion {
 object menuPrincipal inherits PantallaConOpciones{
     const cuadro = new CuadroDeDialogo(
         texto = "MENÚ",
-        etiqueta = "Z: elegir     X / C: cerrar",
+        etiqueta = "Z: Elegir     X / C: Cerrar      I: Instrucciones",
         selector = new SelectorDialogo(opciones = [carpetaPistas, carpetaSospechosos]),
         tamanioDeLetra = self.tamanioDeLetra()
     )
